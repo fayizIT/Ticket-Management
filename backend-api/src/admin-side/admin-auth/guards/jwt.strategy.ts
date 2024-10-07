@@ -1,21 +1,31 @@
-import { Injectable } from '@nestjs/common';
+// src/modules/adminSide/guards/jwt.strategy.ts
+
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AdminAuthService } from '../admin-auth.service'; 
 import { Admin } from '../admin.schema'; 
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly adminAuthService: AdminAuthService) {
+  constructor(
+    private readonly adminAuthService: AdminAuthService,
+    private readonly configService: ConfigService, // Inject ConfigService
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'secretkey', // Make sure to use the same secret used in JwtModule
+      secretOrKey: configService.get<string>('JWT_SECRET') || 'abc123', // Use ConfigService to get secret
     });
   }
 
   async validate(payload: any): Promise<Admin> {
-    const admin = await this.adminAuthService.validateAdmin(payload.email, payload.sub);
-    return admin; // Return the admin object for further use in your application
+    // Use only the sub (ID) to find the admin
+    const admin = await this.adminAuthService.validateAdminById(payload.sub);
+    if (!admin) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    return admin; 
   }
 }

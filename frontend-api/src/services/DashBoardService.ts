@@ -2,21 +2,22 @@ const API_URL = "http://localhost:3000/admin-auth";
 
 
 export const fetchDashboardData = async () => {
-    const token = localStorage.getItem('accessToken'); // Retrieve the token
-  
-    const response = await fetch(`${API_URL}/dashboard`, {
+  const token = localStorage.getItem('accessToken');
+
+  const response = await fetch('http://localhost:3000/admin-auth/dashboard', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`, // Include the token in the request headers
+          'Authorization': `Bearer ${token}`, // Include the token here
+          'Content-Type': 'application/json',
       },
-    });
-  
-    if (!response.ok) {
+  });
+
+  if (!response.ok) {
       throw new Error('Failed to fetch dashboard data');
-    }
-  
-    const data = await response.json();
-    return data.message; // Return the dashboard data
-  };
+  }
+
+  const data = await response.json();
+  return data;
+};
+
   

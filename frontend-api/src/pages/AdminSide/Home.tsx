@@ -46,7 +46,7 @@ const Home: React.FC = () => {
               <div className="mt-6">
                 <h2 className="text-xl font-bold text-gray-800">Admin Dashboard Graph Data Showing Here...</h2>
                 <pre className="bg-gray-100 p-4 rounded-lg">
-                {dashboardData} 
+                {JSON.stringify(dashboardData, null, 2)} 
                 </pre>
               </div>
             )}

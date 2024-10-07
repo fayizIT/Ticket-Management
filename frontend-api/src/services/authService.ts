@@ -12,7 +12,7 @@ export const login = async (email: string, password: string) => {
     }
 
     const data = await response.json();
-    localStorage.setItem('accessToken', data.access_token);
+    localStorage.setItem('accessToken', data.access_token.access_token);
     return data;
 };
 

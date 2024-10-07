@@ -1,9 +1,9 @@
 // src/modules/adminSide/admin-auth.service.ts
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Admin } from './admin.schema'; // Adjust this import based on your structure
+import { Admin } from './admin.schema';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,25 +15,46 @@ export class AdminAuthService {
   ) {}
 
   async createAdmin(email: string, password: string) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newAdmin = new this.adminModel({ email, password: hashedPassword, isAdmin: 1 });
-    return newAdmin.save();
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newAdmin = new this.adminModel({ email, password: hashedPassword, isAdmin: 1 });
+      return await newAdmin.save();
+    } catch (error) {
+      console.error('Error creating admin:', error);
+      throw new InternalServerErrorException('Failed to create admin. Please try again later.');
+    }
   }
 
-  async validateAdmin(email: string, password: string): Promise<any> {
+  async validateAdmin(email: string, password: string): Promise<Admin | null> {
+    console.log('Validating admin with email:', email);
     const admin = await this.adminModel.findOne({ email });
-    if (admin && (await bcrypt.compare(password, admin.password))) {
-      return admin;
+    if (!admin) {
+      console.error('Admin not found:', email);
+      return null; // Return null if not found
     }
-    return null;
+
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    console.log('Password validation result:', isPasswordValid);
+    return isPasswordValid ? admin : null; // Return null if password does not match
+  }
+
+  async validateAdminById(adminId: string): Promise<Admin | null> {
+    const admin = await this.adminModel.findById(adminId);
+    return admin; 
   }
 
   async login(admin: any) {
-    const payload = { email: admin.email, sub: admin._id };
-    return {
-      message: 'Login successful',
-      access_token: this.jwtService.sign(payload),
-    };
+    try {
+      const payload = { email: admin.email, sub: admin._id };
+      return {
+        message: 'Login successful',
+        access_token: this.jwtService.sign(payload),
+      };
+    } catch (error) {
+      console.error('Login failed:', error.message); // Log the error message
+      console.error('Error stack:', error.stack); // Log the error stack
+      throw new InternalServerErrorException('Failed to login. Please try again later.');
+    }
   }
 
   async getDashboard(): Promise<any> {

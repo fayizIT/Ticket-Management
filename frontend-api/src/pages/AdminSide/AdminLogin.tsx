@@ -18,29 +18,32 @@ const AdminLogin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError(''); // Reset the error state
     try {
       const response = await fetch('http://localhost:3000/admin-auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Invalid credentials');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid credentials'); // Extracting message from the response
       }
-
+  
       const data = await response.json();
       console.log('Login successful:', data);
-      localStorage.setItem('accessToken', data.access_token);
-
+      localStorage.setItem('accessToken', data.access_token.access_token); 
+  
       navigate('/admin/home');
     } catch (err: any) {
+      console.error("Login failed:", err);
       setError(err.message || 'An error occurred');
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">

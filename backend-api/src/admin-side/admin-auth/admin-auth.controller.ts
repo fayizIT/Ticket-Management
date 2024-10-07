@@ -1,41 +1,64 @@
+// src/modules/adminSide/admin-auth.controller.ts
 
-
-import { Controller, Post, Body, UnauthorizedException, Get } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, Get, InternalServerErrorException, UseGuards } from '@nestjs/common';
 import { AdminAuthService } from './admin-auth.service';
+import { CreateAdminDto, LoginDto } from './Dto/admin-auth.dto'; 
+import { JwtAuthGuard } from './guards/jwt-auth.guard'; 
 
 @Controller('admin-auth')
 export class AdminAuthController {
   constructor(private readonly adminAuthService: AdminAuthService) {}
 
   @Post('register')
-  async register(@Body() body: { email: string; password: string }) {
-    const { email, password } = body; // Change username to email
-    return this.adminAuthService.createAdmin(email, password);
+  async register(@Body() createAdminDto: CreateAdminDto) {
+    try {
+      const { email, password } = createAdminDto; 
+      return await this.adminAuthService.createAdmin(email, password);
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw new InternalServerErrorException('Failed to register admin. Please try again later.');
+    }
   }
 
   @Post('login')
-  async login(@Body() loginDto: { email: string; password: string }) { // Change username to email
-    const admin = await this.adminAuthService.validateAdmin(
-      loginDto.email, // Change username to email
-      loginDto.password,
-    );
-    if (!admin) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+  async login(@Body() loginDto: LoginDto) { 
+    try {
+      const admin = await this.adminAuthService.validateAdmin(
+        loginDto.email, 
+        loginDto.password,
+      );
+      if (!admin) {
+        console.error('Login attempt with invalid credentials for email:', loginDto.email);
+        throw new UnauthorizedException('Invalid credentials');
+      }
 
-    const accessToken = await this.adminAuthService.login(admin);
-    return { access_token: accessToken };
+      const accessToken = await this.adminAuthService.login(admin);
+      return { access_token: accessToken };
+    } catch (error) {
+      console.error('Login error:', error.message);
+      console.error('Error stack:', error.stack);
+      throw new InternalServerErrorException('Failed to login. Please try again later.');
+    }
   }
 
-
-  @Get('dashboard') // Add endpoint to get dashboard data
+  @UseGuards(JwtAuthGuard) // Protecting the dashboard endpoint with JWT guard
+  @Get('dashboard') 
   async getDashboard() {
-    return this.adminAuthService.getDashboard();
+    try {
+      return await this.adminAuthService.getDashboard();
+    } catch (error) {
+      console.error('Dashboard retrieval error:', error);
+      throw new InternalServerErrorException('Failed to retrieve dashboard data. Please try again later.');
+    }
   }
 
   @Post('logout')
   async logout(@Body() body: { token: string }) {
-    return this.adminAuthService.logout(body.token);
+    try {
+      return await this.adminAuthService.logout(body.token);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw new InternalServerErrorException('Failed to logout. Please try again later.');
+    }
   }
 }
-
