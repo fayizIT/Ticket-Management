@@ -6,6 +6,8 @@ import { AdminAuthModule } from './admin-side/admin-auth/admin-auth.module';
 import { UserHomepageModule } from './user-side/user-homepage/user-homepage.module';
 import { AgeCategoryModule } from './admin-side/age.category/age.category.module';
 import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
+import { TicketCartModule } from './admin-side/ticket.cart/ticket.cart.module';
+import { BookingTicketModule } from './admin-side/booking.ticket/booking.ticket.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
     AdminAuthModule,
     UserHomepageModule,
     AgeCategoryModule,
+    TicketCartModule,
+    BookingTicketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

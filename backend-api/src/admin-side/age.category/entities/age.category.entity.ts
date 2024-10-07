@@ -12,8 +12,8 @@ export class AgeCategory extends Document {
   @Prop({ required: true })
   price: number;
 
-  @Prop({ required: true })
-  discountedPrice: number;
+  // @Prop({ required: true })
+  // discountedPrice: number;
 }
 
 export const AgeCategorySchema = SchemaFactory.createForClass(AgeCategory);

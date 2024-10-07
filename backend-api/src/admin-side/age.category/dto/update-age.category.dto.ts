@@ -11,11 +11,10 @@ export class UpdateAgeCategoryDto {
 
     @IsOptional()
     @IsNumber()
-    price: number; 
-
+    price: number;
     
-    @IsOptional()
-    @IsNumber()
-    discountedPrice: number;
+    // @IsOptional()
+    // @IsNumber()
+    // discountedPrice: number;
 
 }

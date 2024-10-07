@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Header: React.FC = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <header className="bg-purple-700 text-white p-4 fixed top-0 left-0 w-full z-10">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-                <div className="text-2xl font-bold mb-4 md:mb-0">
-                    <Link to="/">canary digital.ai</Link>
+        <header className="bg-white text-blue-600 fixed top-0 left-0 w-full z-20 shadow-md">
+            <div className="container mx-auto px-4 py-2">
+                <div className="flex justify-between items-center">
+                    {/* Logo */}
+                    <div className="text-2xl font-bold">
+                        <Link to="/" className="text-blue-600 hover:text-blue-400">canary digital.ai</Link>
+                    </div>
+
+                    {/* Mobile Menu Toggle */}
+                    <button onClick={toggleMenu} className="text-2xl md:hidden text-blue-600">
+                        {isMenuOpen ? <FaTimes /> : <FaBars />}
+                    </button>
+                    <div className="MuiBox-root css-1cjf47m" style={{background: "rgb(67, 29, 129)", height: "35px"}}></div>
+
+                    {/* Nav Links - Mobile and Desktop */}
+                    <nav className={`absolute md:relative top-full left-0 w-full md:w-auto bg-white md:bg-transparent ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
+                        <ul className="flex flex-col md:flex-row items-center justify-center md:space-x-8 space-y-4 md:space-y-0 p-4 md:p-0">
+                            <li className="md:inline text-center">
+                                <Link to="/about" className="block py-1 hover:text-blue-400">About Us</Link>
+                            </li>
+                            <li className="md:inline text-center">
+                                <Link to="/rides" className="block py-1 hover:text-blue-400">Rides & Attractions</Link>
+                            </li>
+                            <li className="md:inline text-center">
+                                <Link to="/tickets" className="block py-1 hover:text-blue-400">Ticket & Price</Link>
+                            </li>
+                            <li className="md:inline text-center">
+                                <Link to="/career" className="block py-1 hover:text-blue-400">Career</Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <nav className="w-full md:w-auto">
-                    <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                        <li>
-                            <Link to="/about" className="block py-2 md:py-0 hover:text-yellow-300 transition">About Us</Link>
-                        </li>
-                        <li>
-                            <Link to="/rides" className="block py-2 md:py-0 hover:text-yellow-300 transition">Rides & Attractions</Link>
-                        </li>
-                        <li>
-                            <Link to="/tickets" className="block py-2 md:py-0 hover:text-yellow-300 transition">Ticket & Price</Link>
-                        </li>
-                        <li>
-                            <Link to="/career" className="block py-2 md:py-0 hover:text-yellow-300 transition">Career</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <div className="mt-4 md:mt-0">
-                    <span className="block md:inline-block mb-2 md:mb-0 md:mr-4">Call us: +91 999 44 66 777</span>
-                    <span className="block md:inline-block">Follow us on Instagram</span>
+
+                {/* Contact Info */}
+                <div className="text-sm mt-2 md:mt-1 text-center md:text-right">
+                    <span className="block md:inline">Call us: +91 999 44 66 777</span>
+                    <a href="#" className="block md:inline md:ml-4 hover:text-blue-400">Instagram</a>
                 </div>
             </div>
         </header>
     );
-};
 
+};
 export default Header;

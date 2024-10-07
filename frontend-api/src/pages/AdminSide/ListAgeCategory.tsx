@@ -97,20 +97,17 @@ const AgeCategoriesList: React.FC = () => {
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
+          <th className="border border-gray-300 p-4">Actions</th>
             <th className="border border-gray-300 p-4">Name</th>
             <th className="border border-gray-300 p-4">Description</th>
             <th className="border border-gray-300 p-4">Price</th>
-            <th className="border border-gray-300 p-4">Discounted Price</th>
-            <th className="border border-gray-300 p-4">Actions</th>
+            {/* <th className="border border-gray-300 p-4">Discounted Price</th> */}
+            
           </tr>
         </thead>
         <tbody>
           {ageCategories.map((category) => (
             <tr key={category._id}>
-              <td className="border border-gray-300 p-4">{category.name}</td>
-              <td className="border border-gray-300 p-4">{category.description}</td>
-              <td className="border border-gray-300 p-4">{category.price}</td>
-              <td className="border border-gray-300 p-4">{category.discountedPrice}</td>
               <td className="border border-gray-300 p-4 text-center">
                 <button 
                   onClick={() => handleEdit(category._id)}
@@ -125,6 +122,11 @@ const AgeCategoriesList: React.FC = () => {
                   <FaTrash />
                 </button>
               </td>
+              <td className="border border-gray-300 p-4">{category.name}</td>
+              <td className="border border-gray-300 p-4">{category.description}</td>
+              <td className="border border-gray-300 p-4">{category.price}</td>
+              {/* <td className="border border-gray-300 p-4">{category.discountedPrice}</td> */}
+              
             </tr>
           ))}
         </tbody>

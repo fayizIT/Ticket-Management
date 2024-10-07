@@ -85,7 +85,7 @@ const AddAgeCategory: React.FC = () => {
             required
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="discountedPrice" className="block text-sm font-medium text-gray-700">Discounted Price</label>
           <input
             type="number"
@@ -96,7 +96,7 @@ const AddAgeCategory: React.FC = () => {
             className="mt-1 p-2 w-full border border-gray-300 rounded"
             required
           />
-        </div>
+        </div> */}
         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-200">
           Add Age Category
         </button>
