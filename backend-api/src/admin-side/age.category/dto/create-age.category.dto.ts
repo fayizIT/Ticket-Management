@@ -15,8 +15,4 @@ export class CreateAgeCategoryDto {
     @IsNotEmpty()
     @IsNumber()
     price: number;
-
-    // @IsNotEmpty()
-    // @IsNumber()
-    // discountedPrice: number;
 }

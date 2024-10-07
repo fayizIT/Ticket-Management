@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBookingTicketDto } from './dto/create-booking.ticket.dto';
-import { UpdateBookingTicketDto } from './dto/update-booking.ticket.dto';
+// src/bookings/booking.service.ts
+
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateBookingDto } from './dto/create-booking.ticket.dto'; 
+import { Booking, BookingDocument } from './entities/booking.ticket.entity';
+import { AgeCategoryService } from '../age.category/age.category.service';
+
 
 @Injectable()
-export class BookingTicketService {
-  create(createBookingTicketDto: CreateBookingTicketDto) {
-    return 'This action adds a new bookingTicket';
+export class BookingService {
+  constructor(
+    @InjectModel(Booking.name) private bookingModel: Model<BookingDocument>,
+    private ageCategoryService: AgeCategoryService, // Inject AgeCategoryService
+  ) {}
+
+  // Create a booking
+  async create(createBookingDto: CreateBookingDto): Promise<Booking> {
+    // Validate age categories
+    const ageCategoryIds = createBookingDto.ageCategories.map(item => item.ageCategoryId);
+    
+    // Fetch all age categories to check validity
+    const validAgeCategories = await this.ageCategoryService.findAll();
+    const validAgeCategoryIds = validAgeCategories.map(cat => cat._id.toString());
+
+    // Check if all provided age category IDs are valid
+    const invalidIds = ageCategoryIds.filter(id => !validAgeCategoryIds.includes(id));
+    if (invalidIds.length > 0) {
+      throw new NotFoundException(`Invalid age category IDs: ${invalidIds.join(', ')}`);
+    }
+
+    // Proceed to create the booking if all IDs are valid
+    const createdBooking = new this.bookingModel(createBookingDto);
+    return createdBooking.save();
   }
 
-  findAll() {
-    return `This action returns all bookingTicket`;
+
+  // Get all bookings
+  async findAll(): Promise<Booking[]> {
+    return this.bookingModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bookingTicket`;
+  // Find a booking by ID
+  async findOne(id: string): Promise<Booking> {
+    return this.bookingModel.findById(id).exec();
   }
 
-  update(id: number, updateBookingTicketDto: UpdateBookingTicketDto) {
-    return `This action updates a #${id} bookingTicket`;
+  // Update a booking
+  async update(id: string, updateBookingDto: Partial<CreateBookingDto>): Promise<Booking> {
+    return this.bookingModel.findByIdAndUpdate(id, updateBookingDto, { new: true }).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bookingTicket`;
-  }
+  // // Delete a booking
+  // async remove(id: string): Promise<Booking> {
+  //   return this.bookingModel.findByIdAndRemove(id).exec();
+  // }
 }

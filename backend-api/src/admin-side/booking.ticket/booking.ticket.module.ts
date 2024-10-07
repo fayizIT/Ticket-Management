@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
-import { BookingTicketService } from './booking.ticket.service';
-import { BookingTicketController } from './booking.ticket.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { BookingService } from './booking.ticket.service';
+import { BookingController } from './booking.ticket.controller';
+import { Booking, BookingSchema } from './entities/booking.ticket.entity';
+import { AgeCategoryModule } from '../age.category/age.category.module';
 
 @Module({
-  controllers: [BookingTicketController],
-  providers: [BookingTicketService],
+  imports: [
+    MongooseModule.forFeature([{ name: Booking.name, schema: BookingSchema }]),
+    AgeCategoryModule],
+  controllers: [BookingController],
+  providers: [BookingService],
 })
 export class BookingTicketModule {}
