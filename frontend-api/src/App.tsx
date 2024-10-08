@@ -58,6 +58,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the styles
 import EditAgeCategory from './pages/AdminSide/EditAgeCategory';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
+import ParkRulesPage from './pages/UserSide/ParkRulePage';
 
 function App() {
   return (
