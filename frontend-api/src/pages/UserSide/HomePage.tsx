@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
     return (
         <div className="bg-gray-100 min-h-screen">
             <Header />
-            <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8 bg-gray-50">
+            <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-12 bg-gray-50">
                 {/* Left Side - Plan Your Visit */}
                 <div className="bg-white p-6 rounded-xl shadow-lg w-full md:w-1/2 border border-gray-300 flex-grow min-h-[500px]">
                     <button className="text-blue-600 font-semibold mb-4">{`<`} Plan Your Visit</button>

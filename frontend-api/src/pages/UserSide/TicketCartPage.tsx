@@ -41,7 +41,7 @@ const TicketCartPage: React.FC = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Header />
-      <div className="bg-gray-100 min-h-screen p-4 sm:p-8 mt-8">
+      <div className="bg-gray-100 min-h-screen p-4 sm:p-8 mt-12">
         <div className="flex flex-col lg:flex-row justify-center items-start space-y-8 lg:space-y-0 lg:space-x-8">
           {/* Left Side - Ticket Information */}
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-[31.7rem]">
