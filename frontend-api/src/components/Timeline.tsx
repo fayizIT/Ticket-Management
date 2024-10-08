@@ -10,7 +10,7 @@ const Timeline: React.FC<{ currentStep: number; onStepClick: (step: number) => v
           {/* Circle with checkmark or step number */}
           <div className="relative flex items-center">
             <div
-              className={`rounded-full h-12 w-12 flex items-center justify-center border-2 border-black cursor-pointer transition duration-300 ${index < currentStep ? 'bg-green-500 text-white' : index === currentStep ? 'bg-blue-500 text-white' : 'bg-white text-gray-500 hover:bg-gray-200'}`}
+              className={`rounded-full h-12 w-12 flex items-center justify-center border-2 border-black cursor-pointer transition duration-300 ${index < currentStep ? 'bg-green-500 text-white' : index === currentStep ? 'bg-green-600 text-white' : 'bg-white text-gray-500 hover:bg-gray-200'}`}
               onClick={() => index <= currentStep && onStepClick(index)} // Clickable only for current and previous steps
             >
               {index < currentStep ? (

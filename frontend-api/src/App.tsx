@@ -90,6 +90,7 @@ function MainLayout() {
           <Route path="/admin/editAgeCategory/:id" element={<EditAgeCategory />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/ticket-cart" element={<TicketCartPage />} />
+          <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

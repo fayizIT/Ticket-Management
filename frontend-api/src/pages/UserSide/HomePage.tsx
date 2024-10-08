@@ -25,6 +25,10 @@ const HomePage: React.FC = () => {
     return date < today;
   };
 
+  const isSelectedDate = (date: Date) => {
+    return selectedDate && date.toDateString() === selectedDate.toDateString();
+  };
+
   const handleConfirm = () => {
     // Increment the current step to mark it as completed and set it to green
     if (currentStep < 5) {
@@ -101,7 +105,10 @@ const HomePage: React.FC = () => {
               if (isPastDate(date)) {
                 return "bg-gray-700 text-white";
               }
-              return "bg-green-400 text-white";
+              if (isSelectedDate(date)) {
+                return "bg-green-600 text-white"; // Change this to green if it's the selected date
+              }
+              return "bg-green-400 text-white"; // Default available date style
             }}
             tileDisabled={({ date }: { date: Date }) => isPastDate(date)}
             className="w-full"

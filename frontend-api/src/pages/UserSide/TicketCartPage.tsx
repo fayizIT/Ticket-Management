@@ -16,7 +16,7 @@ const TicketCartPage: React.FC = () => {
   );
   const [showRegularTicket, setShowRegularTicket] = useState(false); // State to toggle regular ticket visibility
   const [couponCode, setCouponCode] = useState("");
-  const [currentStep, setCurrentStep] = useState(0); // Track current timeline step
+  const [currentStep, setCurrentStep] = useState(1); 
 
   useEffect(() => {
     dispatch(fetchAgeCategories() as any);
@@ -46,14 +46,11 @@ const TicketCartPage: React.FC = () => {
   const handleConfirm = () => {
     // Increment the current step to mark it as completed and set it to green
     if (currentStep < 5) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(currentStep + 2);
       console.log("Confirmed Tickets:", ticketCounts);
     }
-    navigate("/");
+    navigate("/park-rules");
   };
-
-  //   const handleConfirm = () => {
-  //   };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading categories: {error}</p>;
