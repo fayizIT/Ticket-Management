@@ -1,113 +1,48 @@
-// import React, { useState } from 'react';
-// import Header from '../../components/Header';
-// import OfferPopup from '../../components/OfferPopup'; // Import the new popup component
-
-// const HomePage: React.FC = () => {
-//     const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-//     const handleButtonClick = () => {
-//         setIsPopupOpen(true);
-//     };
-
-//     const handleClosePopup = () => {
-//         setIsPopupOpen(false);
-//     };
-
-//     const handleContinue = (offer: { title: string; discount: number } | null) => {
-//         console.log('Continuing with selected offer:', offer);
-//         handleClosePopup();
-//     };
-
-//     return (
-//         <div 
-//             className="bg-cover bg-center min-h-screen flex flex-col" 
-//             style={{ backgroundImage: "url('/path/to/your/background.jpg')" }} // Update with your banner path
-//         >
-//             <Header />
-
-//             {/* Dark Blue Bar */}
-//             <div className="bg-blue-900 h-10 w-full"></div> 
-
-//             <div className="flex-grow flex flex-col items-center justify-center bg-white bg-opacity-90 p-4">
-//                 <h1 className="text-purple-700 text-3xl mb-6 text-center md:text-4xl font-bold">Welcome to Canary Digital</h1>
-
-//                 {/* Button Grid */}
-//                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
-//                     {/* Button 1 */}
-//                     <button
-//                         className="bg-yellow-400 text-black py-6 px-8 rounded-lg shadow-md hover:bg-yellow-500 transition transform hover:scale-105"
-//                         onClick={handleButtonClick} 
-//                     >
-//                         <div className="text-2xl font-semibold">Offer 1</div>
-//                         <p className="text-sm">Up to 7.5% Discount</p>
-//                     </button>
-
-//                     {/* Button 2 */}
-//                     <button
-//                         className="bg-purple-600 text-white py-6 px-8 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105"
-//                         onClick={handleButtonClick}
-//                     >
-//                         <div className="text-2xl font-semibold">Offer 2</div>
-//                         <p className="text-sm">Up to 7.5% Discount</p>
-//                     </button>
-
-//                     {/* Button 3 */}
-//                     <button
-//                         className="bg-yellow-400 text-black py-6 px-8 rounded-lg shadow-md hover:bg-yellow-500 transition transform hover:scale-105"
-//                         onClick={handleButtonClick}
-//                     >
-//                         <div className="text-2xl font-semibold">Offer 3</div>
-//                         <p className="text-sm">Up to 10% Discount</p>
-//                     </button>
-
-//                     {/* Button 4 */}
-//                     <button
-//                         className="bg-purple-600 text-white py-6 px-8 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105"
-//                         onClick={handleButtonClick}
-//                     >
-//                         <div className="text-2xl font-semibold">Offer 4</div>
-//                         <p className="text-sm">Rooms Available</p>
-//                     </button>
-//                 </div>
-
-//                 {/* Offer Popup */}
-//                 {isPopupOpen && (
-//                     <OfferPopup
-//                         onClose={handleClosePopup}
-//                         onContinue={handleContinue}
-//                     />
-//                 )}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default HomePage;
-
 import React, { useState } from 'react';
-import Calendar from 'react-calendar'; // Import the react-calendar component
-import 'react-calendar/dist/Calendar.css'; // Import default styles for the calendar
+import Calendar from 'react-calendar'; 
+import 'react-calendar/dist/Calendar.css'; 
 import Header from '../../components/Header';
+import { useDispatch } from 'react-redux';
+import { setDate } from '../../redux/dateSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const HomePage: React.FC = () => {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-    const handleDateChange = (date: Date) => {
-        setSelectedDate(date);
-        console.log('Selected Date:', date);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [selectedDate, setSelectedDateState] = useState<Date | null>(null);
+
+
+
+
+
+    const handleDateChange = (value: Date | null) => {
+        if (value instanceof Date) {
+            setSelectedDateState(value);
+            dispatch(setDate(value.toISOString())); // Store date as ISO string or format as needed
+            console.log('Selected Date:', value);
+        }
     };
+    
 
     // Disable past dates
     const isPastDate = (date: Date) => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Ignore time component
+        today.setHours(0, 0, 0, 0); 
         return date < today;
     };
+
+  
+        const handleConfirm = () => {
+            // Navigate to TicketCartPage
+            navigate('/ticket-cart');
+        };
 
     return (
         <div className="bg-gray-100 min-h-screen">
             <Header />
-            <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8 bg-gray-50"> {/* Light background for the main content */}
+            <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8 bg-gray-50">
                 {/* Left Side - Plan Your Visit */}
                 <div className="bg-white p-6 rounded-xl shadow-lg w-full md:w-1/2 border border-gray-300 flex-grow min-h-[500px]">
                     <button className="text-blue-600 font-semibold mb-4">{`<`} Plan Your Visit</button>
@@ -157,14 +92,13 @@ const HomePage: React.FC = () => {
                     <Calendar
                         onChange={handleDateChange}
                         value={selectedDate}
-                        tileClassName={({ date }: { date: any }) => {
-                            const day = date.getDate();
+                        tileClassName={({ date }: { date: Date }) => {
                             if (isPastDate(date)) {
                                 return 'bg-gray-700 text-white'; // Disabled dates (past dates)
                             }
-                            return 'bg-green-500 text-white'; // Brighter green for available days with white text
+                            return 'bg-green-400 text-white'; // Brighter green for available days with white text
                         }}
-                        tileDisabled={({ date }: { date: any }) => isPastDate(date)} // Disable past dates
+                        tileDisabled={({ date }: { date: Date }) => isPastDate(date)} // Disable past dates
                         className="w-full"
                     />
 
@@ -184,14 +118,16 @@ const HomePage: React.FC = () => {
                         </span>
                     </div>
 
-                    <button className="mt-6 bg-blue-700 text-white py-3 px-6 rounded-full w-full hover:bg-blue-800">
+                    <button
+                        className="mt-6 bg-blue-700 text-white py-3 px-6 rounded-full w-full hover:bg-blue-800"
+                        onClick={handleConfirm} // Call handleConfirm on click
+                    >
                         Confirm
                     </button>
                 </div>
             </div>
         </div>
     );
+
 };
-
 export default HomePage;
-

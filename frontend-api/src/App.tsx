@@ -45,6 +45,8 @@
 
 
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { Provider } from 'react-redux'; // Import Provider from react-redux
+import store from './store'; // Import your Redux store
 import AdminLogin from './pages/AdminSide/AdminLogin';
 import Home from './pages/AdminSide/Home';
 import HomePage from './pages/UserSide/HomePage';
@@ -55,13 +57,17 @@ import Sidebar from './components/Sidebar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the styles
 import EditAgeCategory from './pages/AdminSide/EditAgeCategory';
+import TicketCartPage from './pages/UserSide/TicketCartPage';
 
 function App() {
   return (
-    <Router>
-      <MainLayout />
-      <ToastContainer /> 
-    </Router>
+    // Wrap the application with Provider and pass the store
+    <Provider store={store}>
+      <Router>
+        <MainLayout />
+        <ToastContainer />
+      </Router>
+    </Provider>
   );
 }
 
@@ -82,6 +88,7 @@ function MainLayout() {
           <Route path="/admin/age-categories" element={<AgeCategoriesList />} />
           <Route path="/admin/editAgeCategory/:id" element={<EditAgeCategory />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
@@ -90,4 +97,5 @@ function MainLayout() {
 }
 
 export default App;
+
 

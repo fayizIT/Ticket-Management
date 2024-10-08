@@ -1,23 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface DateState {
-  selectedDate: string | null;
-}
-
-const initialState: DateState = {
-  selectedDate: null,
-};
-
-const dateSlice = createSlice({
-  name: 'date',
-  initialState,
-  reducers: {
-    setDate: (state, action: PayloadAction<string>) => {
-      state.selectedDate = action.payload;
+// src/store.ts
+import { configureStore } from '@reduxjs/toolkit';
+import dateReducer from '../redux/dateSlice';
+import ageCategoryReducer from '../redux/ageCategorySlice';
+const store = configureStore({
+    reducer: {
+        date: dateReducer, 
+        ageCategory: ageCategoryReducer,
     },
-  },
 });
 
-export const { setDate } = dateSlice.actions;
-
-export default dateSlice.reducer;
+export default store;
