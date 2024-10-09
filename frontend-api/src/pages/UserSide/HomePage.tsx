@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setDate } from "../../redux/dateSlice";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline"; // Import Timeline component
+import { toast } from "react-toastify";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,13 +30,16 @@ const HomePage: React.FC = () => {
     return selectedDate && date.toDateString() === selectedDate.toDateString();
   };
 
-  const handleConfirm = () => {
-    // Increment the current step to mark it as completed and set it to green
-    if (currentStep < 5) {
-      setCurrentStep(currentStep + 1); // Increment step on confirm
-    }
-    navigate("/ticket-cart");
-  };
+    const handleConfirm = () => {
+      if (!selectedDate) {
+        toast.error("Please select a date");
+        return;
+      }
+      if (currentStep < 5) {
+        setCurrentStep(currentStep + 1);
+      }
+      navigate("/ticket-cart");
+    };
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);

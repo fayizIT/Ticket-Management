@@ -4,6 +4,7 @@ import { fetchAgeCategories } from "../../redux/ageCategorySlice";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const TicketCartPage: React.FC = () => {
   );
   const [showRegularTicket, setShowRegularTicket] = useState(false); // State to toggle regular ticket visibility
   const [couponCode, setCouponCode] = useState("");
-  const [currentStep, setCurrentStep] = useState(1); 
+  const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
     dispatch(fetchAgeCategories() as any);
@@ -44,11 +45,25 @@ const TicketCartPage: React.FC = () => {
   };
 
   const handleConfirm = () => {
+    // Calculate total number of tickets selected
+    const totalTickets = Object.values(ticketCounts).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+
+    // Check if at least one ticket is selected
+    if (totalTickets === 0) {
+      toast.error("Please add at least one ticket.");
+      return;
+    }
+
     // Increment the current step to mark it as completed and set it to green
     if (currentStep < 5) {
       setCurrentStep(currentStep + 2);
       console.log("Confirmed Tickets:", ticketCounts);
     }
+
+    // Navigate to the next page
     navigate("/park-rules");
   };
 

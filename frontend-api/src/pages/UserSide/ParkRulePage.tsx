@@ -16,7 +16,7 @@ const ParkRulesPage: React.FC = () => {
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
-    navigate("/");
+    navigate("");
   };
 
   const handleStepClick = (step: number) => {
