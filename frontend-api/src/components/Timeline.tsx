@@ -29,12 +29,10 @@ const Timeline: React.FC<{ currentStep: number; onStepClick: (step: number) => v
                 ${index > currentStep ? 'cursor-not-allowed' : ''}`} // Disable future steps
               onClick={() => handleStepClick(index)} // Handle click logic with navigation
             >
-              {index < currentStep ? (
-                <span className="text-white">✔️</span>
-              ) : index === currentStep ? (
-                <span className="text-white">✔️</span>
+              {index < currentStep || index === currentStep ? (
+                <span style={{ color: 'black', fontSize: '24px' }}>✓</span> // Larger black tick mark
               ) : (
-                <span className="text-black">{index + 1}</span>
+                <span style={{ color: 'black' }}>{index + 1}</span> // Step number for future steps
               )}
             </div>
 
