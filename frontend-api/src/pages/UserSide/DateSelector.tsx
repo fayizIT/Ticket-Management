@@ -30,16 +30,16 @@ const DateSelector: React.FC = () => {
     return selectedDate && date.toDateString() === selectedDate.toDateString();
   };
 
-    const handleConfirm = () => {
-      if (!selectedDate) {
-        toast.error("Please select a date");
-        return;
-      }
-      if (currentStep < 5) {
-        setCurrentStep(currentStep + 1);
-      }
-      navigate("/ticket-cart");
-    };
+  const handleConfirm = () => {
+    if (!selectedDate) {
+      toast.error("Please select a date");
+      return;
+    }
+    if (currentStep < 5) {
+      setCurrentStep(currentStep + 1);
+    }
+    navigate("/ticket-cart");
+  };
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
