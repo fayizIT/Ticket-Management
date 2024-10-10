@@ -26,7 +26,8 @@ const BannerSection: React.FC = () => {
       <div className="relative z-10 text-center flex flex-col justify-center items-center h-full">
         <img src="../assets/clientlogo.png" alt="Foggy Mountain" className="mb-4 w-[150px] h-auto" />
         <h1 className="text-blue-700 text-4xl md:text-5xl lg:text-6xl font-bold px-4">
-          Prepare for the ultimate adventure at Kerala's best nature park
+          Prepare for the ultimate adventure at Kerala's <br/>
+          best nature park
         </h1>
         <button className="mt-8 px-8 py-4 bg-blue-600 text-white rounded-lg text-lg font-bold shadow-lg hover:bg-blue-700 transition">
           Book Now
