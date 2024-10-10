@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline"; // Import Timeline component
 import { toast } from "react-toastify";
 
-const HomePage: React.FC = () => {
+const DateSelector: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDateState] = useState<Date | null>(null);
@@ -148,4 +148,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default DateSelector;
