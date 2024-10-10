@@ -20,10 +20,16 @@ const FeaturesSection: React.FC = () => {
       {/* First Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-gradient-to-br from-purple-400 to-pink-400 p-4 rounded-lg shadow-md">
+        <img
+            src="/assets/Nature.png" 
+            alt="Nature Icon"
+            className="mr-26  w-100 h-10 object-cover mt-[-55px] " 
+          />
           <h2 className="text-white text-xl font-bold">One of a Kind Adventure Park</h2>
           <p className="text-white mt-2">Experience pure adventure at Foggy Mountain...</p>
         </div>
         <div>
+        
           <img src='/assets/kindAdventure.png'alt="Adventure Park" className="w-full h-64 object-cover rounded-lg" />
         </div>
       </div>
