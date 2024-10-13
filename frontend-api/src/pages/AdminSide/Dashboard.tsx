@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDashboardData } from '../../services/DashBoardService';  // Import the service
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,4 +65,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

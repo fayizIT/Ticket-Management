@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
         <h1 className="text-2xl font-bold">Admin Panel</h1>
       </div>
       <nav className="flex flex-col mt-4">
-        <Link to="/admin/home" className="flex items-center p-4 hover:bg-gray-700 transition duration-200">
+        <Link to="/admin/dashboard" className="flex items-center p-4 hover:bg-gray-700 transition duration-200">
           <span className="material-icons">dashboard</span>
           <span className="ml-2">Dashboard</span>
         </Link>
