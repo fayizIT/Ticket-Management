@@ -1,5 +1,3 @@
-
-
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateAgeCategoryDto {
@@ -10,7 +8,6 @@ export class CreateAgeCategoryDto {
     @IsNotEmpty()
     @IsString()
     description: string;
-
 
     @IsNotEmpty()
     @IsNumber()
