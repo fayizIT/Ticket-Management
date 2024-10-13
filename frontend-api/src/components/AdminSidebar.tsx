@@ -46,6 +46,7 @@ const AdminSidebar: React.FC = () => {
               { name: "Dashboard", path: "/admin/dashboard", icon: "dashboard" },
               { name: "Age Categories", path: "/admin/age-categories", icon: "schedule" },
               { name: "Stay Categories", path: "/admin/stay-category", icon: "hotel" },
+              { name: "Coupon Code", path: "/admin/coupon-code", icon: "local_offer" },
               { name: "Schedules", path: "/admin/schedules", icon: "event" },
               { name: "Payouts", path: "/admin/payouts", icon: "monetization_on" },
               { name: "Settings", path: "/admin/settings", icon: "settings" },
