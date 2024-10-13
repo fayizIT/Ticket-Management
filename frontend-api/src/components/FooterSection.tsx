@@ -25,18 +25,18 @@ const FooterSection: React.FC = () => {
           <p className="text-sm">&copy; 2024 Designed and Developed by</p>
           {/* Company Icon */}
           <img
-            src="/path/to/your/icon.png"
-            alt="Company Icon"
-            className="h-6 w-6"
+            src="/assets/companylogo.png"
+            alt="Company Logo"
+            className="h-7 w-25"
           />
         </div>
 
         {/* Right Section: Company Icon */}
         <div className="mt-4 sm:mt-0">
           <img
-            src="/path/to/your/icon.png"
-            alt="Company Icon"
-            className="h-10 w-10 sm:absolute sm:bottom-6 sm:right-6"
+            src="/assets/clientlogo.png"
+            alt="Client Logo"
+            className="h-20 w-20 sm:absolute sm:bottom-1 sm:right-3"
           />
         </div>
       </div>

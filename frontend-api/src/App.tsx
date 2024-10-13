@@ -13,7 +13,8 @@ import EditAgeCategory from './pages/AdminSide/EditAgeCategory';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
 import ParkRulesPage from './pages/UserSide/ParkRulePage';
 import AdminSidebar from './components/AdminSidebar';
-import HomePage from './pages/UserSide/Homepage/HomePage';
+import HomePage from './pages/UserSide/HomePage';
+import DateSelector from './pages/UserSide/DateSelector';
 
 
 function App() {
@@ -48,6 +49,7 @@ function MainLayout() {
           <Route path="/admin/age-categories" element={<AgeCategoriesList />} />
           <Route path="/admin/editAgeCategory/:id" element={<EditAgeCategory />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/date-selector" element={<DateSelector />} />
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="*" element={<NotFound />} />

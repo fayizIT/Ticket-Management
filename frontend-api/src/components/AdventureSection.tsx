@@ -19,7 +19,7 @@ const AdventureSection: React.FC = () => {
         {/* First Video */}
         <div className="relative w-full h-[600px]">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-            <source src="/assets/Videos/istockphoto-450431077-640_adpp_is.mp4" type="video/mp4" />
+            <source src="/assets/Videos/" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
@@ -27,7 +27,7 @@ const AdventureSection: React.FC = () => {
         {/* Second Video */}
         <div className="relative w-full h-[600px]">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-            <source src="/assets/Videos//istockphoto-999455358-640_adpp_is.mp4" type="video/mp4" />
+            <source src="/assets/Videos/" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
@@ -35,7 +35,7 @@ const AdventureSection: React.FC = () => {
         {/* Third Video */}
         <div className="relative w-[800] h-[600px]">
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-            <source src="/assets/Videos/istockphoto-145725834-640_adpp_is.mp4" type="video/mp4" />
+            <source src="/assets/Videos/" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

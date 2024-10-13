@@ -15,7 +15,7 @@ const TicketCartPage: React.FC = () => {
   const [ticketCounts, setTicketCounts] = useState<{ [key: string]: number }>(
     {}
   );
-  const [showRegularTicket, setShowRegularTicket] = useState(false); // State to toggle regular ticket visibility
+  const [showRegularTicket, setShowRegularTicket] = useState(true); // State to toggle regular ticket visibility
   const [couponCode, setCouponCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
