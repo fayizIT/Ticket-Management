@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AgeCategoryService } from '../../services/AgeCategoryService';
-import SweetAlert from '../../components/SweetAlert';
+import { AgeCategoryService } from '../../../services/AgeCategoryService';
 import Swal from 'sweetalert2';
 
 const EditAgeCategory: React.FC = () => {
@@ -11,7 +10,6 @@ const EditAgeCategory: React.FC = () => {
     name: '',
     description: '',
     price: 0,
-    discountedPrice: 0,
   });
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const EditAgeCategory: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === 'price' || name === 'discountedPrice' ? Number(value) : value,
+      [name]: name === 'price'  ? Number(value) : value,
     }));
   };
 
@@ -111,17 +109,7 @@ const EditAgeCategory: React.FC = () => {
             required
           />
         </div>
-        {/* <div>
-          <label>Discounted Price</label>
-          <input
-            type="number"
-            name="discountedPrice"
-            value={formData.discountedPrice}
-            onChange={handleChange}
-            className="border border-gray-300 p-2 w-full"
-            required
-          />
-        </div> */}
+
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Update Category
         </button>

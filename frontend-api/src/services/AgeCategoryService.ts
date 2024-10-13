@@ -6,7 +6,6 @@ interface CreateAgeCategoryDto {
   name: string;
   description: string;
   price: number;
-  discountedPrice: number;
 }
 
 export const AgeCategoryService = {

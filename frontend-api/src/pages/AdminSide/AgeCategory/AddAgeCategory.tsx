@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { AgeCategoryService } from '../../services/AgeCategoryService'; 
+import { AgeCategoryService } from '../../../services/AgeCategoryService'; 
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../components/Modal';  // Import the Modal component
+import Modal from '../../../components/Modal';
 
 const AddAgeCategory: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +9,6 @@ const AddAgeCategory: React.FC = () => {
     name: '',
     description: '',
     price: 0,
-    discountedPrice: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
@@ -17,7 +16,7 @@ const AddAgeCategory: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === 'price' || name === 'discountedPrice' ? Number(value) : value,
+      [name]: name === 'price' ? Number(value) : value,
     }));
   };
 
@@ -30,7 +29,6 @@ const AddAgeCategory: React.FC = () => {
         name: '',
         description: '',
         price: 0,
-        discountedPrice: 0,
       });
       // Navigate after closing the modal
       setTimeout(() => navigate('/admin/age-categories'), 2000); // Wait for 2 seconds before redirecting
@@ -85,18 +83,7 @@ const AddAgeCategory: React.FC = () => {
             required
           />
         </div>
-        {/* <div className="mb-4">
-          <label htmlFor="discountedPrice" className="block text-sm font-medium text-gray-700">Discounted Price</label>
-          <input
-            type="number"
-            id="discountedPrice"
-            name="discountedPrice"
-            value={formData.discountedPrice}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
-          />
-        </div> */}
+
         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-200">
           Add Age Category
         </button>

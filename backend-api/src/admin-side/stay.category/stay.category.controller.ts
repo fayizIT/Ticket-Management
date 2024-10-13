@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, HttpException, HttpStatus } from '@nestjs/common';
 import { StayCategoryService } from './stay.category.service';
 import { CreateStayCategoryDto } from './dto/create-stay.category.dto';
 import { UpdateStayCategoryDto } from './dto/update-stay.category.dto';
@@ -22,13 +22,21 @@ export class StayCategoryController {
     return this.stayCategoryService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateStayCategoryDto: UpdateStayCategoryDto) {
     return this.stayCategoryService.update(id, updateStayCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stayCategoryService.remove(id);
+  async remove(@Param('id') id: string): Promise<{ message: string }> {
+      try {
+          await this.stayCategoryService.remove(id);
+          return { message: `Stay category with ID ${id} successfully deleted` }; // Return success message
+      } catch (error) {
+          // If a NotFoundException is thrown, it will be handled by NestJS automatically and return a 404 status
+          // If other errors occur, you can customize the error response here
+          throw new HttpException('Unable to delete stay category', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
   }
+  
 }

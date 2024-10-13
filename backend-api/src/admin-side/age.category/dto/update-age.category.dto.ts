@@ -13,8 +13,5 @@ export class UpdateAgeCategoryDto {
     @IsNumber()
     price: number;
     
-    // @IsOptional()
-    // @IsNumber()
-    // discountedPrice: number;
 
 }
