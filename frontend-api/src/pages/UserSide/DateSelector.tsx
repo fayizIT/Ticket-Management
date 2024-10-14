@@ -4,8 +4,9 @@ import "react-calendar/dist/Calendar.css";
 import { useDispatch } from "react-redux";
 import { setDate } from "../../redux/dateSlice";
 import { useNavigate } from "react-router-dom";
-import Timeline from "../../components/Timeline"; // Import Timeline component
+import Timeline from "../../components/Timeline";
 import { toast } from "react-toastify";
+import store from "../../store";
 
 const DateSelector: React.FC = () => {
   const navigate = useNavigate();
@@ -13,12 +14,15 @@ const DateSelector: React.FC = () => {
   const [selectedDate, setSelectedDateState] = useState<Date | null>(null);
   const [currentStep, setCurrentStep] = useState(0); // Track current timeline step
 
-  const handleDateChange = (value: Date | null) => {
-    if (value instanceof Date) {
-      setSelectedDateState(value);
-      dispatch(setDate(value.toISOString()));
-    }
-  };
+
+
+const handleDateChange = (value: Date | null) => {
+  if (value instanceof Date) {
+    setSelectedDateState(value);
+    dispatch(setDate(value.toISOString())); // Store as ISO string
+  }
+};
+
 
   const isPastDate = (date: Date) => {
     const today = new Date();
@@ -38,6 +42,8 @@ const DateSelector: React.FC = () => {
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
+    dispatch(setDate(selectedDate.toISOString())); // Dispatch action
+    console.log("Redux State After Dispatch:", store.getState()); 
     navigate("/ticket-cart");
   };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Timeline: React.FC<{ currentStep: number; onStepClick: (step: number) => void }> = ({ currentStep, onStepClick }) => {
-  const steps = ['Location', 'Date', 'Tickets', 'Rules', 'Add-Tent', 'Billing'];
+  const steps = ['Location', 'Date', 'Tickets', 'Add-Tent', 'Rules', 'Billing'];
   const navigate = useNavigate();
 
   const handleStepClick = (index: number) => {

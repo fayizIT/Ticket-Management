@@ -12,16 +12,21 @@ const TicketCartPage: React.FC = () => {
     (state: any) => state.ageCategory
   );
 
+  
+
   const [ticketCounts, setTicketCounts] = useState<{ [key: string]: number }>(
     {}
   );
-  const [showRegularTicket, setShowRegularTicket] = useState(true); // State to toggle regular ticket visibility
+  const [showRegularTicket, setShowRegularTicket] = useState(true); 
   const [couponCode, setCouponCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
+ useEffect(() => {
     dispatch(fetchAgeCategories() as any);
   }, [dispatch]);
+
+
+  
 
   const handleCountChange = (
     id: string,
@@ -36,6 +41,8 @@ const TicketCartPage: React.FC = () => {
       return { ...prevCounts, [id]: newCount };
     });
   };
+
+  
 
   const calculateTotal = () => {
     return Object.keys(ticketCounts).reduce((total, id) => {
@@ -59,12 +66,12 @@ const TicketCartPage: React.FC = () => {
 
     // Increment the current step to mark it as completed and set it to green
     if (currentStep < 5) {
-      setCurrentStep(currentStep + 2);
+      setCurrentStep(currentStep + 1);
       console.log("Confirmed Tickets:", ticketCounts);
     }
 
     // Navigate to the next page
-    navigate("/park-rules");
+    navigate("/stay-categories");
   };
 
   if (loading) return <p>Loading...</p>;

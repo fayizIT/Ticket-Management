@@ -17,6 +17,7 @@ import Dashboard from './pages/AdminSide/Dashboard';
 import StayCategoryList from './pages/AdminSide/StayCategory/StayCategoryList';
 import EditStayCategory from './pages/AdminSide/StayCategory/EditStayCategory';
 import CreateStayCategory from './pages/AdminSide/StayCategory/CreateStayCategory';
+import StayCart from './pages/UserSide/StayCart';
 
 
 function App() {
@@ -50,7 +51,6 @@ function MainLayout() {
           <Route path="/admin/addAgecategory" element={<AddAgeCategory />} />
           <Route path="/admin/age-categories" element={<AgeCategoriesList />} />
           <Route path="/admin/editAgeCategory/:id" element={<EditAgeCategory />} />
-
           <Route path="/admin/stay-category" element={<StayCategoryList />} />
           <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
           <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
@@ -65,6 +65,7 @@ function MainLayout() {
           <Route path="/date-selector" element={<DateSelector />} />
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
+          <Route path="/stay-categories" element={<StayCart />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
