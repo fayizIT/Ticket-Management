@@ -8,11 +8,8 @@ const store = configureStore({
         date: dateReducer, 
         ageCategory: ageCategoryReducer,
         stayCategory: stayCategoryReducer,
-    },
-
-   
+    },  
     
 });
-
 
 export default store;

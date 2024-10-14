@@ -7,6 +7,7 @@ import { AgeCategoryModule } from './admin-side/age.category/age.category.module
 import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
 import { BookingTicketModule } from './admin-side/booking.ticket/booking.ticket.module';
 import { StayCategoryModule } from './admin-side/stay.category/stay.category.module';
+import { CouponModule } from './admin-side/coupon/coupon.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { StayCategoryModule } from './admin-side/stay.category/stay.category.mod
     AgeCategoryModule,
     BookingTicketModule,
     StayCategoryModule,
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [AppService],

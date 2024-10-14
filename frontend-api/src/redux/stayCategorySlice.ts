@@ -24,7 +24,7 @@ export const fetchStayCategories = createAsyncThunk<StayCategory[]>('stayCategor
         throw new Error("Failed to fetch stay categories");
     }
     const data = await response.json();
-    console.log("dataaa",data);
+    console.log(data,"dataaaaaaaaaaaaaa");
     
     return data;
 });

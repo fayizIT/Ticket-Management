@@ -14,7 +14,11 @@ const Timeline: React.FC<{ currentStep: number; onStepClick: (step: number) => v
         navigate('/date-selector'); // Navigate to "Tickets"
       }else if (index === 2) {
         navigate('/ticket-cart'); // Navigate to "Tickets"
-      } else {
+      }else if (index === 3) {
+        navigate('/stay-categories'); 
+       }else if (index === 3) {
+        navigate('/park-rules'); 
+       } else {
         onStepClick(index); // Default behavior for other steps
       }
     }
