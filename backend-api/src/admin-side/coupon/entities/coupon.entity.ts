@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type CouponDocument = Coupon & Document;
 
-@Schema()
+@Schema({ timestamps: true })  
 export class Coupon {
   @Prop({ required: true })
   code: string;
