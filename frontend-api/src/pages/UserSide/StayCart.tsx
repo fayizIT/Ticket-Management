@@ -1,38 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStayCategories } from "../../redux/stayCategorySlice";
+import { decrementStay, fetchStayCategories, incrementStay } from "../../redux/stayCategorySlice";
 import { FaShoppingCart } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
 
-// Define types for your state
-interface StayCategory {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-}
-
-interface StayCartProps {
-  categories: StayCategory[]; // Use the correct prop type here
-  loading: boolean;
-  error: string | null;
-}
-
 const StayCart: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Ensure to select categories from the correct state slice
-  const { stayCategories: categories = [], loading = false, error = null }: StayCartProps = useSelector((state: any) => state.stayCategory || {});
-
-  const tickets = useSelector((state: any) => state.tickets); // Assuming tickets are stored in Redux
-  const selectedDate = useSelector((state: any) => state.date); 
-
-  const [stayCounts, setStayCounts] = useState<{ [key: string]: number }>({});
+  const { stayCategories, loading, error, tickets, total } = useSelector((state: any) => state.stayCategory);
   const [currentStep, setCurrentStep] = useState(2);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<StayCategory | null>(null);
@@ -41,29 +20,16 @@ const StayCart: React.FC = () => {
     dispatch(fetchStayCategories() as any);
   }, [dispatch]);
 
-  // Log ticket and date information from Redux
-  useEffect(() => {
-    console.log("Tickets:", tickets);
-    console.log("Selected Date:", selectedDate);
-  }, [tickets, selectedDate]);
-
   const handleCountChange = (id: string, operation: "increment" | "decrement") => {
-    setStayCounts((prevCounts) => {
-      const currentCount = prevCounts[id] || 0;
-      const newCount = operation === "increment" ? currentCount + 1 : Math.max(0, currentCount - 1);
-      return { ...prevCounts, [id]: newCount };
-    });
-  };
-
-  const calculateTotal = () => {
-    return Object.keys(stayCounts).reduce((total, id) => {
-      const category = categories.find((cat: StayCategory) => cat._id === id);
-      return total + (category?.price || 0) * (stayCounts[id] || 0);
-    }, 0);
+    if (operation === "increment") {
+      dispatch(incrementStay(id));
+    } else {
+      dispatch(decrementStay(id));
+    }
   };
 
   const handleConfirm = () => {
-    const totalStays = Object.values(stayCounts).reduce((sum, count) => sum + count, 0);
+    const totalStays = Object.values(tickets).reduce((sum, count) => sum + count, 0);
 
     if (totalStays === 0) {
       toast.error("Please select at least one stay.");
@@ -112,7 +78,14 @@ const StayCart: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col h-auto lg:h-[31.7rem] overflow-y-auto">
-            {categories.map((category: StayCategory) => (
+
+            {stayCategories.map((category: {
+              _id: string
+              image: string
+              name: string
+              price: number
+              description: string
+            }) => (
               <div key={category._id} className="border border-gray-300 rounded-md p-4 mb-4">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
@@ -143,7 +116,7 @@ const StayCart: React.FC = () => {
                     <input
                       type="number"
                       className="w-8 sm:w-12 text-center border-t border-b border-gray-300 focus:outline-none"
-                      value={stayCounts[category._id] || 0}
+                      value={tickets[category._id] || 0}
                       readOnly
                     />
                     <button
@@ -158,7 +131,7 @@ const StayCart: React.FC = () => {
             ))}
             <div className="flex justify-between items-center mt-4">
               <p className="text-base sm:text-lg font-bold">
-                Total: ₹{calculateTotal().toFixed(2)}
+                Total: ₹{total.toFixed(2)}
               </p>
               <button
                 className="bg-blue-700 text-white py-2 px-4 rounded-full hover:bg-blue-800 transition-colors duration-200 text-sm sm:text-base"
@@ -176,7 +149,7 @@ const StayCart: React.FC = () => {
         onRequestClose={closeModal}
         className="bg-white rounded-lg p-6 w-11/12 md:w-1/2 lg:w-1/3 mx-auto mt-20"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        ariaHideApp={false} // Add this for accessibility
+        ariaHideApp={false}
       >
         {selectedCategory && (
           <div>
@@ -199,6 +172,6 @@ const StayCart: React.FC = () => {
       </Modal>
     </div>
   );
-
 };
+
 export default StayCart;
