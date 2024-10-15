@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline";
+import { useSelector } from "react-redux";
 
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const ParkRulesPage: React.FC = () => {
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -124,7 +127,7 @@ const ParkRulesPage: React.FC = () => {
             )}
           </div>
 
-          {/* Agree & Proceed Button */}
+  
           <button
             className="mt-6 bg-blue-700 text-white py-3 px-6 rounded-full w-full hover:bg-blue-800"
             onClick={handleConfirm}

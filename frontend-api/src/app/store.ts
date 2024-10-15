@@ -1,13 +1,13 @@
 // src/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import dateReducer from '../redux/dateSlice';
-import ticketCategoryReducer from '../redux/tickectSlice';
+import ticketCategoryReducer from '../redux/ticketSlice';
 import stayCategoryReducer from '../redux/stayCategorySlice'
 const store = configureStore({
     reducer: {
-        date: dateReducer, 
+        date: dateReducer,
         ticketCategory: ticketCategoryReducer,
-        stayCategory: stayCategoryReducer,
+    stayCategory: stayCategoryReducer,
     },  
     
 });

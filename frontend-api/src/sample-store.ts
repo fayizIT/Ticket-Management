@@ -1,7 +1,7 @@
 // src/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import dateReducer from './redux/dateSlice'; // Import the date reducer
-import ageCategoryReducer from './redux/tickectSlice'; // Import the age category reducer
+import ageCategoryReducer from './redux/ticketSlice'; // Import the age category reducer
 
 const store = configureStore({
     reducer: {
