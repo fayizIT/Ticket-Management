@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStayCategories } from "../../redux/stayCategorySlice"; // Adjust path as necessary
+import { fetchStayCategories } from "../../redux/stayCategorySlice";
 import { FaShoppingCart } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
@@ -10,25 +10,33 @@ const StayCart: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Provide default values in case state is initially undefined
+  // Assuming tickets and dates are stored in Redux
   const {
     categories = [],
     loading = false,
     error = null,
   } = useSelector((state: any) => state.stayCategory || {});
+  
+  const tickets = useSelector((state: any) => state.tickets); // Assuming tickets are stored in Redux
+  const selectedDate = useSelector((state: any) => state.date); // Assuming date is stored in Redux
 
   const [stayCounts, setStayCounts] = useState<{ [key: string]: number }>({});
   const [currentStep, setCurrentStep] = useState(2);
 
   useEffect(() => {
-  dispatch(fetchStayCategories() as any);
-       // Ensure result is set to an empty array if undefined
+    dispatch(fetchStayCategories() as any);
   }, [dispatch]);
 
-
+  // Log the categories from Redux
   useEffect(() => {
     console.log("Stay Categories in Redux:", categories);
   }, [categories]);
+
+  // Log ticket and date information from Redux
+  useEffect(() => {
+    console.log("Tickets:", tickets); // Logging the stored ticket information
+    console.log("Selected Date:", selectedDate); // Logging the selected date
+  }, [tickets, selectedDate]);
 
   const handleCountChange = (
     id: string,
@@ -46,7 +54,7 @@ const StayCart: React.FC = () => {
 
   const calculateTotal = () => {
     return Object.keys(stayCounts).reduce((total, id) => {
-      const category = categories.find((cat:any) => cat._id === id);
+      const category = categories.find((cat: any) => cat._id === id);
       return total + (category?.price || 0) * (stayCounts[id] || 0);
     }, 0);
   };
@@ -94,7 +102,7 @@ const StayCart: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col h-auto lg:h-[31.7rem] overflow-y-auto">
-            {categories.map((category:any) => (
+            {categories.map((category: any) => (
               <div
                 key={category._id}
                 className="flex justify-between items-center border-b py-2"
