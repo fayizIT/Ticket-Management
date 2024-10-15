@@ -12,28 +12,29 @@ const DateSelector: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDateState] = useState<Date | null>(null);
-  const [currentStep, setCurrentStep] = useState(0); // Track current timeline step
+  const [currentStep, setCurrentStep] = useState(0);
 
+  // Handle Date Change
+  const handleDateChange = (value: Date | null) => {
+    if (value instanceof Date) {
+      setSelectedDateState(value);
+      dispatch(setDate(value.toISOString()));
+    }
+  };
 
-
-const handleDateChange = (value: Date | null) => {
-  if (value instanceof Date) {
-    setSelectedDateState(value);
-    dispatch(setDate(value.toISOString())); // Store as ISO string
-  }
-};
-
-
+  // Check if the date is in the past
   const isPastDate = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date < today;
   };
 
+  // Check if the date is the selected one
   const isSelectedDate = (date: Date) => {
     return selectedDate && date.toDateString() === selectedDate.toDateString();
   };
 
+  // Handle the confirmation of the selected date
   const handleConfirm = () => {
     if (!selectedDate) {
       toast.error("Please select a date");
@@ -42,14 +43,19 @@ const handleDateChange = (value: Date | null) => {
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
-    dispatch(setDate(selectedDate.toISOString())); // Dispatch action
-    console.log("Redux State After Dispatch:", store.getState()); 
+    dispatch(setDate(selectedDate.toISOString())); // Dispatch action to set the date
+    console.log("Redux State After Dispatch:", store.getState());
     navigate("/ticket-cart");
   };
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+  // Get current month and year dynamically
+  const currentMonthYear = selectedDate
+    ? selectedDate.toLocaleString("default", { month: "long", year: "numeric" })
+    : new Date().toLocaleString("default", { month: "long", year: "numeric" });
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -60,7 +66,7 @@ const handleDateChange = (value: Date | null) => {
         {/* Left Side */}
         <div className="bg-white p-6 rounded-xl shadow-lg w-full md:w-1/2 border border-gray-300 flex-grow min-h-[500px]">
           <button className="text-blue-600 font-semibold mb-4">
-            {`<`} Plan Your Visit
+            {"<"} Plan Your Visit
           </button>
           <h2 className="text-2xl font-bold mb-4">Plan Your Visit</h2>
 
@@ -107,18 +113,18 @@ const handleDateChange = (value: Date | null) => {
 
         {/* Right Side */}
         <div className="bg-white p-6 rounded-xl shadow-lg w-full md:w-1/2 border border-gray-300 flex-grow min-h-[500px]">
-          <h3 className="text-2xl font-bold mb-4 ">October 2024</h3>
+          <h3 className="text-2xl font-bold mb-4">{currentMonthYear}</h3>
           <Calendar
             onChange={handleDateChange}
             value={selectedDate}
             tileClassName={({ date }: { date: Date }) => {
               if (isPastDate(date)) {
-                return "bg-gray-700 text-white";
+                return "bg-gray-1000 text-white";
               }
               if (isSelectedDate(date)) {
-                return "bg-green-600 text-white"; // Change this to green if it's the selected date
+                return "bg-green-600 text-white"; 
               }
-              return "bg-green-400 text-white"; // Default available date style
+              return "bg-white-400 text-black"; 
             }}
             tileDisabled={({ date }: { date: Date }) => isPastDate(date)}
             className="w-full"
