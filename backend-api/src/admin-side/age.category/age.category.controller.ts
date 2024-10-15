@@ -17,7 +17,7 @@ import { CreateAgeCategoryDto } from './dto/create-age.category.dto';
 import { UpdateAgeCategoryDto } from './dto/update-age.category.dto';
 import { AgeCategory } from './entities/age.category.entity';
 
-@Controller('admin/age-categories')
+@Controller('admin/ticket-Category')
 export class AgeCategoryController {
   constructor(private readonly ageCategoryService: AgeCategoryService) {}
 

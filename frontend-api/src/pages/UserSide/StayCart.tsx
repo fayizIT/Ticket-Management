@@ -11,40 +11,51 @@ const StayCart: React.FC = () => {
   const dispatch = useDispatch();
 
   // Provide default values in case state is initially undefined
-  const { categories = [], loading = false, error = null } = useSelector((state: any) => state.stayCategory || {});
-  
-  const [result, setResult] = useState<any[]>([]); // Explicit type for clarity
+  const {
+    categories = [],
+    loading = false,
+    error = null,
+  } = useSelector((state: any) => state.stayCategory || {});
+
   const [stayCounts, setStayCounts] = useState<{ [key: string]: number }>({});
   const [currentStep, setCurrentStep] = useState(2);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await dispatch(fetchStayCategories() as any);
-      console.log(response.payload, "checking dispatch");
-      setResult(response?.payload || []); // Ensure result is set to an empty array if undefined
-    };
-  
-    fetchCategories();
+  dispatch(fetchStayCategories() as any);
+       // Ensure result is set to an empty array if undefined
   }, [dispatch]);
 
-  const handleCountChange = (id: string, operation: "increment" | "decrement") => {
+
+  useEffect(() => {
+    console.log("Stay Categories in Redux:", categories);
+  }, [categories]);
+
+  const handleCountChange = (
+    id: string,
+    operation: "increment" | "decrement"
+  ) => {
     setStayCounts((prevCounts) => {
       const currentCount = prevCounts[id] || 0;
       const newCount =
-        operation === "increment" ? currentCount + 1 : Math.max(0, currentCount - 1);
+        operation === "increment"
+          ? currentCount + 1
+          : Math.max(0, currentCount - 1);
       return { ...prevCounts, [id]: newCount };
     });
   };
 
   const calculateTotal = () => {
     return Object.keys(stayCounts).reduce((total, id) => {
-      const category = result.find((cat) => cat._id === id);
+      const category = categories.find((cat:any) => cat._id === id);
       return total + (category?.price || 0) * (stayCounts[id] || 0);
     }, 0);
   };
 
   const handleConfirm = () => {
-    const totalStays = Object.values(stayCounts).reduce((sum, count) => sum + count, 0);
+    const totalStays = Object.values(stayCounts).reduce(
+      (sum, count) => sum + count,
+      0
+    );
 
     if (totalStays === 0) {
       toast.error("Please select at least one stay.");
@@ -83,13 +94,20 @@ const StayCart: React.FC = () => {
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col h-auto lg:h-[31.7rem] overflow-y-auto">
-            {result.map((category) => (
-              <div key={category._id} className="flex justify-between items-center border-b py-2">
+            {categories.map((category:any) => (
+              <div
+                key={category._id}
+                className="flex justify-between items-center border-b py-2"
+              >
                 <div className="flex items-center">
                   <FaShoppingCart className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-4 text-gray-500" />
                   <div>
-                    <h4 className="font-bold text-sm sm:text-base">{category.name}</h4>
-                    <p className="text-base sm:text-lg">₹{category.price.toFixed(2)}</p>
+                    <h4 className="font-bold text-sm sm:text-base">
+                      {category.name}
+                    </h4>
+                    <p className="text-base sm:text-lg">
+                      ₹{category.price.toFixed(2)}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">

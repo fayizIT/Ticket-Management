@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
           <span className="ml-2">Booked users List</span>
         </Link>
 
-        <Link to="/admin/age-categories" className="flex items-center p-4 hover:bg-gray-700 transition duration-200"> {/* Updated this line */}
+        <Link to="/admin/ticket-Category" className="flex items-center p-4 hover:bg-gray-700 transition duration-200"> {/* Updated this line */}
           <span className="material-icons">people</span>
           <span className="ml-2">Age Categories</span>
         </Link>

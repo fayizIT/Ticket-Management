@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAgeCategories } from "../../redux/ageCategorySlice";
+import { fetchTicketCategories } from "../../redux/tickectSlice";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
@@ -22,8 +22,12 @@ const TicketCartPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
  useEffect(() => {
-    dispatch(fetchAgeCategories() as any);
+    dispatch(fetchTicketCategories() as any);
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("Tickect Categories in Redux:", categories);
+  }, [categories]);
 
 
   

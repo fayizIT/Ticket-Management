@@ -13,7 +13,7 @@ interface AgeCategory {
   price: number;
 }
 
-const AgeCategoriesList: React.FC = () => {
+const TicketCategoriesList: React.FC = () => {
   const [ageCategories, setAgeCategories] = useState<AgeCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);  // State for confirmation dialog
@@ -23,7 +23,7 @@ const AgeCategoriesList: React.FC = () => {
   useEffect(() => {
     const fetchAgeCategories = async () => {
       try {
-        const response = await fetch('http://localhost:3000/admin/age-categories', {
+        const response = await fetch('http://localhost:3000/admin/ticket-Category', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
           },
@@ -45,7 +45,7 @@ const AgeCategoriesList: React.FC = () => {
   }, []);
 
   const handleEdit = (id: string) => {
-    navigate(`/admin/editAgeCategory/${id}`);
+    navigate(`/admin/edit-ticket-Category/${id}`);
   };
 
   const handleDelete = async () => {
@@ -94,7 +94,7 @@ const AgeCategoriesList: React.FC = () => {
       <div className="mb-4">
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={() => navigate('/admin/addAgeCategory')}
+          onClick={() => navigate('/admin/add-ticket-category')}
         >
           Create Category
         </button>
@@ -148,4 +148,4 @@ const AgeCategoriesList: React.FC = () => {
   );
 };
 
-export default AgeCategoriesList;
+export default TicketCategoriesList;

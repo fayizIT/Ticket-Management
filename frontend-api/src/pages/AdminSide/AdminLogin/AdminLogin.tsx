@@ -12,7 +12,7 @@
 
 //   useEffect(() => {
 //     if (isAuthenticated) {
-//       navigate('/admin/home');
+//       navigate('/admin/dashboard');
 //     }
 //   }, [isAuthenticated, navigate]);
 
@@ -37,7 +37,7 @@
 //       console.log('Login successful:', data);
 //       localStorage.setItem('accessToken', data.access_token.access_token); 
   
-//       navigate('/admin/home');
+//       navigate('/admin/dashboard');
 //     } catch (err: any) {
 //       console.error("Login failed:", err);
 //       setError(err.message || 'An error occurred');
@@ -103,7 +103,7 @@ const AdminLogin: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/admin/home');
+      navigate('/admin/dashboard');
     }
   }, [isAuthenticated, navigate]);
 
@@ -128,7 +128,7 @@ const AdminLogin: React.FC = () => {
       console.log('Login successful:', data);
       localStorage.setItem('accessToken', data.access_token.access_token); 
   
-      navigate('/admin/home');
+      navigate('/admin/dashboard');
     } catch (err: any) {
       console.error("Login failed:", err);
       setError(err.message || 'An error occurred');

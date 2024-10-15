@@ -6,7 +6,7 @@ import { setDate } from "../../redux/dateSlice";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline";
 import { toast } from "react-toastify";
-import store from "../../store";
+import store from "../../app/store"; 
 
 const DateSelector: React.FC = () => {
   const navigate = useNavigate();

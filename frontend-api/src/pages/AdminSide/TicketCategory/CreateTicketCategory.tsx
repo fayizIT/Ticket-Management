@@ -3,7 +3,7 @@ import { AgeCategoryService } from '../../../services/AgeCategoryService';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 
-const AddAgeCategory: React.FC = () => {
+const CreateTicketCategory: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -31,7 +31,7 @@ const AddAgeCategory: React.FC = () => {
         price: 0,
       });
       // Navigate after closing the modal
-      setTimeout(() => navigate('/admin/age-categories'), 2000); // Wait for 2 seconds before redirecting
+      setTimeout(() => navigate('/admin/ticket-Category'), 2000); // Wait for 2 seconds before redirecting
     } catch (error) {
       console.error('Failed to add Age Category:', error);
       // Optionally, you can handle error display here
@@ -40,7 +40,7 @@ const AddAgeCategory: React.FC = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    navigate('/admin/age-categories'); // Redirect after closing the modal
+    navigate('/admin/ticket-Category'); // Redirect after closing the modal
   };
 
   return (
@@ -100,4 +100,4 @@ const AddAgeCategory: React.FC = () => {
   );
 };
 
-export default AddAgeCategory;
+export default CreateTicketCategory;

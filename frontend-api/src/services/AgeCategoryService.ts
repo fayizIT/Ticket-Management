@@ -1,5 +1,5 @@
 // src/services/AgeCategoryService.ts
-const BASE_URL = 'http://localhost:3000/admin/age-categories';
+const BASE_URL = 'http://localhost:3000/admin/ticket-Category';
 
 interface CreateAgeCategoryDto {
     id?:string;

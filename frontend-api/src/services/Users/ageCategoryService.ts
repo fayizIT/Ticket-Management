@@ -1,4 +1,4 @@
-// const API_URL = 'http://localhost:3000/admin/age-categories'; // Change this to your API URL
+// const API_URL = 'http://localhost:3000/admin/ticket-Category'; // Change this to your API URL
 
 // export const getAgeCategories = async () => {
 //     try {

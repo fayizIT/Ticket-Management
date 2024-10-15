@@ -2,9 +2,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Replace with your actual API URL
-const API_URL = 'http://localhost:3000/admin/age-categories';
+const API_URL = 'http://localhost:3000/admin/ticket-Category';
 
-export const fetchAgeCategories = createAsyncThunk(
+export const fetchTicketCategories = createAsyncThunk(
     'ageCategory/fetchAgeCategories',
     async () => {
         const response = await fetch(API_URL);
@@ -16,37 +16,37 @@ export const fetchAgeCategories = createAsyncThunk(
     }
 );
 
-interface AgeCategoryState {
+interface TicketCategoryState {
     categories: any[];
     loading: boolean;
     error: string | null;
 }
 
-const initialState: AgeCategoryState = {
+const initialState: TicketCategoryState = {
     categories: [],
     loading: false,
     error: null,
 };
 
-const ageCategorySlice = createSlice({
-    name: 'ageCategory',
+const ticketCategorySlice = createSlice({
+    name: 'ticketCategory',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchAgeCategories.pending, (state) => {
+            .addCase(fetchTicketCategories.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchAgeCategories.fulfilled, (state, action) => {
+            .addCase(fetchTicketCategories.fulfilled, (state, action) => {
                 state.loading = false;
                 state.categories = action.payload;
             })
-            .addCase(fetchAgeCategories.rejected, (state, action) => {
+            .addCase(fetchTicketCategories.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to load age categories';
             });
     },
 });
 
-export default ageCategorySlice.reducer;
+export default ticketCategorySlice.reducer;

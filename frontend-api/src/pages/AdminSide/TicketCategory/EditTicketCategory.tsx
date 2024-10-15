@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AgeCategoryService } from '../../../services/AgeCategoryService';
 import Swal from 'sweetalert2';
 
-const EditAgeCategory: React.FC = () => {
+const EditTicketCategory: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ const EditAgeCategory: React.FC = () => {
         text: 'Age category updated successfully!',
         confirmButtonText: 'OK',
       });
-      navigate('/admin/age-categories');
+      navigate('/admin/ticket-Category');
     } catch (error) {
       console.error('Failed to update age category:', error);
       Swal.fire({
@@ -118,4 +118,4 @@ const EditAgeCategory: React.FC = () => {
   );
 };
 
-export default EditAgeCategory;
+export default EditTicketCategory;

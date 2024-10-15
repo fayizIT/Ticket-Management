@@ -44,7 +44,7 @@ const AdminSidebar: React.FC = () => {
           <ul className="space-y-8 pt-10">
             {[
               { name: "Dashboard", path: "/admin/dashboard", icon: "dashboard" },
-              { name: "Age Categories", path: "/admin/age-categories", icon: "schedule" },
+              { name: "Age Categories", path: "/admin/ticket-Category", icon: "schedule" },
               { name: "Stay Categories", path: "/admin/stay-category", icon: "hotel" },
               { name: "Coupon Code", path: "/admin/coupon-code", icon: "local_offer" },
               { name: "Schedules", path: "/admin/schedules", icon: "event" },
