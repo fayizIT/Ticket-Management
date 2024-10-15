@@ -29,7 +29,7 @@ const StayCart: React.FC = () => {
   // Ensure to select categories from the correct state slice
   const { stayCategories: categories = [], loading = false, error = null }: StayCartProps = useSelector((state: any) => state.stayCategory || {});
 
-  const tickets = useSelector((state: any) => state.tickets); 
+  const tickets = useSelector((state: any) => state.tickets); // Assuming tickets are stored in Redux
   const selectedDate = useSelector((state: any) => state.date); 
 
   const [stayCounts, setStayCounts] = useState<{ [key: string]: number }>({});
@@ -41,6 +41,11 @@ const StayCart: React.FC = () => {
     dispatch(fetchStayCategories() as any);
   }, [dispatch]);
 
+  // Log ticket and date information from Redux
+  useEffect(() => {
+    console.log("Tickets:", tickets);
+    console.log("Selected Date:", selectedDate);
+  }, [tickets, selectedDate]);
 
   const handleCountChange = (id: string, operation: "increment" | "decrement") => {
     setStayCounts((prevCounts) => {
@@ -171,7 +176,7 @@ const StayCart: React.FC = () => {
         onRequestClose={closeModal}
         className="bg-white rounded-lg p-6 w-11/12 md:w-1/2 lg:w-1/3 mx-auto mt-20"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        ariaHideApp={false} 
+        ariaHideApp={false} // Add this for accessibility
       >
         {selectedCategory && (
           <div>
@@ -194,5 +199,6 @@ const StayCart: React.FC = () => {
       </Modal>
     </div>
   );
+
 };
 export default StayCart;

@@ -20,6 +20,7 @@ import CreateStayCategory from './pages/AdminSide/StayCategory/CreateStayCategor
 import StayCart from './pages/UserSide/StayCart';
 import EditTicketCategory from './pages/AdminSide/TicketCategory/EditTicketCategory';
 import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCategory';
+import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
 
 
 function App() {
@@ -56,6 +57,7 @@ function MainLayout() {
           <Route path="/admin/stay-category" element={<StayCategoryList />} />
           <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
           <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
+          <Route path="/admin/coupon-code" element={<CouponCodeList />} />
 
 
 
@@ -68,6 +70,7 @@ function MainLayout() {
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
