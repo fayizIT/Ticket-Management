@@ -1,23 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTicketCategories, incrementTicket, decrementTicket } from "../../redux/ticketSlice";
+import {
+  fetchTicketCategories,
+  incrementTicket,
+  decrementTicket,
+  applyDiscount,
+  removeDiscount,
+} from "../../redux/ticketSlice";
 import { FaUser } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CouponService from "../../services/CouponService"; 
+import CouponService from "../../services/CouponService";
 
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { categories, loading, error, tickets, totalticket } = useSelector((state: any) => state.ticketCategory);
+  const {
+    categories,
+    loading,
+    error,
+    tickets,
+    activeCoupon,
+    discountedTotal,
+  } = useSelector((state: any) => state.ticketCategory);
+  const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [couponCode, setCouponCode] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [activeCoupon, setActiveCoupon] = useState(""); 
   const [coupons, setCoupons] = useState([]);
+
+  useEffect(() => {
+    if (!selectedDate) {
+      navigate("/"); // Navigate to home page if date is not set
+    }
+  }, [navigate, selectedDate]);
 
   useEffect(() => {
     const fetchCoupons = async () => {
@@ -39,6 +56,7 @@ const TicketCartPage: React.FC = () => {
     } else {
       dispatch(decrementTicket(id));
     }
+    console.log("Current tickets:", tickets); // Log tickets after count change
   };
 
   const handleConfirm = () => {
@@ -51,6 +69,7 @@ const TicketCartPage: React.FC = () => {
       setCurrentStep(currentStep + 1);
     }
     navigate("/stay-categories");
+    console.log("Confirmed tickets:", tickets); // Log tickets when confirming
   };
 
   const handleStepClick = (step: number) => {
@@ -60,35 +79,38 @@ const TicketCartPage: React.FC = () => {
   const handleCouponClick = (code: string, discountAmount: number) => {
     const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
     if (totalTickets > 0) {
-      if (activeCoupon === code) {
-        // If the same coupon is clicked again, remove it
-        setActiveCoupon("");
-        setDiscount(0);
-        setCouponCode("");
+      if (activeCoupon && activeCoupon.code === code) {
+        // Remove coupon
+        setCoupons((prev) => prev.filter((coupon: { code: string }) => coupon.code !== code));
+        dispatch(removeDiscount()); // Clear discount in Redux
         toast.success("Coupon removed");
       } else {
-        // Apply the new coupon if it’s different
-        setActiveCoupon(code);
-        setDiscount(discountAmount);
-        setCouponCode(code);
+        // Apply coupon
+        const calculatedTotal = categories.reduce((sum: number, category: any) => {
+          return sum + (category.price * (tickets[category._id] || 0));
+        }, 0);
+        const discountedTotal = Math.max(0, calculatedTotal - (calculatedTotal * (discountAmount / 100)));
+        dispatch(applyDiscount({ code, discount: discountAmount })); // Set discount in Redux
         toast.success(`Coupon applied: ${code}`);
-
-        // Store the coupon code in local storage
-        localStorage.setItem("activeCoupon", JSON.stringify({ code, discount: discountAmount }));
       }
     } else {
       toast.error("Please add at least one ticket before applying a coupon.");
     }
   };
 
-  // Calculate the total number of tickets and total price based on the tickets selected
+  // Calculate total price based on tickets selected
   const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
   const calculatedTotal = categories.reduce((sum: number, category: any) => {
     return sum + (category.price * (tickets[category._id] || 0));
   }, 0);
 
-  // Ensure total doesn't go negative
-  const discountedTotal = Math.max(0, calculatedTotal - (calculatedTotal * (discount / 100)));
+  // Log all relevant data when the component renders
+  useEffect(() => {
+    console.log("Tickets:", tickets);
+    console.log("Calculated total:", calculatedTotal);
+    console.log("Discounted total:", discountedTotal);
+    console.log("Coupons:", coupons);
+  }, [tickets, calculatedTotal, discountedTotal, coupons]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading categories: {error}</p>;
@@ -109,7 +131,7 @@ const TicketCartPage: React.FC = () => {
                 {coupons.map((coupon: any) => (
                   <div
                     key={coupon.code}
-                    className={`cursor-pointer border p-4 rounded-md ${activeCoupon === coupon.code ? 'bg-gray-200' : ''}`}
+                    className={`cursor-pointer border p-4 rounded-md ${activeCoupon?.code === coupon.code ? 'bg-gray-200' : ''}`}
                     onClick={() => handleCouponClick(coupon.code, coupon.discount)}
                   >
                     <h4 className="font-bold">{coupon.code}</h4>
@@ -162,12 +184,12 @@ const TicketCartPage: React.FC = () => {
                   type="text"
                   className="border rounded-l-md p-2 flex-grow"
                   placeholder="Enter Coupon Code"
-                  value={couponCode}
-                  readOnly // Disable manual entry until tickets are added
+                  value={activeCoupon?.code || ""}
+                  readOnly // Disable manual entry since coupon codes are managed via buttons
                 />
                 <button
                   className="bg-blue-500 text-white rounded-r-md px-2 sm:px-4 py-2 hover:bg-blue-600"
-                  onClick={() => alert("Coupon applied!")} // Adjust based on how you want to handle coupon application
+                  onClick={() => alert("Coupon applied!")} // This can be adjusted based on your logic
                   disabled={totalTickets === 0} // Disable if no tickets added
                 >
                   Apply
@@ -187,7 +209,7 @@ const TicketCartPage: React.FC = () => {
                 )}
               </div>
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
                 onClick={handleConfirm}
               >
                 Confirm Tickets

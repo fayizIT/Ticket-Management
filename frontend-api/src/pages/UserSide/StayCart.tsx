@@ -11,7 +11,7 @@ const StayCart: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { stayCategories, loading, error, tickets, totalticket,total,discountedTotal } = useSelector((state: any) => state.stayCategory);
+  const { stayCategories, loading, error, tickets,total } = useSelector((state: any) => state.stayCategory);
   const [currentStep, setCurrentStep] = useState(2);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<{
@@ -24,9 +24,7 @@ const StayCart: React.FC = () => {
 
 
   // Log the stored data
-  console.log("Tickets:", tickets);
-  console.log("Total Price:", totalticket);
-  console.log("Discounted Total:", discountedTotal);
+
 
   useEffect(() => {
     dispatch(fetchStayCategories() as any);

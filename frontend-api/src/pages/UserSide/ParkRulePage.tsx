@@ -6,6 +6,7 @@ const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(3);
+  
 
   const toggleSection = (section: string) => {
     setActiveSection(activeSection === section ? null : section);
@@ -16,7 +17,7 @@ const ParkRulesPage: React.FC = () => {
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
-    navigate("");
+    navigate("/billing");
   };
 
   const handleStepClick = (step: number) => {

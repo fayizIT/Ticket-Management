@@ -19,9 +19,9 @@ import StayCart from './pages/UserSide/StayCart';
 import EditTicketCategory from './pages/AdminSide/TicketCategory/EditTicketCategory';
 import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCategory';
 import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
-import ReviewBooking from './pages/UserSide/ReviewBooking';
 import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
+import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 
 
 function App() {
@@ -73,7 +73,7 @@ function MainLayout() {
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
-          <Route path="/billing" element={<ReviewBooking />} />
+          <Route path="/billing" element={<ReviewBookingPage />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>
