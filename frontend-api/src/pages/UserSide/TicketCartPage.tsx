@@ -1,23 +1,36 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTicketCategories, incrementTicket, decrementTicket } from "../../redux/ticketSlice";
-import { FaUser, FaShoppingCart } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import CouponService from "../../services/CouponService"; 
 
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { categories, loading, error, tickets, total } = useSelector((state: any) => state.ticketCategory);
+  const { categories, loading, error, tickets, totalticket } = useSelector((state: any) => state.ticketCategory);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [activeCoupon, setActiveCoupon] = useState(""); 
+  const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchTicketCategories()as any);
+    const fetchCoupons = async () => {
+      try {
+        const fetchedCoupons = await CouponService.fetchCoupons();
+        setCoupons(fetchedCoupons);
+      } catch (error) {
+        toast.error("Failed to fetch coupons");
+      }
+    };
+
+    fetchCoupons();
+    dispatch(fetchTicketCategories() as any);
   }, [dispatch]);
 
   const handleCountChange = (id: string, operation: "increment" | "decrement") => {
@@ -44,6 +57,39 @@ const TicketCartPage: React.FC = () => {
     setCurrentStep(step);
   };
 
+  const handleCouponClick = (code: string, discountAmount: number) => {
+    const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+    if (totalTickets > 0) {
+      if (activeCoupon === code) {
+        // If the same coupon is clicked again, remove it
+        setActiveCoupon("");
+        setDiscount(0);
+        setCouponCode("");
+        toast.success("Coupon removed");
+      } else {
+        // Apply the new coupon if it’s different
+        setActiveCoupon(code);
+        setDiscount(discountAmount);
+        setCouponCode(code);
+        toast.success(`Coupon applied: ${code}`);
+
+        // Store the coupon code in local storage
+        localStorage.setItem("activeCoupon", JSON.stringify({ code, discount: discountAmount }));
+      }
+    } else {
+      toast.error("Please add at least one ticket before applying a coupon.");
+    }
+  };
+
+  // Calculate the total number of tickets and total price based on the tickets selected
+  const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+  const calculatedTotal = categories.reduce((sum: number, category: any) => {
+    return sum + (category.price * (tickets[category._id] || 0));
+  }, 0);
+
+  // Ensure total doesn't go negative
+  const discountedTotal = Math.max(0, calculatedTotal - (calculatedTotal * (discount / 100)));
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading categories: {error}</p>;
 
@@ -57,6 +103,21 @@ const TicketCartPage: React.FC = () => {
             <p className="text-gray-700 mb-6 leading-relaxed">
               Wonderla provides regular tickets, fast track tickets for queue skipping, and Special Offer tickets.
             </p>
+            <div className="flex flex-col space-y-4">
+              <h3 className="text-xl font-bold">Trending Coupons</h3>
+              <div className="flex space-x-4">
+                {coupons.map((coupon: any) => (
+                  <div
+                    key={coupon.code}
+                    className={`cursor-pointer border p-4 rounded-md ${activeCoupon === coupon.code ? 'bg-gray-200' : ''}`}
+                    onClick={() => handleCouponClick(coupon.code, coupon.discount)}
+                  >
+                    <h4 className="font-bold">{coupon.code}</h4>
+                    <p>{coupon.discount}% off on Regular Tickets</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col h-auto lg:h-[31.7rem] overflow-y-auto">
@@ -75,25 +136,40 @@ const TicketCartPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <button className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600"
-                      onClick={() => handleCountChange(category._id, "decrement")}>
+                    <button
+                      className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600"
+                      onClick={() => handleCountChange(category._id, "decrement")}
+                    >
                       -
                     </button>
-                    <input type="number" className="w-8 sm:w-12 text-center border-t border-b border-gray-300 focus:outline-none"
-                      value={tickets[category._id] || 0} readOnly />
-                    <button className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
-                      onClick={() => handleCountChange(category._id, "increment")}>
+                    <input
+                      type="number"
+                      className="w-8 sm:w-12 text-center border-t border-b border-gray-300 focus:outline-none"
+                      value={tickets[category._id] || 0}
+                      readOnly
+                    />
+                    <button
+                      className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
+                      onClick={() => handleCountChange(category._id, "increment")}
+                    >
                       +
                     </button>
                   </div>
                 </div>
               ))}
               <div className="flex items-center mt-4">
-                <input type="text" className="border rounded-l-md p-2 flex-grow"
-                  placeholder="Enter Coupon Code" value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)} />
-                <button className="bg-blue-500 text-white rounded-r-md px-2 sm:px-4 py-2 hover:bg-blue-600"
-                  onClick={() => alert("Coupon applied!")}>
+                <input
+                  type="text"
+                  className="border rounded-l-md p-2 flex-grow"
+                  placeholder="Enter Coupon Code"
+                  value={couponCode}
+                  readOnly // Disable manual entry until tickets are added
+                />
+                <button
+                  className="bg-blue-500 text-white rounded-r-md px-2 sm:px-4 py-2 hover:bg-blue-600"
+                  onClick={() => alert("Coupon applied!")} // Adjust based on how you want to handle coupon application
+                  disabled={totalTickets === 0} // Disable if no tickets added
+                >
                   Apply
                 </button>
               </div>
@@ -101,10 +177,19 @@ const TicketCartPage: React.FC = () => {
             <div className="flex justify-between items-center mt-4">
               <div>
                 <h4 className="text-lg font-bold">Total Price:</h4>
-                <p className="text-lg sm:text-xl">₹{total.toFixed(2)}</p>
+                {activeCoupon ? (
+                  <div className="flex items-center">
+                    <p className="text-lg sm:text-xl line-through mr-2">₹{calculatedTotal.toFixed(2)}</p>
+                    <p className="text-lg sm:text-xl">₹{discountedTotal.toFixed(2)}</p>
+                  </div>
+                ) : (
+                  <p className="text-lg sm:text-xl">₹{calculatedTotal.toFixed(2)}</p>
+                )}
               </div>
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                onClick={handleConfirm}>
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                onClick={handleConfirm}
+              >
                 Confirm Tickets
               </button>
             </div>
@@ -116,4 +201,3 @@ const TicketCartPage: React.FC = () => {
 };
 
 export default TicketCartPage;
-

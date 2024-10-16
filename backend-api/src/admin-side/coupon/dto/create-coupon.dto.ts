@@ -9,9 +9,5 @@ export class CreateCouponDto {
   @IsNumber()
   discount: number;
 
-  @IsNotEmpty()
-  @IsDate()
-  expiryDate: Date;
-
   isActive?: boolean; // Optional field
 }

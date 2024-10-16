@@ -35,7 +35,7 @@ export class CouponService {
       return coupon;
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw error; // rethrow the NotFoundException
+        throw error;
       }
       throw new InternalServerErrorException('Failed to retrieve coupon');
     }
@@ -52,6 +52,28 @@ export class CouponService {
       throw new InternalServerErrorException('Failed to update coupon');
     }
   }
+
+  async updateStatus(id: string, isActive: boolean): Promise<Coupon> {
+    try {
+      const updatedCoupon = await this.couponModel.findByIdAndUpdate(
+        id,
+        { isActive },
+        { new: true }
+      ).exec();
+  
+      if (!updatedCoupon) {
+        throw new NotFoundException(`Coupon with ID ${id} not found`);
+      }
+  
+      return updatedCoupon;
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to update coupon status');
+    }
+  }
+
+
+  
+  
 
   async remove(id: string): Promise<void> {
     try {

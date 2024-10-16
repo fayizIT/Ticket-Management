@@ -1,15 +1,18 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 interface TicketCategory {
-  _id: string; // Assuming your categories use _id as a unique identifier
+  _id: string; // Unique identifier for the ticket category
   name: string;
-  price: number; // Include price for each ticket
+  price: number; // Price for each ticket
 }
 
 interface TicketCategoryState {
   categories: TicketCategory[];
-  tickets: Record<string, number>; // Store counts of each ticket type
-  total: number;
+  tickets: Record<string, number>; // Counts of each ticket type
+  totalticket: number;
+  discountedTotal: number; // Total price after discount
+  discount: number; // Discount percentage
+  activeCoupon: string | null; // Currently applied coupon
   loading: boolean;
   error: string | null;
 }
@@ -17,7 +20,10 @@ interface TicketCategoryState {
 const initialState: TicketCategoryState = {
   categories: [],
   tickets: {},
-  total: 0,
+  totalticket: 0,
+  discountedTotal: 0,
+  discount: 0,
+  activeCoupon: null,
   loading: false,
   error: null,
 };
@@ -42,10 +48,13 @@ const ticketCategorySlice = createSlice({
     incrementTicket: (state, action: PayloadAction<string>) => {
       const ticketId = action.payload;
       state.tickets[ticketId] = (state.tickets[ticketId] || 0) + 1;
-      // Update total price
+
+      // Update total ticket price
       const ticket = state.categories.find(cat => cat._id === ticketId);
       if (ticket) {
-        state.total += ticket.price;
+        state.totalticket += ticket.price;
+        // Recalculate discounted total
+        state.discountedTotal = Math.max(0, state.totalticket - (state.totalticket * (state.discount / 100)));
       }
     },
     decrementTicket: (state, action: PayloadAction<string>) => {
@@ -53,18 +62,35 @@ const ticketCategorySlice = createSlice({
       if (state.tickets[ticketId] > 0) {
         const ticket = state.categories.find(cat => cat._id === ticketId);
         if (ticket) {
-          state.total -= ticket.price;
+          state.totalticket -= ticket.price;
         }
         state.tickets[ticketId] -= 1;
+
+        // Recalculate discounted total
+        state.discountedTotal = Math.max(0, state.totalticket - (state.totalticket * (state.discount / 100)));
       }
+    },
+    applyDiscount: (state, action: PayloadAction<{ code: string; discountAmount: number }>) => {
+      const { code, discountAmount } = action.payload;
+      state.activeCoupon = code;
+      state.discount = discountAmount;
+      state.discountedTotal = Math.max(0, state.totalticket - (state.totalticket * (state.discount / 100)));
+    },
+    removeDiscount: (state) => {
+      state.activeCoupon = null;
+      state.discount = 0;
+      state.discountedTotal = state.totalticket; // Reset to total price
     },
     resetCart: (state) => {
       state.tickets = {};
-      state.total = 0;
+      state.totalticket = 0;
+      state.discountedTotal = 0;
+      state.discount = 0;
+      state.activeCoupon = null; // Reset active coupon
     },
     setCategories: (state, action: PayloadAction<TicketCategory[]>) => {
       state.categories = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,5 +108,13 @@ const ticketCategorySlice = createSlice({
   },
 });
 
-export const { incrementTicket, decrementTicket, resetCart, setCategories } = ticketCategorySlice.actions;
+export const { 
+  incrementTicket, 
+  decrementTicket, 
+  applyDiscount, 
+  removeDiscount, 
+  resetCart, 
+  setCategories 
+} = ticketCategorySlice.actions;
+
 export default ticketCategorySlice.reducer;

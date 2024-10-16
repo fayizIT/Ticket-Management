@@ -11,9 +11,6 @@ export class Coupon {
   @Prop({ required: true })
   discount: number;
 
-  @Prop({ required: true })
-  expiryDate: Date;
-
   @Prop({ default: true })
   isActive: boolean;
 }

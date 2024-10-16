@@ -29,6 +29,15 @@ export class CouponController {
     return this.couponService.update(id, updateCouponDto);
   }
 
+  @Put(':id/status')
+@HttpCode(HttpStatus.OK)
+updateStatus(
+  @Param('id') id: string,
+  @Body() status: { isActive: boolean },
+): Promise<Coupon> {
+  return this.couponService.updateStatus(id, status.isActive);
+}
+
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.couponService.remove(id);
