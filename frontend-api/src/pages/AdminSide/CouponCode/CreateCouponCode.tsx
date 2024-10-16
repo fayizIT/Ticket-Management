@@ -18,13 +18,13 @@ const CreateCouponCode: React.FC = () => {
       if (discount === undefined) {
         throw new Error('Discount is required');
       }
-      const newCoupon = { code, discount, expiryDate: new Date(expiryDate), isActive };
+      const newCoupon = { code, discount, isActive };
       await CouponService.create(newCoupon);
       toast.success('Coupon code created successfully!');
 
       // Delay navigation to allow the toast to show
       setTimeout(() => {
-        navigate('/admin/coupon-codes');
+        navigate('/admin/coupon-code');
       }, 2000); // Delay for 2 seconds
 
     } catch (error) {
@@ -54,16 +54,6 @@ const CreateCouponCode: React.FC = () => {
             type="number"
             value={discount === undefined ? '' : discount}
             onChange={(e) => setDiscount(e.target.value ? Number(e.target.value) : undefined)}
-            required
-            className="border border-gray-300 rounded w-full px-4 py-2"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700">Expiry Date</label>
-          <input
-            type="date"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
             required
             className="border border-gray-300 rounded w-full px-4 py-2"
           />

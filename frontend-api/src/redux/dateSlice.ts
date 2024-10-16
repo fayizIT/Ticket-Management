@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface DateState {
-    selectedDate: string | null; // Change to string type
+    selectedDate: string | null |any; // Change to string type
   }
   
 const initialState: DateState = {

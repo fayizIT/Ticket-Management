@@ -4,10 +4,8 @@ import store from './app/store';
 import AdminLogin from './pages/AdminSide/AdminLogin/AdminLogin'; 
 import NotFound from './components/NotFound';
 import CreateTicketCategory from './pages/AdminSide/TicketCategory/CreateTicketCategory';
-import AgeCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCategory'; 
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import the styles
-import EditAgeCategory from './pages/AdminSide/TicketCategory/EditTicketCategory';
+import 'react-toastify/dist/ReactToastify.css'; 
 import TicketCartPage from './pages/UserSide/TicketCartPage';
 import ParkRulesPage from './pages/UserSide/ParkRulePage';
 import AdminSidebar from './components/AdminSidebar';
@@ -21,6 +19,9 @@ import StayCart from './pages/UserSide/StayCart';
 import EditTicketCategory from './pages/AdminSide/TicketCategory/EditTicketCategory';
 import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCategory';
 import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
+import ReviewBooking from './pages/UserSide/ReviewBooking';
+import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
+import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 
 
 function App() {
@@ -58,6 +59,8 @@ function MainLayout() {
           <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
           <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
           <Route path="/admin/coupon-code" element={<CouponCodeList />} />
+          <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
+          <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
 
 
 
@@ -70,6 +73,7 @@ function MainLayout() {
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
+          <Route path="/billing" element={<ReviewBooking />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

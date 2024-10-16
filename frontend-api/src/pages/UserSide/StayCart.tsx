@@ -14,7 +14,13 @@ const StayCart: React.FC = () => {
   const { stayCategories, loading, error, tickets, total } = useSelector((state: any) => state.stayCategory);
   const [currentStep, setCurrentStep] = useState(2);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<StayCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<{
+    _id: string;
+    image: string;
+    name: string;
+    price: number;
+    description: string;
+  } | null>(null);
 
   useEffect(() => {
     dispatch(fetchStayCategories() as any);
@@ -29,7 +35,7 @@ const StayCart: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    const totalStays = Object.values(tickets).reduce((sum, count) => sum + count, 0);
+    const totalStays = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
 
     if (totalStays === 0) {
       toast.error("Please select at least one stay.");
@@ -49,7 +55,13 @@ const StayCart: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const openModal = (category: StayCategory) => {
+  const openModal = (category: {
+    _id: string;
+    image: string;
+    name: string;
+    price: number;
+    description: string;
+  }) => {
     setSelectedCategory(category);
     setModalIsOpen(true);
   };

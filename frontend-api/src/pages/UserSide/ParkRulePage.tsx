@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline";
-import { useSelector } from "react-redux";
 
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();

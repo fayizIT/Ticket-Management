@@ -15,12 +15,21 @@ const DateSelector: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   // Handle Date Change
-  const handleDateChange = (value: Date | null) => {
+  // const handleDateChange = (value: Date | null, event: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (value instanceof Date) {
+  //     setSelectedDateState(value);
+  //     dispatch(setDate(value.toISOString()));
+  //   }
+  // };
+
+  const handleDateChange = (value: Date | Date[] | null | any, event: React.MouseEvent<HTMLButtonElement>) => {
     if (value instanceof Date) {
+      // Single Date Selection
       setSelectedDateState(value);
       dispatch(setDate(value.toISOString()));
     }
   };
+  
 
   // Check if the date is in the past
   const isPastDate = (date: Date) => {

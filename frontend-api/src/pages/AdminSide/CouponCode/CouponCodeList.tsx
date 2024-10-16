@@ -1,10 +1,9 @@
-// src/components/CouponList.tsx
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import ConfirmDialogBox from '../../../components/ConfirmDialogBox'; 
 import CouponService from '../../../services/CouponService'; // Import the CouponService
 
 interface Coupon {
@@ -20,6 +19,9 @@ const CouponCodeList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState<string | null>(null);
+  const [toggleDialogOpen, setToggleDialogOpen] = useState(false);
+  const [toggleCouponId, setToggleCouponId] = useState<string | null>(null);
+  const [toggleCouponStatus, setToggleCouponStatus] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,9 +61,35 @@ const CouponCodeList: React.FC = () => {
     }
   };
 
-  const openDialog = (id: string) => {
+  const openDeleteDialog = (id: string) => {
     setSelectedCouponId(id);
     setIsDialogOpen(true);
+  };
+
+  const toggleCouponStatusHandler = (id: string, currentStatus: boolean) => {
+    setToggleCouponId(id);
+    setToggleCouponStatus(!currentStatus);
+    setToggleDialogOpen(true);
+  };
+
+  const confirmToggleStatus = async () => {
+    if (!toggleCouponId) return;
+    try {
+      await CouponService.updateCouponStatus(toggleCouponId, toggleCouponStatus);
+      setCoupons((prevCoupons) =>
+        prevCoupons.map((coupon) =>
+          coupon._id === toggleCouponId ? { ...coupon, isActive: toggleCouponStatus } : coupon
+        )
+      );
+      toast.success(`Coupon status updated to ${toggleCouponStatus ? 'Active' : 'Inactive'}!`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update coupon status. Please try again.");
+    } finally {
+      setToggleDialogOpen(false);
+      setToggleCouponId(null);
+      setToggleCouponStatus(false); // Reset status
+    }
   };
 
   // Loading Spinner
@@ -93,7 +121,6 @@ const CouponCodeList: React.FC = () => {
             <th className="border border-gray-300 p-4">Actions</th>
             <th className="border border-gray-300 p-4">Code</th>
             <th className="border border-gray-300 p-4">Discount</th>
-            <th className="border border-gray-300 p-4">Expiry Date</th>
             <th className="border border-gray-300 p-4">Active</th>
           </tr>
         </thead>
@@ -108,28 +135,51 @@ const CouponCodeList: React.FC = () => {
                   <FaEdit />
                 </button>
                 <button
-                  onClick={() => openDialog(coupon._id)}
+                  onClick={() => openDeleteDialog(coupon._id)}
                   className="text-red-500 hover:text-red-700 mx-2"
                 >
                   <FaTrash />
                 </button>
               </td>
               <td className="border border-gray-300 p-4">{coupon.code}</td>
-              <td className="border border-gray-300 p-4">{coupon.discount}</td>
-              <td className="border border-gray-300 p-4">{new Date(coupon.expiryDate).toLocaleDateString()}</td>
-              <td className="border border-gray-300 p-4">{coupon.isActive ? 'Active' : 'Inactive'}</td>
+              <td className="border border-gray-300 p-4">{coupon.discount}%</td>
+              <td className="border border-gray-300 p-4">
+                <button
+                  onClick={() => toggleCouponStatusHandler(coupon._id, coupon.isActive)}
+                  className={`px-2 py-1 rounded ${
+                    coupon.isActive
+                      ? 'bg-green-500 hover:bg-green-600 text-white'
+                      : 'bg-red-500 hover:bg-red-600 text-white'
+                  }`}
+                >
+                  {coupon.isActive ? 'Active' : 'Inactive'}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Confirmation Dialog */}
-      <ConfirmDialog
+      {/* Confirmation Dialog for Delete */}
+      <ConfirmDialogBox
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onConfirm={handleDelete}
         title="Delete Coupon"
         message="Are you sure you want to delete this coupon? This action cannot be undone."
+        confirmButtonText="Delete" // Default button text for delete
+        cancelButtonText="Cancel"   // Default button text for cancel
+      />
+
+      {/* Confirmation Dialog for Toggle Status */}
+      <ConfirmDialogBox
+        isOpen={toggleDialogOpen}
+        onClose={() => setToggleDialogOpen(false)}
+        onConfirm={confirmToggleStatus}
+        title="Toggle Coupon Status"
+        message={`Are you sure you want to mark this coupon as ${toggleCouponStatus ? 'Active' : 'Inactive'}?`}
+        confirmButtonText="Change Status" // Custom text for the confirm button
+        cancelButtonText="Cancel"          // Custom text for the cancel button
       />
     </div>
   );
