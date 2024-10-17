@@ -19,6 +19,7 @@ interface TicketCategoryState {
   tickets: Record<string, number>; // Counts of each ticket type
   total: number; // Total price before discount
   discountedTotal: number; // Total price after discount
+  discountAmount: number;
   discount: number; // Discount percentage
   activeCoupon: Coupon | null; // Currently applied coupon
   loading: boolean; // Loading state for fetching categories
@@ -30,6 +31,7 @@ const initialState: TicketCategoryState = {
   tickets: {},
   total: 0,
   discountedTotal: 0,
+  discountAmount: 0,
   discount: 0,
   activeCoupon: null,
   loading: false,
@@ -91,17 +93,20 @@ const ticketCategorySlice = createSlice({
         state.discountedTotal = Math.max(0, state.total - (state.total * (state.discount / 100)));
       }
     },
-    applyDiscount: (state, action: PayloadAction<Coupon>) => {
-      const coupon = action.payload;
-      state.activeCoupon = coupon; // Set the active coupon
-      state.discount = coupon.discount; // Set the discount percentage from the coupon
-      // Update the discounted total
-      state.discountedTotal = Math.max(0, state.total - (state.total * (state.discount / 100)));
+    applyDiscount: (state, action: PayloadAction<{ code: string, discount: number }>) => {
+      const total = state.categories.reduce(
+        (sum, category) => sum + category.price * (state.tickets[category._id] || 0),
+        0
+      );
+      const discountAmount = total * (action.payload.discount / 100); // Calculate the discount amount
+      state.discountedTotal = total - discountAmount; // Subtract the discount from total
+      state.discountAmount = discountAmount; // Store the discount amount
+      state.activeCoupon = { code: action.payload.code, discount: action.payload.discount };
     },
     removeDiscount: (state) => {
+      state.discountedTotal = state.total; // Reset to total
+      state.discountAmount = 0; // Clear the discount
       state.activeCoupon = null; // Clear active coupon
-      state.discount = 0; // Reset discount percentage
-      state.discountedTotal = state.total; // Reset to total price
     },
     resetCart: (state) => {
       state.tickets = {};

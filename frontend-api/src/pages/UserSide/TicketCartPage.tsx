@@ -17,14 +17,8 @@ const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    categories,
-    loading,
-    error,
-    tickets,
-    activeCoupon,
-    discountedTotal,
-  } = useSelector((state: any) => state.ticketCategory);
+  const { categories, loading, error, tickets, activeCoupon, discountedTotal } =
+    useSelector((state: any) => state.ticketCategory);
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -50,7 +44,10 @@ const TicketCartPage: React.FC = () => {
     dispatch(fetchTicketCategories() as any);
   }, [dispatch]);
 
-  const handleCountChange = (id: string, operation: "increment" | "decrement") => {
+  const handleCountChange = (
+    id: string,
+    operation: "increment" | "decrement"
+  ) => {
     if (operation === "increment") {
       dispatch(incrementTicket(id));
     } else {
@@ -60,7 +57,10 @@ const TicketCartPage: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+    const totalTickets = Object.values(tickets).reduce(
+      (sum: number, count) => sum + (count as number),
+      0
+    );
     if (totalTickets === 0) {
       toast.error("Please add at least one ticket.");
       return;
@@ -77,19 +77,30 @@ const TicketCartPage: React.FC = () => {
   };
 
   const handleCouponClick = (code: string, discountAmount: number) => {
-    const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+    const totalTickets = Object.values(tickets).reduce(
+      (sum: number, count) => sum + (count as number),
+      0
+    );
     if (totalTickets > 0) {
       if (activeCoupon && activeCoupon.code === code) {
         // Remove coupon
-        setCoupons((prev) => prev.filter((coupon: { code: string }) => coupon.code !== code));
+        setCoupons((prev) =>
+          prev.filter((coupon: { code: string }) => coupon.code !== code)
+        );
         dispatch(removeDiscount()); // Clear discount in Redux
         toast.success("Coupon removed");
       } else {
         // Apply coupon
-        const calculatedTotal = categories.reduce((sum: number, category: any) => {
-          return sum + (category.price * (tickets[category._id] || 0));
-        }, 0);
-        const discountedTotal = Math.max(0, calculatedTotal - (calculatedTotal * (discountAmount / 100)));
+        const calculatedTotal = categories.reduce(
+          (sum: number, category: any) => {
+            return sum + category.price * (tickets[category._id] || 0);
+          },
+          0
+        );
+        const discountedTotal = Math.max(
+          0,
+          calculatedTotal - calculatedTotal * (discountAmount / 100)
+        );
         dispatch(applyDiscount({ code, discount: discountAmount })); // Set discount in Redux
         toast.success(`Coupon applied: ${code}`);
       }
@@ -99,9 +110,12 @@ const TicketCartPage: React.FC = () => {
   };
 
   // Calculate total price based on tickets selected
-  const totalTickets = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+  const totalTickets = Object.values(tickets).reduce(
+    (sum: number, count) => sum + (count as number),
+    0
+  );
   const calculatedTotal = categories.reduce((sum: number, category: any) => {
-    return sum + (category.price * (tickets[category._id] || 0));
+    return sum + category.price * (tickets[category._id] || 0);
   }, 0);
 
   // Log all relevant data when the component renders
@@ -123,7 +137,8 @@ const TicketCartPage: React.FC = () => {
           <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-[31.7rem]">
             <h2 className="text-2xl font-bold mb-4">Grab Your Tickets</h2>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Wonderla provides regular tickets, fast track tickets for queue skipping, and Special Offer tickets.
+              Wonderla provides regular tickets, fast track tickets for queue
+              skipping, and Special Offer tickets.
             </p>
             <div className="flex flex-col space-y-4">
               <h3 className="text-xl font-bold">Trending Coupons</h3>
@@ -131,8 +146,12 @@ const TicketCartPage: React.FC = () => {
                 {coupons.map((coupon: any) => (
                   <div
                     key={coupon.code}
-                    className={`cursor-pointer border p-4 rounded-md ${activeCoupon?.code === coupon.code ? 'bg-gray-200' : ''}`}
-                    onClick={() => handleCouponClick(coupon.code, coupon.discount)}
+                    className={`cursor-pointer border p-4 rounded-md ${
+                      activeCoupon?.code === coupon.code ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() =>
+                      handleCouponClick(coupon.code, coupon.discount)
+                    }
                   >
                     <h4 className="font-bold">{coupon.code}</h4>
                     <p>{coupon.discount}% off on Regular Tickets</p>
@@ -149,18 +168,27 @@ const TicketCartPage: React.FC = () => {
             <div className="border rounded-md p-4 mb-4">
               <p className="mb-2 text-gray-700">Allows Entry To Any Ride</p>
               {categories.map((category: any) => (
-                <div key={category._id} className="flex justify-between items-center border-b py-2">
+                <div
+                  key={category._id}
+                  className="flex justify-between items-center border-b py-2"
+                >
                   <div className="flex items-center">
                     <FaUser className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-4 text-gray-500" />
                     <div>
-                      <h4 className="font-bold text-sm sm:text-base">{category.name}</h4>
-                      <p className="text-base sm:text-lg">₹{category.price.toFixed(2)}</p>
+                      <h4 className="font-bold text-sm sm:text-base">
+                        {category.name}
+                      </h4>
+                      <p className="text-base sm:text-lg">
+                        ₹{category.price.toFixed(2)}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <button
                       className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600"
-                      onClick={() => handleCountChange(category._id, "decrement")}
+                      onClick={() =>
+                        handleCountChange(category._id, "decrement")
+                      }
                     >
                       -
                     </button>
@@ -172,7 +200,9 @@ const TicketCartPage: React.FC = () => {
                     />
                     <button
                       className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
-                      onClick={() => handleCountChange(category._id, "increment")}
+                      onClick={() =>
+                        handleCountChange(category._id, "increment")
+                      }
                     >
                       +
                     </button>
@@ -197,24 +227,36 @@ const TicketCartPage: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-between items-center mt-4">
-              <div>
-                <h4 className="text-lg font-bold">Total Price:</h4>
-                {activeCoupon ? (
-                  <div className="flex items-center">
-                    <p className="text-lg sm:text-xl line-through mr-2">₹{calculatedTotal.toFixed(2)}</p>
-                    <p className="text-lg sm:text-xl">₹{discountedTotal.toFixed(2)}</p>
-                  </div>
-                ) : (
-                  <p className="text-lg sm:text-xl">₹{calculatedTotal.toFixed(2)}</p>
-                )}
-              </div>
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                onClick={handleConfirm}
-              >
-                Confirm Tickets
-              </button>
-            </div>
+  <div>
+    <h4 className="text-lg font-bold">Total Price:</h4>
+    {activeCoupon ? (
+      <div>
+        <div className="flex items-center">
+          <p className="text-lg sm:text-xl">
+            ₹{calculatedTotal.toFixed(2)} {/* Original total */}
+          </p>
+          <p className="text-lg sm:text-xl text-red-500 ml-2">
+            (-₹{(calculatedTotal - discountedTotal).toFixed(2)}) {/* Discounted amount */}
+          </p>
+        </div>
+        <p className="text-lg sm:text-xl">
+          ₹{discountedTotal.toFixed(2)} {/* Final discounted total */}
+        </p>
+      </div>
+    ) : (
+      <p className="text-lg sm:text-xl">
+        ₹{calculatedTotal.toFixed(2)} {/* Show total if no coupon applied */}
+      </p>
+    )}
+  </div>
+  <button
+    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+    onClick={handleConfirm}
+  >
+    Confirm Tickets
+  </button>
+</div>
+
           </div>
         </div>
       </div>
