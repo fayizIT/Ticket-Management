@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../components/Timeline";
 
@@ -6,7 +6,6 @@ const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(3);
-  
 
   const toggleSection = (section: string) => {
     setActiveSection(activeSection === section ? null : section);
@@ -24,8 +23,6 @@ const ParkRulesPage: React.FC = () => {
     setCurrentStep(step);
   };
 
-
-
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Timeline */}
@@ -36,7 +33,9 @@ const ParkRulesPage: React.FC = () => {
         <div className="bg-white p-6 rounded-xl shadow-lg w-full md:w-1/2 border border-gray-300 flex-grow min-h-[500px]">
           <h2 className="text-3xl font-bold mb-4">Park Rules & Guides</h2>
           <p className="text-gray-700 mb-6 leading-relaxed">
-            To ensure your safety within our park, we kindly ask all guests to adhere to the dress code and familiarize themselves with the park's do's and don'ts.
+            To ensure your safety within our park, we kindly ask all guests to
+            adhere to the dress code and familiarize themselves with the park's
+            do's and don'ts.
           </p>
           <div className="flex justify-center items-center">
             <img
@@ -63,7 +62,9 @@ const ParkRulesPage: React.FC = () => {
             {activeSection === "dressCode" && (
               <div className="mt-2 text-gray-600 text-sm">
                 <p>
-                  Guests are expected to wear comfortable, family-friendly attire. No offensive slogans or images are allowed on clothing.
+                  Guests are expected to wear comfortable, family-friendly
+                  attire. No offensive slogans or images are allowed on
+                  clothing.
                 </p>
               </div>
             )}
@@ -82,7 +83,8 @@ const ParkRulesPage: React.FC = () => {
             {activeSection === "specialServices" && (
               <div className="mt-2 text-gray-600 text-sm">
                 <p>
-                  Wheelchairs & Prams are available for Sr. Citizens and Toddlers.
+                  Wheelchairs & Prams are available for Sr. Citizens and
+                  Toddlers.
                 </p>
               </div>
             )}
@@ -100,10 +102,19 @@ const ParkRulesPage: React.FC = () => {
             {activeSection === "terms" && (
               <div className="mt-2 text-gray-600 text-sm">
                 <ul className="list-disc list-inside">
-                  <li>To ensure the safety of the guests, height and weight restrictions are applicable for certain rides.</li>
-                  <li>Entry is restricted to one person per ticket, valid only for a date and specified time.</li>
+                  <li>
+                    To ensure the safety of the guests, height and weight
+                    restrictions are applicable for certain rides.
+                  </li>
+                  <li>
+                    Entry is restricted to one person per ticket, valid only for
+                    a date and specified time.
+                  </li>
                   <li>Tickets are non-transferable.</li>
-                  <li>Foods from outside and alcoholic drinks are not allowed inside the park.</li>
+                  <li>
+                    Foods from outside and alcoholic drinks are not allowed
+                    inside the park.
+                  </li>
                 </ul>
               </div>
             )}
@@ -121,13 +132,13 @@ const ParkRulesPage: React.FC = () => {
             {activeSection === "lockerInfo" && (
               <div className="mt-2 text-gray-600 text-sm">
                 <p>
-                  Lockers are available for rent near the park entrance. Please secure your belongings for the duration of your visit.
+                  Lockers are available for rent near the park entrance. Please
+                  secure your belongings for the duration of your visit.
                 </p>
               </div>
             )}
           </div>
 
-  
           <button
             className="mt-6 bg-blue-700 text-white py-3 px-6 rounded-full w-full hover:bg-blue-800"
             onClick={handleConfirm}

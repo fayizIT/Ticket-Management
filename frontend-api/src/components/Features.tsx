@@ -4,7 +4,7 @@ import bgImage from "../../public/assets/navbarBanner.png";
 const Features: React.FC = () => {
   return (
     <div className="min-h-screen bg-white-50 p-6">
-      {/* Hero Section */}
+     
       <section
         className="relative h-[400px] w-full bg-cover bg-center "
         style={{ backgroundImage: `url(${bgImage})` }}
@@ -31,10 +31,10 @@ const Features: React.FC = () => {
         </div>
       </section>
 
-      {/* Feature Section */}
+      
       <section className="py-12">
         <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Feature 1 */}
+
           <div className="bg-red-500 text-white p-6 rounded-xl transform transition-transform  hover:cursor-pointer hover:scale-105 hover:shadow-xl hover:bg-red-400 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">🩹</span>
@@ -43,7 +43,6 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Feature 2 */}
           <div className="bg-indigo-600 text-white p-6 rounded-xl transform transition-transform hover:scale-105 hover:shadow-xl hover:cursor-pointer hover:bg-indigo-500 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">🅿️</span>
@@ -52,7 +51,6 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Feature 3 */}
           <div className="bg-purple-700 text-white p-6 rounded-xl transform transition-transform hover:cursor-pointer hover:scale-105 hover:shadow-xl hover:bg-purple-600 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">🔒</span>
@@ -61,7 +59,6 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Feature 4 */}
           <div className="bg-blue-600 text-white p-6 rounded-xl transform transition-transform hover:cursor-pointer hover:scale-105 hover:shadow-xl hover:bg-blue-500 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">📶</span>
@@ -70,7 +67,6 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Feature 5 */}
           <div className="bg-green-600 text-white p-6 rounded-xl transform transition-transform hover:scale-105 hover:cursor-pointer hover:shadow-xl hover:bg-green-500 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">🍽️</span>
@@ -79,7 +75,6 @@ const Features: React.FC = () => {
             </div>
           </div>
 
-          {/* Feature 6 */}
           <div className="bg-yellow-500 text-white p-6 rounded-xl transform transition-transform hover:cursor-pointer hover:scale-105 hover:shadow-xl hover:bg-yellow-400 duration-300">
             <div className="flex flex-col items-center">
               <span className="mb-4 text-4xl">🏨</span>

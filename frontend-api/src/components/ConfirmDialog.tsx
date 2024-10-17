@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ConfirmDialogProps {
   isOpen: boolean;
@@ -14,10 +14,10 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  title = 'Are you sure?',
+  title = "Are you sure?",
   message = "You won't be able to revert this!",
-  confirmText = 'Delete',
-  cancelText = 'Cancel',
+  confirmText = "Delete",
+  cancelText = "Cancel",
 }) => {
   if (!isOpen) return null;
 

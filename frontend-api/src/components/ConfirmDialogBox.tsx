@@ -1,5 +1,5 @@
-import React from 'react';
-import { Dialog } from '@headlessui/react'; 
+import React from "react";
+import { Dialog } from "@headlessui/react";
 
 interface ConfirmDialogProps {
   isOpen: boolean;
@@ -7,8 +7,8 @@ interface ConfirmDialogProps {
   onConfirm: () => void;
   title: string;
   message: string;
-  confirmButtonText?: string; // Optional prop for custom confirm button text
-  cancelButtonText?: string;   // Optional prop for custom cancel button text
+  confirmButtonText?: string;
+  cancelButtonText?: string;
 }
 
 const ConfirmDialogBox: React.FC<ConfirmDialogProps> = ({
@@ -17,12 +17,15 @@ const ConfirmDialogBox: React.FC<ConfirmDialogProps> = ({
   onConfirm,
   title,
   message,
-  confirmButtonText = "Confirm", // Default to "Confirm"
-  cancelButtonText = "Cancel",    // Default to "Cancel"
+  confirmButtonText = "Confirm",
+  cancelButtonText = "Cancel",
 }) => {
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <div className="fixed inset-0 bg-black bg-opacity-30" aria-hidden="true" />
+      <div
+        className="fixed inset-0 bg-black bg-opacity-30"
+        aria-hidden="true"
+      />
       <div className="fixed inset-0 flex items-center justify-center">
         <Dialog.Panel className="bg-white rounded p-6 max-w-sm mx-auto">
           <Dialog.Title className="text-lg font-bold">{title}</Dialog.Title>

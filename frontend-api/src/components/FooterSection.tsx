@@ -1,19 +1,3 @@
-// import React from 'react';
-
-// const FooterSection: React.FC = () => {
-//   return (
-//     <footer className="bg-blue-800 text-white p-6 text-center">
-//       <p>Prepare for the ultimate adventure at Kerala's best nature park</p>
-//       <div className="mt-4">
-//         <button className="px-6 py-3 bg-red-500 rounded-md">Book Now</button>
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default FooterSection;
-
-
 import React from "react";
 
 const FooterSection: React.FC = () => {
@@ -45,4 +29,3 @@ const FooterSection: React.FC = () => {
 };
 
 export default FooterSection;
-

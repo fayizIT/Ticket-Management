@@ -83,6 +83,14 @@ const ReviewBookingPage: React.FC = () => {
     }
   };
 
+  const handleDecrementWithCheck = (categoryId: any) => {
+    const currentCount = ticket[categoryId] || 0; // Get current count for the category
+    if (currentCount > 0) {
+      handleDecrement(categoryId);
+    } else {
+      alert("Quantity cannot be less than 0");
+    }
+  };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-8">
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
@@ -130,44 +138,55 @@ const ReviewBookingPage: React.FC = () => {
 
           {/* Display ticket categories with count > 0 */}
           <h2 className="text-lg font-semibold mt-4 mb-2">Ticket Summary</h2>
-          {categories
-            .filter((category: any) => ticket[category._id] > 0)
-            .map((category: any) => (
-              <div
-                key={category._id}
-                className="flex justify-between items-center py-2 border-b border-gray-300"
-              >
-                <div className="flex items-center">
-                  <FaUser className="w-6 h-6 text-gray-500" />
-                  <div className="ml-2">
-                    <h4 className="font-bold">{category.name}</h4>
-                    <p className="text-gray-600">
-                      ₹{category.price.toFixed(2)}
-                    </p>
+          {Object.keys(ticket).length > 0 ? (
+            Object.keys(ticket).map((categoryId) => {
+              const category = categories.find(
+                (cat: { _id: string }) => cat._id === categoryId
+              );
+              if (category) {
+                const count = ticket[categoryId]; // Get the ticket count
+                return (
+                  <div
+                    key={category._id}
+                    className="flex justify-between items-center py-2 border-b border-gray-300"
+                  >
+                    <div className="flex items-center">
+                      <FaUser className="w-6 h-6 text-gray-500" />
+                      <div className="ml-2">
+                        <h4 className="font-bold">{category.name}</h4>
+                        <p className="text-gray-600">
+                          ₹{category.price.toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <button
+                        className="px-2 py-1 bg-blue-500 text-white rounded-l"
+                        onClick={() => handleDecrementWithCheck(category._id)}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        className="w-12 text-center border-t border-b"
+                        value={count}
+                        readOnly
+                      />
+                      <button
+                        className="px-2 py-1 bg-blue-500 text-white rounded-r"
+                        onClick={() => handleIncrement(category._id)}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center">
-                  <button
-                    className="px-2 py-1 bg-blue-500 text-white rounded-l"
-                    onClick={() => handleDecrement(category._id)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    className="w-12 text-center border-t border-b"
-                    value={ticket[category._id] || 0}
-                    readOnly
-                  />
-                  <button
-                    className="px-2 py-1 bg-blue-500 text-white rounded-r"
-                    onClick={() => handleIncrement(category._id)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
+                );
+              }
+              return null; // If the category is not found, return null
+            })
+          ) : (
+            <p className="text-gray-500">No tickets added.</p>
+          )}
 
           {/* Display Stay categories with count > 0 */}
           <h2 className="text-lg font-semibold mt-4 mb-2">Stays Summary</h2>
@@ -280,4 +299,3 @@ const ReviewBookingPage: React.FC = () => {
 };
 
 export default ReviewBookingPage;
-
