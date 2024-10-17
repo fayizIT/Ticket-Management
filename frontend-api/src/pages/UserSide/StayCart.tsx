@@ -23,9 +23,6 @@ const StayCart: React.FC = () => {
   } | null>(null);
 
 
-  // Log the stored data
-
-
   useEffect(() => {
     dispatch(fetchStayCategories() as any);
   }, [dispatch]);
@@ -38,13 +35,14 @@ const StayCart: React.FC = () => {
     }
   };
 
-  const handleConfirm = () => {
-    const totalStays = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+  
 
-    if (totalStays === 0) {
-      toast.error("Please select at least one stay.");
-      return;
-    }
+  const handleConfirm = () => {
+    // const totalStays = Object.values(tickets).reduce((sum: number, count) => sum + (count as number), 0);
+
+    // if (totalStays === 0) {
+    //   return;
+    // }
 
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);

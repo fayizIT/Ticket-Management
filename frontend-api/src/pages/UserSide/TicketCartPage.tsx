@@ -26,7 +26,7 @@ const TicketCartPage: React.FC = () => {
 
   useEffect(() => {
     if (!selectedDate) {
-      navigate("/"); // Navigate to home page if date is not set
+      navigate("/");
     }
   }, [navigate, selectedDate]);
 
@@ -53,7 +53,7 @@ const TicketCartPage: React.FC = () => {
     } else {
       dispatch(decrementTicket(id));
     }
-    console.log("Current tickets:", tickets); // Log tickets after count change
+    console.log("Current tickets:", tickets); 
   };
 
   const handleConfirm = () => {
@@ -69,7 +69,7 @@ const TicketCartPage: React.FC = () => {
       setCurrentStep(currentStep + 1);
     }
     navigate("/stay-categories");
-    console.log("Confirmed tickets:", tickets); // Log tickets when confirming
+    console.log("Confirmed tickets:", tickets); 
   };
 
   const handleStepClick = (step: number) => {
@@ -87,7 +87,7 @@ const TicketCartPage: React.FC = () => {
         setCoupons((prev) =>
           prev.filter((coupon: { code: string }) => coupon.code !== code)
         );
-        dispatch(removeDiscount()); // Clear discount in Redux
+        dispatch(removeDiscount());
         toast.success("Coupon removed");
       } else {
         // Apply coupon
@@ -101,7 +101,7 @@ const TicketCartPage: React.FC = () => {
           0,
           calculatedTotal - calculatedTotal * (discountAmount / 100)
         );
-        dispatch(applyDiscount({ code, discount: discountAmount })); // Set discount in Redux
+        dispatch(applyDiscount({ code, discount: discountAmount })); 
         toast.success(`Coupon applied: ${code}`);
       }
     } else {

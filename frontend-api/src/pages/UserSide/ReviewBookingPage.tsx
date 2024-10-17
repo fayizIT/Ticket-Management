@@ -4,6 +4,7 @@ import { FaUser, FaBed, FaUserFriends } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
 import { decrementTicket, incrementTicket } from "../../redux/ticketSlice";
+import {decrementStay, incrementStay} from "../../redux/stayCategorySlice"
 
 const ReviewBookingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -56,10 +57,10 @@ const ReviewBookingPage: React.FC = () => {
 
   // Redirect to home if there's no ticket data
   useEffect(() => {
-    if (!Object.keys(ticket).length || !stayTotal) {
+    if (!Object.keys(ticket).length ) {
       navigate("/"); // Navigate to home page if there's no ticket or stay data
     }
-  }, [ticket, stayTotal, navigate]);
+  }, [ticket, navigate]);
 
   const handleConfirm = () => {
     if (currentStep < 5) {
@@ -73,20 +74,29 @@ const ReviewBookingPage: React.FC = () => {
   };
 
   // Update ticket count
-  const handleIncrement = (categoryId: string) => {
+  const handleTicketIncrement = (categoryId: string) => {
     dispatch(incrementTicket(categoryId));
   };
 
-  const handleDecrement = (categoryId: string) => {
+
+  const handleTicketDecrement = (categoryId: string) => {
     if (ticket[categoryId] > 0) {
       dispatch(decrementTicket(categoryId));
     }
   };
 
+  const handleStayIncrement = (categoryId: string) => {
+    dispatch(incrementStay(categoryId));
+  };
+
+  const handleStayDecrement = (categoryId: string) => {
+    dispatch(decrementStay(categoryId));
+  };
+
   const handleDecrementWithCheck = (categoryId: any) => {
     const currentCount = ticket[categoryId] || 0; // Get current count for the category
     if (currentCount > 0) {
-      handleDecrement(categoryId);
+      handleTicketDecrement(categoryId);
     } else {
       alert("Quantity cannot be less than 0");
     }
@@ -138,96 +148,102 @@ const ReviewBookingPage: React.FC = () => {
 
           {/* Display ticket categories with count > 0 */}
           <h2 className="text-lg font-semibold mt-4 mb-2">Ticket Summary</h2>
-          {Object.keys(ticket).length > 0 ? (
-            Object.keys(ticket).map((categoryId) => {
-              const category = categories.find(
-                (cat: { _id: string }) => cat._id === categoryId
-              );
-              if (category) {
-                const count = ticket[categoryId]; // Get the ticket count
-                return (
-                  <div
-                    key={category._id}
-                    className="flex justify-between items-center py-2 border-b border-gray-300"
-                  >
-                    <div className="flex items-center">
-                      <FaUser className="w-6 h-6 text-gray-500" />
-                      <div className="ml-2">
-                        <h4 className="font-bold">{category.name}</h4>
-                        <p className="text-gray-600">
-                          ₹{category.price.toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <button
-                        className="px-2 py-1 bg-blue-500 text-white rounded-l"
-                        onClick={() => handleDecrementWithCheck(category._id)}
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        className="w-12 text-center border-t border-b"
-                        value={count}
-                        readOnly
-                      />
-                      <button
-                        className="px-2 py-1 bg-blue-500 text-white rounded-r"
-                        onClick={() => handleIncrement(category._id)}
-                      >
-                        +
-                      </button>
+       {Object.keys(ticket).length > 0 ? (
+        Object.keys(ticket)
+          .filter((categoryId) => ticket[categoryId] > 0) // Only show categories with count > 0
+          .map((categoryId) => {
+            const category = categories.find((cat:any) => cat._id === categoryId);
+            if (category) {
+              const count = ticket[categoryId]; // Get the ticket count
+              return (
+                <div
+                  key={category._id}
+                  className="flex justify-between items-center py-2 border-b border-gray-300"
+                >
+                  <div className="flex items-center">
+                    <FaUser className="w-6 h-6 text-gray-500" />
+                    <div className="ml-2">
+                      <h4 className="font-bold">{category.name}</h4>
+                      <p className="text-gray-600">₹{category.price.toFixed(2)}</p>
                     </div>
                   </div>
-                );
-              }
-              return null; // If the category is not found, return null
-            })
-          ) : (
-            <p className="text-gray-500">No tickets added.</p>
-          )}
+                  <div className="flex items-center">
+                    <button
+                      className="px-2 py-1 bg-blue-500 text-white rounded-l"
+                      onClick={() => {
+                        if (count > 0) {
+                          handleDecrementWithCheck(category._id);
+                        } else {
+                          alert("Quantity cannot be less than 0");
+                        }
+                      }}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      className="w-12 text-center border-t border-b"
+                      value={count}
+                      readOnly
+                    />
+                    <button
+                      className="px-2 py-1 bg-blue-500 text-white rounded-r"
+                      onClick={() => handleTicketIncrement(category._id)}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+            return null; // If the category is not found, return null
+          })
+      ) : (
+        <p className="text-gray-500">No tickets added.</p>
+      )}
+     
 
           {/* Display Stay categories with count > 0 */}
           <h2 className="text-lg font-semibold mt-4 mb-2">Stays Summary</h2>
-          {stayCategories
-            .filter((category: any) => stayTickets[category._id] > 0)
-            .map((category: any) => (
-              <div
-                key={category._id}
-                className="flex justify-between items-center py-2 border-b border-gray-300"
-              >
-                <div className="flex items-center">
-                  <FaBed className="w-6 h-6 text-gray-500" />
-                  <div className="ml-2">
-                    <h4 className="font-bold">{category.name}</h4>
-                    <p className="text-gray-600">
-                      ₹{category.price.toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <button
-                    className="px-2 py-1 bg-blue-500 text-white rounded-l"
-                    onClick={() => handleDecrement(category._id)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    className="w-12 text-center border-t border-b"
-                    value={stayTickets[category._id] || 0}
-                    readOnly
-                  />
-                  <button
-                    className="px-2 py-1 bg-blue-500 text-white rounded-r"
-                    onClick={() => handleIncrement(category._id)}
-                  >
-                    +
-                  </button>
+      {Object.keys(stayTickets).length > 0 && Object.values(stayTickets).some((count: any) => count > 0) ? (        stayCategories
+          .filter((category:any) => stayTickets[category._id] > 0)
+          .map((category:any) => (
+            <div
+              key={category._id}
+              className="flex justify-between items-center py-2 border-b border-gray-300"
+            >
+              <div className="flex items-center">
+                <FaBed className="w-6 h-6 text-gray-500" />
+                <div className="ml-2">
+                  <h4 className="font-bold">{category.name}</h4>
+                  <p className="text-gray-600">₹{category.price.toFixed(2)}</p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-center">
+                <button
+                  className="px-2 py-1 bg-blue-500 text-white rounded-l"
+                  onClick={() => handleStayDecrement(category._id)}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  className="w-12 text-center border-t border-b"
+                  value={stayTickets[category._id] || 0}
+                  readOnly
+                />
+                <button
+                  className="px-2 py-1 bg-blue-500 text-white rounded-r"
+                  onClick={() => handleStayIncrement(category._id)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))
+      ) : (
+        <p className="text-gray-500">No tickets added in stay cart.</p>
+      )}
 
           {/* Grand Total, GST, and Amount to be Paid */}
           <div className="mt-6 border-t border-gray-300 pt-4">
