@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { Provider } from 'react-redux'; // Import Provider from react-redux
+import { Provider } from 'react-redux';
 import store from './app/store';
 import AdminLogin from './pages/AdminSide/AdminLogin/AdminLogin'; 
 import NotFound from './components/NotFound';
@@ -26,7 +26,6 @@ import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 
 function App() {
   return (
-    // Wrap the application with Provider and pass the store
     <Provider store={store}>
       <Router>
         <MainLayout />
@@ -40,15 +39,15 @@ function MainLayout() {
   const location = useLocation();
 
   // Array of routes where the sidebar should NOT be displayed
-  const noSidebarRoutes = ['/admin/login']; // Add any additional routes here
+  const noSidebarRoutes = ['/admin/login']; 
 
   // Check if the current path is an admin route and not in the noSidebarRoutes
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
 
   return (
     <div className="flex" >
-      {isAdminRoute && <AdminSidebar />} {/* Render Sidebar only for specific admin routes */}
-      <div className="flex-grow">
+      {isAdminRoute && <AdminSidebar />}
+      <div className=" flex-grow">
         <Routes>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -63,10 +62,6 @@ function MainLayout() {
           <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
 
 
-
-
-
-
           
           <Route path="/" element={<HomePage />} />
           <Route path="/date-selector" element={<DateSelector />} />
@@ -74,7 +69,6 @@ function MainLayout() {
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
           <Route path="/billing" element={<ReviewBookingPage />} />
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

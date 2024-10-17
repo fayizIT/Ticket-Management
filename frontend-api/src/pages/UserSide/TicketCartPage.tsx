@@ -17,8 +17,15 @@ const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { categories, loading, error, tickets, activeCoupon, discountedTotal } =
-    useSelector((state: any) => state.ticketCategory);
+  const {
+    categories,
+    loading,
+    error,
+    tickets,
+    activeCoupon,
+    currentCoupon,
+    discountedTotal,
+  } = useSelector((state: any) => state.ticketCategory);
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -34,12 +41,11 @@ const TicketCartPage: React.FC = () => {
     const fetchCoupons = async () => {
       try {
         const fetchedCoupons = await CouponService.fetchCoupons();
-        setCoupons(fetchedCoupons);
+        setCoupons(fetchedCoupons as React.SetStateAction<never[]>);
       } catch (error) {
         toast.error("Failed to fetch coupons");
       }
     };
-
     fetchCoupons();
     dispatch(fetchTicketCategories() as any);
   }, [dispatch]);
@@ -53,7 +59,7 @@ const TicketCartPage: React.FC = () => {
     } else {
       dispatch(decrementTicket(id));
     }
-    console.log("Current tickets:", tickets); 
+    console.log("Current tickets:", tickets);
   };
 
   const handleConfirm = () => {
@@ -69,12 +75,47 @@ const TicketCartPage: React.FC = () => {
       setCurrentStep(currentStep + 1);
     }
     navigate("/stay-categories");
-    console.log("Confirmed tickets:", tickets); 
+    console.log("Confirmed tickets:", tickets);
   };
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+  // const handleCouponClick = (code: string, discountAmount: number) => {
+  //   const totalTickets = Object.values(tickets).reduce(
+  //     (sum: number, count) => sum + (count as number),
+  //     0
+  //   );
+  //   if (totalTickets > 0) {
+  //     if (activeCoupon && activeCoupon.code === code) {
+  //       // Remove coupon
+  //       setCoupons((prev) =>
+  //         prev.filter((coupon: { code: string }) => coupon.code !== code)
+  //       );
+  //       dispatch(removeDiscount());
+  //       toast.success("Coupon removed");
+  //     } else {
+  //       // Apply coupon
+  //       const calculatedTotal = categories.reduce(
+  //         (sum: number, category: any) => {
+  //           return sum + category.price * (tickets[category._id] || 0);
+  //         },
+  //         0
+  //       );
+  //       const discountedTotal = Math.max(
+  //         0,
+  //         calculatedTotal - calculatedTotal * (discountAmount / 100)
+  //       );
+  //       dispatch(applyDiscount({ code, discount: discountAmount }));
+  //       toast.success(`Coupon applied: ${code}`);
+  //     }
+  //   } else {
+  //     toast.error("Please add at least one ticket before applying a coupon.");
+  //   }
+  // };
+
+  // Calculate total price based on tickets selected
 
   const handleCouponClick = (code: string, discountAmount: number) => {
     const totalTickets = Object.values(tickets).reduce(
@@ -82,7 +123,7 @@ const TicketCartPage: React.FC = () => {
       0
     );
     if (totalTickets > 0) {
-      if (activeCoupon && activeCoupon.code === code) {
+      if (currentCoupon && currentCoupon.code === code) {
         // Remove coupon
         setCoupons((prev) =>
           prev.filter((coupon: { code: string }) => coupon.code !== code)
@@ -101,15 +142,13 @@ const TicketCartPage: React.FC = () => {
           0,
           calculatedTotal - calculatedTotal * (discountAmount / 100)
         );
-        dispatch(applyDiscount({ code, discount: discountAmount })); 
+        dispatch(applyDiscount({ code, discount: discountAmount }));
         toast.success(`Coupon applied: ${code}`);
       }
     } else {
       toast.error("Please add at least one ticket before applying a coupon.");
     }
   };
-
-  // Calculate total price based on tickets selected
   const totalTickets = Object.values(tickets).reduce(
     (sum: number, count) => sum + (count as number),
     0
@@ -134,7 +173,7 @@ const TicketCartPage: React.FC = () => {
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
       <div className="bg-gray-100 min-h-screen p-4 sm:p-8 mt-12">
         <div className="flex flex-col lg:flex-row justify-center items-start space-y-8 lg:space-y-0 lg:space-x-8">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col justify-between h-auto lg:h-[31.7rem]">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col justify-between">
             <h2 className="text-2xl font-bold mb-4">Grab Your Tickets</h2>
             <p className="text-gray-700 mb-6 leading-relaxed">
               Wonderla provides regular tickets, fast track tickets for queue
@@ -147,7 +186,7 @@ const TicketCartPage: React.FC = () => {
                   <div
                     key={coupon.code}
                     className={`cursor-pointer border p-4 rounded-md ${
-                      activeCoupon?.code === coupon.code ? "bg-gray-200" : ""
+                      currentCoupon?.code === coupon.code ? "bg-gray-200" : ""
                     }`}
                     onClick={() =>
                       handleCouponClick(coupon.code, coupon.discount)
@@ -215,7 +254,6 @@ const TicketCartPage: React.FC = () => {
                   className="border rounded-l-md p-2 flex-grow"
                   placeholder="Enter Coupon Code"
                   value={activeCoupon?.code || ""}
-                  readOnly // Disable manual entry since coupon codes are managed via buttons
                 />
                 <button
                   className="bg-blue-500 text-white rounded-r-md px-2 sm:px-4 py-2 hover:bg-blue-600"
@@ -227,36 +265,38 @@ const TicketCartPage: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-between items-center mt-4">
-  <div>
-    <h4 className="text-lg font-bold">Total Price:</h4>
-    {activeCoupon ? (
-      <div>
-        <div className="flex items-center">
-          <p className="text-lg sm:text-xl">
-            ₹{calculatedTotal.toFixed(2)} {/* Original total */}
-          </p>
-          <p className="text-lg sm:text-xl text-red-500 ml-2">
-            (-₹{(calculatedTotal - discountedTotal).toFixed(2)}) {/* Discounted amount */}
-          </p>
-        </div>
-        <p className="text-lg sm:text-xl">
-          ₹{discountedTotal.toFixed(2)} {/* Final discounted total */}
-        </p>
-      </div>
-    ) : (
-      <p className="text-lg sm:text-xl">
-        ₹{calculatedTotal.toFixed(2)} {/* Show total if no coupon applied */}
-      </p>
-    )}
-  </div>
-  <button
-    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-    onClick={handleConfirm}
-  >
-    Confirm Tickets
-  </button>
-</div>
-
+              <div>
+                <h4 className="text-lg font-bold">Total Price:</h4>
+                {activeCoupon ? (
+                  <div>
+                    <div className="flex items-center">
+                      <p className="text-lg sm:text-xl">
+                        ₹{calculatedTotal.toFixed(2)} {/* Original total */}
+                      </p>
+                      <p className="text-lg sm:text-xl text-red-500 ml-2">
+                        (-₹{(calculatedTotal - discountedTotal).toFixed(2)}){" "}
+                        {/* Discounted amount */}
+                      </p>
+                    </div>
+                    <p className="text-lg sm:text-xl">
+                      ₹{discountedTotal.toFixed(2)}{" "}
+                      {/* Final discounted total */}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-lg sm:text-xl">
+                    ₹{calculatedTotal.toFixed(2)}{" "}
+                    {/* Show total if no coupon applied */}
+                  </p>
+                )}
+              </div>
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                onClick={handleConfirm}
+              >
+                Confirm Tickets
+              </button>
+            </div>
           </div>
         </div>
       </div>
