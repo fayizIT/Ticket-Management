@@ -27,8 +27,8 @@ export class CreateBookingDto {
 
   @IsArray()
   @IsNotEmpty()
-  ageCategories: {  // Keeping it as ageCategories to match entity
-    ageCategoryId: string; 
+  ticketCategories: {  // Keeping it as ageCategories to match entity
+    ticketCategoryId: string; 
     quantity: number; 
     price: number; // Include price if needed for the booking
   }[];

@@ -16,6 +16,9 @@ const ReviewBookingPage: React.FC = () => {
     categories,
     discountedTotal: ticketDiscountedTotal,
   } = useSelector((state: any) => state.ticketCategory);
+
+  console.log(ticket,"kkkkkkkkkkkkkkkkkkkkkkkkk");
+  
   const {
     stayCategories,
     tickets: stayTickets,

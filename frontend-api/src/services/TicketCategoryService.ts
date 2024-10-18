@@ -1,14 +1,13 @@
-// src/services/AgeCategoryService.ts
 const BASE_URL = 'http://localhost:3000/admin/ticket-Category';
 
-interface CreateAgeCategoryDto {
+interface CreateTicketCategoryDto {
     id?:string;
   name: string;
   description: string;
   price: number;
 }
 
-export const AgeCategoryService = {
+export const TicketCategoryService = {
   getAll: async () => {
     const response = await fetch(BASE_URL, {
       headers: {
@@ -21,7 +20,7 @@ export const AgeCategoryService = {
     return response.json();
   },
 
-  create: async (data: CreateAgeCategoryDto) => {
+  create: async (data: CreateTicketCategoryDto) => {
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
@@ -31,7 +30,7 @@ export const AgeCategoryService = {
       body: JSON.stringify(data),
     });
     if (!response.ok) {
-      throw new Error('Failed to create age category');
+      throw new Error('Failed to create ticket  category');
     }
     return response.json();
   },
@@ -43,12 +42,12 @@ export const AgeCategoryService = {
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch age category');
+      throw new Error('Failed to fetch ticket  category');
     }
     return response.json();
   },
 
-  update: async (id: string, data: CreateAgeCategoryDto) => {
+  update: async (id: string, data: CreateTicketCategoryDto) => {
     const response = await fetch(`${BASE_URL}/${id}`, {
       method: 'PUT',
       headers: {
@@ -58,7 +57,7 @@ export const AgeCategoryService = {
       body: JSON.stringify(data),
     });
     if (!response.ok) {
-      throw new Error('Failed to update age category');
+      throw new Error('Failed to update ticket  category');
     }
     return response.json();
   },
@@ -71,7 +70,7 @@ export const AgeCategoryService = {
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to delete age category');
+      throw new Error('Failed to delete ticket  category');
     }
     return response.json();
   },

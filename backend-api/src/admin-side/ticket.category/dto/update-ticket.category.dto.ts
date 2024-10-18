@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateAgeCategoryDto {
+export class UpdateTicketCategoryDto {
     @IsOptional()
     @IsString()
     name: string; 

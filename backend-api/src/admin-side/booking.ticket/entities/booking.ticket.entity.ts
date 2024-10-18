@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { TicketCategory } from 'src/admin-side/ticket.category/entities/ticket.category.entity';
 
 export type BookingDocument = Booking & Document;
 
@@ -29,14 +30,14 @@ export class Booking {
   @Prop({
     type: [
       {
-        ageCategoryId: { type: String, required: true },
+        ticketCategoryId: { type: String, required: true },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
       },
     ],
     required: true,
   })
-  ageCategories: AgeCategory[];  // Changed to AgeCategory
+  ticketCategories: TicketCategory[];  // Changed to AgeCategory
 
   @Prop({ default: Date.now })
   createdAt: Date;
@@ -48,8 +49,8 @@ export class Booking {
 export const BookingSchema = SchemaFactory.createForClass(Booking);
 
 // Nested schema for each cart item
-export class AgeCategory {  // Changed to AgeCategory
-  ageCategoryId: string;
+export class ticketCategory {  
+  ticketCategoryId: string;
   quantity: number;
   price: number;
 }

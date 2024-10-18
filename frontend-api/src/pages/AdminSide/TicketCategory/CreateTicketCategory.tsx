@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AgeCategoryService } from '../../../services/AgeCategoryService'; 
+import { TicketCategoryService } from '../../../services/TicketCategoryService'; 
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 
@@ -10,7 +10,7 @@ const CreateTicketCategory: React.FC = () => {
     description: '',
     price: 0,
   });
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,24 +23,24 @@ const CreateTicketCategory: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await AgeCategoryService.create(formData);
-      setIsModalOpen(true); // Open modal on success
-      setFormData({ // Clear form data
+      await TicketCategoryService.create(formData);
+      setIsModalOpen(true); 
+      setFormData({ 
         name: '',
         description: '',
         price: 0,
       });
-      // Navigate after closing the modal
+     
       setTimeout(() => navigate('/admin/ticket-Category'), 2000); // Wait for 2 seconds before redirecting
     } catch (error) {
       console.error('Failed to add Age Category:', error);
-      // Optionally, you can handle error display here
+
     }
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    navigate('/admin/ticket-Category'); // Redirect after closing the modal
+    navigate('/admin/ticket-Category');
   };
 
   return (

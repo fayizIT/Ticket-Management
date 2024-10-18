@@ -48,7 +48,7 @@ const AdminSidebar: React.FC = () => {
                 icon: "dashboard",
               },
               {
-                name: "Age Categories",
+                name: "Ticket Categories",
                 path: "/admin/ticket-Category",
                 icon: "schedule",
               },

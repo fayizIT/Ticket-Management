@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AgeCategoryService } from '../../../services/AgeCategoryService';
+import { TicketCategoryService } from '../../../services/TicketCategoryService';
 import Swal from 'sweetalert2';
 
 const EditTicketCategory: React.FC = () => {
@@ -15,10 +15,10 @@ const EditTicketCategory: React.FC = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const category = await AgeCategoryService.getById(id as string);
+        const category = await TicketCategoryService.getById(id as string);
         setFormData(category);
       } catch (error) {
-        console.error('Failed to fetch age category:', error);
+        console.error('Failed to fetch Ticket  category:', error);
       }
     };
 
@@ -54,27 +54,27 @@ const EditTicketCategory: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      await AgeCategoryService.update(id as string, { ...formData, id: id as string });
+      await TicketCategoryService.update(id as string, { ...formData, id: id as string });
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'Age category updated successfully!',
+        text: 'Ticket  category updated successfully!',
         confirmButtonText: 'OK',
       });
       navigate('/admin/ticket-Category');
     } catch (error) {
-      console.error('Failed to update age category:', error);
+      console.error('Failed to update Ticket  category:', error);
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to update age category. Please try again.',
+        text: 'Failed to update Ticket  category. Please try again.',
       });
     }
   };
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Edit Age Category</h2>
+      <h2 className="text-2xl font-bold mb-4">Edit Ticket  category</h2>
       <form onSubmit={handleFormSubmit} className="space-y-4">
         <div>
           <label>Name</label>

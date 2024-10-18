@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { AgeCategoryService } from '../../../services/AgeCategoryService'; 
+import { TicketCategoryService } from '../../../services/TicketCategoryService'; 
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 import ConfirmDialog from '../../../components/ConfirmDialog'; 
@@ -52,7 +52,7 @@ const TicketCategoriesList: React.FC = () => {
     if (!selectedCategoryId) return;
   
     try {
-      await AgeCategoryService.delete(selectedCategoryId);
+      await TicketCategoryService.delete(selectedCategoryId);
   
       // Update the state immediately to remove the deleted category
       setAgeCategories((prevCategories) =>

@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 
 @Schema({ timestamps: true })  
-export class AgeCategory extends Document {
+export class TicketCategory extends Document {
   
   @Prop({ required: true })
   name: string;
@@ -15,4 +15,4 @@ export class AgeCategory extends Document {
   price: number;
 }
 
-export const AgeCategorySchema = SchemaFactory.createForClass(AgeCategory);
+export const TicketCategorySchema = SchemaFactory.createForClass(TicketCategory);
