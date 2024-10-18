@@ -8,7 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 import { BookingModule } from './admin-side/booking.ticket/booking.ticket.module'; 
 import { StayCategoryModule } from './admin-side/stay.category/stay.category.module';
 import { CouponModule } from './admin-side/coupon/coupon.module';
-import { UserModule } from './admin-side/user/user.module';
 
 @Module({
   imports: [
@@ -20,8 +19,7 @@ import { UserModule } from './admin-side/user/user.module';
     TicketCategoryModule,
     BookingModule,
     StayCategoryModule,
-    CouponModule,
-    UserModule,
+    CouponModule
   ],
   controllers: [AppController],
   providers: [AppService],
