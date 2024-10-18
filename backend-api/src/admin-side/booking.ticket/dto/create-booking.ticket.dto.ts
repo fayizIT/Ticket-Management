@@ -1,47 +1,167 @@
-import { IsNotEmpty, IsArray, IsString, IsNumber } from 'class-validator';
+// import { IsNotEmpty, IsArray, IsString, IsNumber, IsOptional } from 'class-validator';
+
+// export class CreateBookingDto {
+//   @IsNotEmpty()
+//   @IsString()
+//   fullName: string;
+
+//   @IsNotEmpty()
+//   @IsString()
+//   phoneNumber: string;
+
+//   @IsNotEmpty()
+//   @IsString()
+//   email: string;
+
+//   @IsNotEmpty()
+//   @IsString()
+//   pinCode: string;
+
+//   @IsNotEmpty()
+//   @IsString() // Assuming date is in string format (e.g., "YYYY-MM-DD")
+//   dateOfVisit: string;
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   totalVisitors: number;
+
+//   @IsArray()
+//   @IsNotEmpty()
+//   ticketCategories: {
+//     ticketCategoryId: string; 
+//     quantity: number; 
+//     price: number;
+//   }[];
+
+//   @IsArray()  // Add stayCategories similar to ticketCategories
+//   @IsNotEmpty()
+//   stayCategories: {
+//     stayCategoryId: string;
+//     quantity: number;
+//     price: number;
+//   }[];
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   totalAmount: number;
+
+//   @IsString()
+//   @IsOptional()
+//   couponCode: string
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   ticketGst: number;
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   grandTotal: number;
+// }
+
+
+// import { IsNotEmpty, IsArray, IsString, IsNumber, IsOptional } from 'class-validator';
+
+// export class CreateBookingDto {
+//   @IsNotEmpty()
+//   @IsString()
+//   fullName: string;
+
+//   @IsNotEmpty()
+//   @IsString()
+//   phoneNumber: string;
+
+//   @IsNotEmpty()
+//   @IsString()
+//   email: string; // Add email to track user
+
+//   @IsNotEmpty()
+//   @IsString()
+//   pinCode: string;
+
+//   @IsNotEmpty()
+//   @IsString() // Assuming date is in string format (e.g., "YYYY-MM-DD")
+//   dateOfVisit: string;
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   totalVisitors: number;
+
+//   @IsArray()
+//   @IsNotEmpty()
+//   ticketCategories: {
+//     ticketCategoryId: string; 
+//     quantity: number; 
+//     price: number;
+//   }[];
+
+//   @IsArray()  
+//   @IsNotEmpty()
+//   stayCategories: {
+//     stayCategoryId: string; // Ensure the correct property name is used
+//     quantity: number;
+//     price: number;
+//   }[];
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   totalAmount: number;
+
+//   @IsString()
+//   @IsOptional()
+//   couponCode: string;
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   ticketGst: number;
+
+//   @IsNotEmpty()
+//   @IsNumber()
+//   grandTotal: number;
+// }
+
+
+
+import { IsArray, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreateBookingDto {
-  @IsNotEmpty()
-  @IsString()
-  fullName: string;
+    @IsString()
+    @IsNotEmpty()
+    fullName: string;
 
-  @IsNotEmpty()
-  @IsString()
-  phoneNumber: string;
+    @IsString()
+    @IsNotEmpty()
+    phoneNumber: string;
 
-  @IsNotEmpty()
-  @IsString()
-  email: string;
+    @IsEmail()
+    email: string;
 
-  @IsNotEmpty()
-  @IsString()
-  pinCode: string;
+    @IsString()
+    @IsNotEmpty()
+    pinCode: string;
 
-  @IsNotEmpty()
-  @IsString() // Assuming date is in string format (e.g., "YYYY-MM-DD")
-  dateOfVisit: string;
+    @IsDateString()
+    dateOfVisit: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  totalVisitors: number;
+    @IsNumber()
+    @IsNotEmpty()
+    totalVisitors: number;
 
-  @IsArray()
-  @IsNotEmpty()
-  ticketCategories: {  // Keeping it as ageCategories to match entity
-    ticketCategoryId: string; 
-    quantity: number; 
-    price: number; // Include price if needed for the booking
-  }[];
+    @IsArray()
+    ticketCategories: {
+        ticketCategoryId: string;
+        quantity: number;
+        price: number;
+    }[];
 
-  @IsNotEmpty()
-  @IsNumber()
-  totalAmount: number;
+    @IsArray()
+    stayCategories: {
+        ageCategoryId: string;
+        quantity: number;
+        price: number;
+    }[];
 
-  @IsNotEmpty()
-  @IsNumber()
-  ticketGst: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  grandTotal: number;
+    @IsString()
+    @IsOptional()
+    couponDiscountId?: string; // Optional coupon discount ID
 }
+

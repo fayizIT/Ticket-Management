@@ -9,5 +9,6 @@ import { StayCategory, StayCategorySchema } from './entities/stay.category.entit
   imports: [MongooseModule.forFeature([{ name: StayCategory.name, schema: StayCategorySchema }])],
   controllers: [StayCategoryController],
   providers: [StayCategoryService],
+  exports: [StayCategoryService],
 })
 export class StayCategoryModule {}

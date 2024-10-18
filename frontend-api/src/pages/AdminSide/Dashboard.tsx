@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchDashboardData } from '../../services/DashBoardService';  // Import the service
+import { fetchDashboardData } from '../../services/DashBoardService';
 
 const Dashboard: React.FC = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
     const getData = async () => {
       try {
         const data = await fetchDashboardData();
-        setDashboardData(data); // Set the dashboard data in state
+        setDashboardData(data);
       } catch (error: any) {
         setError('Failed to fetch dashboard data');
       } finally {

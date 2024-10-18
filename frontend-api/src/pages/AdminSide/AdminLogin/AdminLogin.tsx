@@ -33,7 +33,7 @@ const AdminLogin: React.FC = () => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Invalid credentials'); // Extracting message from the response
+        throw new Error(errorData.message || 'Invalid credentials'); 
       }
   
       const data = await response.json();
