@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaUser, FaBed, FaUserFriends } from "react-icons/fa";
 import Timeline from "../../components/Timeline";
 import { useNavigate } from "react-router-dom";
-import { decrementTicket, incrementTicket } from "../../redux/ticketSlice";
+import { decrementTicket, incrementTicket, selectTicketQuantity } from "../../redux/ticketSlice";
 import { decrementStay, incrementStay } from "../../redux/stayCategorySlice";
+import { setBookingData } from "../../redux/bookingSlice";
+import { createBooking } from "../../services/BookingService";
 
 const ReviewBookingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -17,13 +19,18 @@ const ReviewBookingPage: React.FC = () => {
     discountedTotal: ticketDiscountedTotal,
   } = useSelector((state: any) => state.ticketCategory);
 
-  console.log(ticket,"kkkkkkkkkkkkkkkkkkkkkkkkk");
-  
   const {
     stayCategories,
     tickets: stayTickets,
     total: stayTotal,
   } = useSelector((state: any) => state.stayCategory);
+
+  const activeCouponId = useSelector((state: any) => state.ticketCategory.activeCoupon?.id);
+  console.log(activeCouponId); // This will log the MongoDB Object ID
+  
+  
+
+  
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   // Calculate original ticket total
@@ -56,6 +63,14 @@ const ReviewBookingPage: React.FC = () => {
     0
   );
 
+  // State for billing information
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    pinCode: "",
+  });
+
   const [currentStep, setCurrentStep] = useState(4);
 
   // Redirect to home if there's no ticket data
@@ -65,11 +80,49 @@ const ReviewBookingPage: React.FC = () => {
     }
   }, [ticket, navigate]);
 
-  const handleConfirm = () => {
-    if (currentStep < 5) {
-      setCurrentStep(currentStep + 1);
+  // Moved handleChange outside of handleConfirm for better readability
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleConfirm = async () => {
+    // Basic validation
+    if (!formData.fullName || !formData.phoneNumber || !formData.email || !formData.pinCode) {
+      alert("Please fill in all fields.");
+      return;
     }
-    navigate("/billing");
+
+    const bookingData = {
+      ...formData,
+      dateOfVisit: selectedDate,
+      totalVisitors: totalTicketCount,
+      ticketCategories: Object.keys(ticket).map((categoryId) => ({
+        ticketCategoryId: categoryId,
+        quantity: ticket[categoryId],
+        price: categories.find((cat: any) => cat._id === categoryId)?.price,
+      })),
+      stayCategories: Object.keys(stayTickets).map((categoryId) => ({
+        stayCategoryId: categoryId,
+        quantity: stayTickets[categoryId],
+        price: stayCategories.find((cat: any) => cat._id === categoryId)?.price,
+      })),
+      couponId: activeCouponId || null, 
+    };
+
+    console.log( bookingData,"Booking dataaaaaaaaaa");
+
+    console.log("Stay Categories:", stayCategories);
+
+    
+
+    try {
+      const result = await createBooking(bookingData);
+      dispatch(setBookingData(result)); // Optionally store booking data in Redux
+      navigate("/billing");
+    } catch (error) {
+      alert("Error creating booking: " + error);
+    }
   };
 
   const handleStepClick = (step: number) => {
@@ -103,6 +156,7 @@ const ReviewBookingPage: React.FC = () => {
       alert("Quantity cannot be less than 0");
     }
   };
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center py-8">
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
@@ -279,6 +333,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Full Name</label>
               <input
                 type="text"
+                name="fullName" // Added name attribute
+                onChange={handleChange} // Added onChange to input
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your full name"
               />
@@ -287,6 +343,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Phone Number</label>
               <input
                 type="tel"
+                name="phoneNumber" // Added name attribute
+                onChange={handleChange} // Added onChange to input
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />
@@ -295,6 +353,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Email Address</label>
               <input
                 type="email"
+                name="email" // Added name attribute
+                onChange={handleChange} // Added onChange to input
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email address"
               />
@@ -302,6 +362,8 @@ const ReviewBookingPage: React.FC = () => {
             <div>
               <label className="block text-gray-700">PIN code</label>
               <textarea
+                name="pinCode" // Added name attribute
+                onChange={handleChange} // Added onChange to textarea
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 resize-none" // Set height and prevent resizing
                 placeholder="Enter your PIN"
               />

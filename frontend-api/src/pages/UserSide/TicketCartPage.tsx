@@ -82,7 +82,7 @@ const TicketCartPage: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const handleCouponClick = (code: string, discountAmount: number) => {
+  const handleCouponClick = (id:any, code: string, discountAmount: number) => {
     const totalTickets = Object.values(tickets).reduce(
       (sum: number, count) => sum + (count as number),
       0
@@ -104,7 +104,9 @@ const TicketCartPage: React.FC = () => {
           0,
           calculatedTotal - calculatedTotal * (discountAmount / 100)
         );
-        dispatch(applyDiscount({ code, discount: discountAmount }));
+        dispatch(applyDiscount({id, code, discount: discountAmount }));
+        console.log(id, code, discountAmount,"-------------------------");
+        
         toast.success(`Coupon applied: ${code}`);
       }
     } else {
@@ -160,7 +162,7 @@ const TicketCartPage: React.FC = () => {
                         : "bg-orange-50"
                     }`}
                     onClick={() =>
-                      handleCouponClick(coupon.code, coupon.discount)
+                      handleCouponClick(coupon.id, coupon.code, coupon.discount)
                     }
                   >
                     <h4 className="font-bold text-gray-800">{coupon.code}</h4>
@@ -234,7 +236,7 @@ const TicketCartPage: React.FC = () => {
                   value={activeCoupon?.code || ""}
                   onChange={(e) =>
                     dispatch(
-                      applyDiscount({ code: e.target.value, discount: 0 })
+                      applyDiscount({ id: null, code: e.target.value, discount: 0 })
                     )
                   }
                 />

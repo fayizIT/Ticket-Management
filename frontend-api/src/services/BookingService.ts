@@ -1,3 +1,42 @@
+// src/services/apiService.ts
+const API_URL = 'http://localhost:3000/bookings'; // Replace with your backend URL
+
+export const createBooking = async (bookingData: any) => {
+  const response = await fetch('http://localhost:3000/bookings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(bookingData),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to create booking');
+  }
+
+  return await response.json();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // services/BookingService.js
 
 // const API_BASE_URL = 'http://localhost:5000'; // Adjust based on your backend URL
@@ -75,46 +114,46 @@
 // services/BookingService.js
 
 // bookingService.ts
-const API_URL = "http://localhost:3000/bookings"; // Replace with your API base URL
+// const API_URL = "http://localhost:3000/bookings"; // Replace with your API base URL
 
-// services/BookingService.ts
+// // services/BookingService.ts
 
-class BookingService {
-    static async createBooking(bookingData: any) {
-      const response = await fetch('http://localhost:3000/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData),
-      });
+// class BookingService {
+//     static async createBooking(bookingData: any) {
+//       const response = await fetch('http://localhost:3000/bookings', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(bookingData),
+//       });
   
-      if (!response.ok) {
-        throw new Error('Failed to create booking');
-      }
+//       if (!response.ok) {
+//         throw new Error('Failed to create booking');
+//       }
   
-      return await response.json();
-    }
-  }
+//       return await response.json();
+//     }
+//   }
   
-  export default BookingService;
+//   export default BookingService;
   
 
-export const submitBillingInfo = async (billingInfo: any) => {
-  try {
-    const response = await fetch(`${API_URL}/bookings`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(billingInfo),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to submit billing information");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error submitting billing info:", error);
-    throw error;
-  }
-};
+// export const submitBillingInfo = async (billingInfo: any) => {
+//   try {
+//     const response = await fetch(`${API_URL}/bookings`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(billingInfo),
+//     });
+//     if (!response.ok) {
+//       throw new Error("Failed to submit billing information");
+//     }
+//     return await response.json();
+//   } catch (error) {
+//     console.error("Error submitting billing info:", error);
+//     throw error;
+//   }
+// };

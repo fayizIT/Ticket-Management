@@ -1,5 +1,3 @@
-
-
 import { IsArray, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreateBookingDto {
@@ -34,7 +32,7 @@ export class CreateBookingDto {
 
     @IsArray()
     stayCategories: {
-        ageCategoryId: string;
+        stayCategoryId: string;
         quantity: number;
         price: number;
     }[];
