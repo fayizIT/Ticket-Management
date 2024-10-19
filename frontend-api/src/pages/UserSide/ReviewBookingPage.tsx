@@ -17,6 +17,7 @@ const ReviewBookingPage: React.FC = () => {
     tickets: ticket,
     categories,
     discountedTotal: ticketDiscountedTotal,
+    activeCoupon,
   } = useSelector((state: any) => state.ticketCategory);
 
   const {
@@ -25,12 +26,9 @@ const ReviewBookingPage: React.FC = () => {
     total: stayTotal,
   } = useSelector((state: any) => state.stayCategory);
 
-  const activeCouponId = useSelector((state: any) => state.ticketCategory.activeCoupon?.id);
-  console.log(activeCouponId); // This will log the MongoDB Object ID
-  
-  
+  const activeCouponId = activeCoupon?.id; // Fetch active coupon ID
+  console.log(activeCouponId); 
 
-  
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   // Calculate original ticket total
@@ -80,19 +78,18 @@ const ReviewBookingPage: React.FC = () => {
     }
   }, [ticket, navigate]);
 
-  // Moved handleChange outside of handleConfirm for better readability
+  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleConfirm = async () => {
-    // Basic validation
     if (!formData.fullName || !formData.phoneNumber || !formData.email || !formData.pinCode) {
       alert("Please fill in all fields.");
       return;
     }
-
+  
     const bookingData = {
       ...formData,
       dateOfVisit: selectedDate,
@@ -107,20 +104,18 @@ const ReviewBookingPage: React.FC = () => {
         quantity: stayTickets[categoryId],
         price: stayCategories.find((cat: any) => cat._id === categoryId)?.price,
       })),
-      couponId: activeCouponId || null, 
+      couponDiscountId: activeCouponId || null,
     };
-
-    console.log( bookingData,"Booking dataaaaaaaaaa");
-
-    console.log("Stay Categories:", stayCategories);
-
-    
-
+  
+    console.log("Booking Data:", bookingData); // Debugging log
+  
     try {
       const result = await createBooking(bookingData);
-      dispatch(setBookingData(result)); // Optionally store booking data in Redux
+      console.log("Booking Result:", result); // Debugging log
+      dispatch(setBookingData(result));
       navigate("/billing");
     } catch (error) {
+      console.error("Error creating booking:", error); // Debugging log
       alert("Error creating booking: " + error);
     }
   };
@@ -149,7 +144,7 @@ const ReviewBookingPage: React.FC = () => {
   };
 
   const handleDecrementWithCheck = (categoryId: any) => {
-    const currentCount = ticket[categoryId] || 0; // Get current count for the category
+    const currentCount = ticket[categoryId] || 0; 
     if (currentCount > 0) {
       handleTicketDecrement(categoryId);
     } else {
@@ -164,9 +159,7 @@ const ReviewBookingPage: React.FC = () => {
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-6xl gap-4">
         {/* Left side: Booking Summary */}
         <div className="w-full lg:w-2/5 p-4 bg-white rounded-xl shadow-lg border border-gray-300 flex flex-col justify-between mb-8 lg:mb-0">
-          <h2 className="text-xl font-semibold mb-4 text-center">
-            Booking Summary
-          </h2>
+          <h2 className="text-xl font-semibold mb-4 text-center">Booking Summary</h2>
 
           {/* Display total visitors and ticket total */}
           <div className="mb-4 text-center">
@@ -195,9 +188,7 @@ const ReviewBookingPage: React.FC = () => {
               {/* Total Amount */}
               <div className="flex flex-col items-center mt-2 md:mt-0">
                 <p className="text-sm font-bold">Total:</p>
-                <span className="font-bold">
-                  ₹{originalTicketTotal.toFixed(2)}
-                </span>
+                <span className="font-bold">₹{originalTicketTotal.toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -206,13 +197,11 @@ const ReviewBookingPage: React.FC = () => {
           <h2 className="text-lg font-semibold mt-4 mb-2">Ticket Summary</h2>
           {Object.keys(ticket).length > 0 ? (
             Object.keys(ticket)
-              .filter((categoryId) => ticket[categoryId] > 0) // Only show categories with count > 0
+              .filter((categoryId) => ticket[categoryId] > 0) 
               .map((categoryId) => {
-                const category = categories.find(
-                  (cat: any) => cat._id === categoryId
-                );
+                const category = categories.find((cat: any) => cat._id === categoryId);
                 if (category) {
-                  const count = ticket[categoryId]; // Get the ticket count
+                  const count = ticket[categoryId];
                   return (
                     <div
                       key={category._id}
@@ -222,9 +211,7 @@ const ReviewBookingPage: React.FC = () => {
                         <FaUser className="w-6 h-6 text-gray-500" />
                         <div className="ml-2">
                           <h4 className="font-bold">{category.name}</h4>
-                          <p className="text-gray-600">
-                            ₹{category.price.toFixed(2)}
-                          </p>
+                          <p className="text-gray-600">₹{category.price.toFixed(2)}</p>
                         </div>
                       </div>
                       <div className="flex items-center">
@@ -256,7 +243,7 @@ const ReviewBookingPage: React.FC = () => {
                     </div>
                   );
                 }
-                return null; // If the category is not found, return null
+                return null;
               })
           ) : (
             <p className="text-gray-500">No tickets added.</p>
@@ -277,9 +264,7 @@ const ReviewBookingPage: React.FC = () => {
                     <FaBed className="w-6 h-6 text-gray-500" />
                     <div className="ml-2">
                       <h4 className="font-bold">{category.name}</h4>
-                      <p className="text-gray-600">
-                        ₹{category.price.toFixed(2)}
-                      </p>
+                      <p className="text-gray-600">₹{category.price.toFixed(2)}</p>
                     </div>
                   </div>
                   <div className="flex items-center">
@@ -333,8 +318,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Full Name</label>
               <input
                 type="text"
-                name="fullName" // Added name attribute
-                onChange={handleChange} // Added onChange to input
+                name="fullName"
+                onChange={handleChange}
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your full name"
               />
@@ -343,8 +328,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Phone Number</label>
               <input
                 type="tel"
-                name="phoneNumber" // Added name attribute
-                onChange={handleChange} // Added onChange to input
+                name="phoneNumber"
+                onChange={handleChange}
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />
@@ -353,8 +338,8 @@ const ReviewBookingPage: React.FC = () => {
               <label className="block text-gray-700">Email Address</label>
               <input
                 type="email"
-                name="email" // Added name attribute
-                onChange={handleChange} // Added onChange to input
+                name="email"
+                onChange={handleChange}
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email address"
               />
@@ -362,9 +347,9 @@ const ReviewBookingPage: React.FC = () => {
             <div>
               <label className="block text-gray-700">PIN code</label>
               <textarea
-                name="pinCode" // Added name attribute
-                onChange={handleChange} // Added onChange to textarea
-                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 resize-none" // Set height and prevent resizing
+                name="pinCode" 
+                onChange={handleChange}
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-12 resize-none"
                 placeholder="Enter your PIN"
               />
             </div>

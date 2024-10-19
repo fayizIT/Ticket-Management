@@ -23,7 +23,6 @@ const TicketCartPage: React.FC = () => {
     error,
     tickets,
     activeCoupon,
-    currentCoupon,
     discountedTotal,
   } = useSelector((state: any) => state.ticketCategory);
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
@@ -41,6 +40,7 @@ const TicketCartPage: React.FC = () => {
     const fetchCoupons = async () => {
       try {
         const fetchedCoupons = await CouponService.fetchCoupons();
+        console.log("Fetched Coupons:", fetchedCoupons);
         setCoupons(fetchedCoupons as React.SetStateAction<never[]>);
       } catch (error) {
         toast.error("Failed to fetch coupons");
@@ -82,18 +82,16 @@ const TicketCartPage: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const handleCouponClick = (id:any, code: string, discountAmount: number) => {
+  const handleCouponClick = (id: string, code: string, discountAmount: number) => {
     const totalTickets = Object.values(tickets).reduce(
       (sum: number, count) => sum + (count as number),
       0
     );
     if (totalTickets > 0) {
-      if (currentCoupon && currentCoupon.code === code) {
-        // Remove coupon from input only
+      if (activeCoupon && activeCoupon.code === code) {
         dispatch(removeDiscount());
         toast.success("Coupon removed");
       } else {
-        // Apply coupon
         const calculatedTotal = categories.reduce(
           (sum: number, category: any) => {
             return sum + category.price * (tickets[category._id] || 0);
@@ -104,15 +102,14 @@ const TicketCartPage: React.FC = () => {
           0,
           calculatedTotal - calculatedTotal * (discountAmount / 100)
         );
-        dispatch(applyDiscount({id, code, discount: discountAmount }));
-        console.log(id, code, discountAmount,"-------------------------");
-        
+        dispatch(applyDiscount({ id, code, discount: discountAmount }));
         toast.success(`Coupon applied: ${code}`);
       }
     } else {
       toast.error("Please add at least one ticket before applying a coupon.");
     }
   };
+  
 
   const totalTickets = Object.values(tickets).reduce(
     (sum: number, count) => sum + (count as number),
@@ -128,7 +125,8 @@ const TicketCartPage: React.FC = () => {
     console.log("Calculated total:", calculatedTotal);
     console.log("Discounted total:", discountedTotal);
     console.log("Coupons:", coupons);
-  }, [tickets, calculatedTotal, discountedTotal, coupons]);
+    console.log("Active Coupon:", activeCoupon);
+  }, [tickets, calculatedTotal, discountedTotal, coupons, activeCoupon]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading categories: {error}</p>;
@@ -153,16 +151,18 @@ const TicketCartPage: React.FC = () => {
               </h3>
               <div className="flex flex-wrap justify-between space-x-4">
                 {/* Map through your coupon data */}
-                {coupons.map((coupon: any) => (
+                {coupons
+                  .filter((coupon: any) => coupon.isActive === true) 
+                .map((coupon: any) => (
                   <div
-                    key={coupon.code}
+                    key={coupon.code} 
                     className={`flex-1 cursor-pointer border p-4 rounded-md text-sm m-2 ${
-                      currentCoupon?.code === coupon.code
+                      activeCoupon?.code === coupon.code
                         ? "bg-orange-100 border-orange-300"
                         : "bg-orange-50"
                     }`}
                     onClick={() =>
-                      handleCouponClick(coupon.id, coupon.code, coupon.discount)
+                      handleCouponClick(coupon._id, coupon.code, coupon.discount)
                     }
                   >
                     <h4 className="font-bold text-gray-800">{coupon.code}</h4>
@@ -242,10 +242,10 @@ const TicketCartPage: React.FC = () => {
                 />
                 <button
                   className={`bg-blue-500 text-white rounded-r-md px-3 py-2 text-sm hover:bg-blue-600 ${
-                    currentCoupon ? "bg-red-500" : "bg-blue-500"
+                    activeCoupon ? "bg-red-500" : "bg-blue-500"
                   }`}
                   onClick={() => {
-                    if (currentCoupon) {
+                    if (activeCoupon) {
                       dispatch(removeDiscount());
                       toast.success("Coupon removed");
                     } else {
@@ -253,7 +253,7 @@ const TicketCartPage: React.FC = () => {
                     }
                   }}
                 >
-                  {currentCoupon ? "Remove Coupon" : "Apply Coupon"}
+                  {activeCoupon ? "Remove Coupon" : "Apply Coupon"}
                 </button>
               </div>
             </div>

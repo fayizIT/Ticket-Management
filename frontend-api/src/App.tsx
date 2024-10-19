@@ -22,6 +22,7 @@ import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
 import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
+import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 
 
 
@@ -61,6 +62,7 @@ function MainLayout() {
           <Route path="/admin/coupon-code" element={<CouponCodeList />} />
           <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
           <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
+          <Route path="/admin/booking-ticket" element={<BookingDetails />} />
 
 
           

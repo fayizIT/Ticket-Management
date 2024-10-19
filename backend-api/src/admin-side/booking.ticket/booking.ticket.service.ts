@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Booking } from './entities/booking.ticket.entity';
 import { CreateBookingDto } from './dto/create-booking.ticket.dto';
 import { Coupon } from '../coupon/entities/coupon.entity';
@@ -23,6 +23,23 @@ export class BookingService {
         // Check if the visit date is valid
         if (visitDate < today) {
             throw new BadRequestException('Date of visit cannot be in the past.');
+        }
+
+        // Convert string IDs to ObjectId
+        createBookingDto.ticketCategories = createBookingDto.ticketCategories.map(ticket => ({
+            ticketCategoryId: new Types.ObjectId(ticket.ticketCategoryId), // Keep as ObjectId
+            quantity: ticket.quantity,
+            price: ticket.price,
+        }));
+
+        createBookingDto.stayCategories = createBookingDto.stayCategories.map(stay => ({
+            stayCategoryId: new Types.ObjectId(stay.stayCategoryId), // Keep as ObjectId
+            quantity: stay.quantity,
+            price: stay.price,
+        }));
+
+        if (createBookingDto.couponDiscountId) {
+            createBookingDto.couponDiscountId = new Types.ObjectId(createBookingDto.couponDiscountId);
         }
 
         // Validate categories before processing
@@ -67,20 +84,20 @@ export class BookingService {
         }
     }
 
-    private async validateTicketAndStayCategories(ticketCategories: { ticketCategoryId: string; quantity: number; price: number; }[], stayCategories: { stayCategoryId: string; quantity: number; price: number; }[]) {
+    private async validateTicketAndStayCategories(ticketCategories: { ticketCategoryId: Types.ObjectId; quantity: number; price: number; }[], stayCategories: { stayCategoryId: Types.ObjectId; quantity: number; price: number; }[]) {
         if (!ticketCategories || !Array.isArray(ticketCategories)) {
             throw new BadRequestException('Ticket categories must be provided and must be an array.');
         }
         if (!stayCategories || !Array.isArray(stayCategories)) {
             throw new BadRequestException('Stay categories must be provided and must be an array.');
         }
-    
+
         const ticketIds = ticketCategories.map(item => item.ticketCategoryId);
         const stayIds = stayCategories.map(item => item.stayCategoryId); // Ensure this is the correct key
-    
+
         const tickets = await this.ticketModel.find({ _id: { $in: ticketIds } });
         const stays = await this.stayModel.find({ _id: { $in: stayIds } });
-    
+
         if (tickets.length !== ticketIds.length) {
             throw new BadRequestException('One or more ticket categories are invalid.');
         }
@@ -88,7 +105,6 @@ export class BookingService {
             throw new BadRequestException('One or more stay categories are invalid.');
         }
     }
-    
 
     private calculateTotalAmount(ticketCategories: { price: number; quantity: number; }[], stayCategories: { price: number; quantity: number; }[], discountPercentage: number): { total: number, totalTicket: number, totalStay: number } {
         // Calculate ticket totals

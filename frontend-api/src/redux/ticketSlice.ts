@@ -22,7 +22,6 @@ interface TicketCategoryState {
   discountAmount: number;
   discount: number;
   activeCoupon: Coupon | null;
-  currentCoupon: Coupon | null;
   coupons: Coupon[]; // Added this line
   loading: boolean;
   error: string | null;
@@ -36,7 +35,6 @@ const initialState: TicketCategoryState = {
   discountAmount: 0,
   discount: 0,
   activeCoupon: null,
-  currentCoupon: null,
   coupons: [], // Initialize as an empty array
   loading: false,
   error: null,
@@ -121,13 +119,11 @@ const ticketCategorySlice = createSlice({
         discount: action.payload.discount,
         id: action.payload.id, // Make sure to set the ID here
       };
-      state.currentCoupon = state.activeCoupon; // Updated
     },
     removeDiscount: (state) => {
       state.discountedTotal = state.total;
       state.discountAmount = 0;
       state.activeCoupon = null;
-      state.currentCoupon = null; // Clear active coupon (renamed)
     },
     resetCart: (state) => {
       state.tickets = {};
@@ -135,7 +131,6 @@ const ticketCategorySlice = createSlice({
       state.discountedTotal = 0;
       state.discount = 0;
       state.activeCoupon = null;
-      state.currentCoupon = null; // Reset active coupon (renamed)
     },
     setCategories: (state, action: PayloadAction<TicketCategory[]>) => {
       state.categories = action.payload;

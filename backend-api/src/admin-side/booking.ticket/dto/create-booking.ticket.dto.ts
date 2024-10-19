@@ -1,4 +1,5 @@
 import { IsArray, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsString, IsOptional } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateBookingDto {
     @IsString()
@@ -25,20 +26,19 @@ export class CreateBookingDto {
 
     @IsArray()
     ticketCategories: {
-        ticketCategoryId: string;
+        ticketCategoryId: Types.ObjectId; // Update to Types.ObjectId
         quantity: number;
         price: number;
     }[];
 
     @IsArray()
     stayCategories: {
-        stayCategoryId: string;
+        stayCategoryId: Types.ObjectId; // Update to Types.ObjectId
         quantity: number;
         price: number;
     }[];
 
     @IsString()
     @IsOptional()
-    couponDiscountId?: string; 
+    couponDiscountId?: Types.ObjectId; // Update to Types.ObjectId
 }
-

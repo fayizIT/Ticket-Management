@@ -15,6 +15,18 @@ export const createBooking = async (bookingData: any) => {
   }
 
   return await response.json();
+
+}
+
+  export const fetchBookings = async () => {
+    const response = await fetch(API_URL);
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch bookings');
+    }
+  
+    return await response.json();
+  
 };
 
 

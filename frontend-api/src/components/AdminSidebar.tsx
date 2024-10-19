@@ -64,7 +64,7 @@ const AdminSidebar: React.FC = () => {
               },
               {
                 name: "Booked Users",
-                path: "/admin/booked-users",
+                path: "/admin/booking-ticket",
                 icon: "event",
               },
               {
