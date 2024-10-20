@@ -4,7 +4,6 @@ const BASE_URL = 'http://localhost:3000/admin/coupons';
 interface Coupon {
   code: string;
   discount: number;
-
   isActive: boolean;
 }
 

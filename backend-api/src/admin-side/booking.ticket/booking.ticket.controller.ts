@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get } from '@nestjs/common';
 import { BookingService } from './booking.ticket.service'; 
 import { CreateBookingDto } from './dto/create-booking.ticket.dto'; 
 import { Booking } from './entities/booking.ticket.entity'; 
+import { ConfirmPaymentDto } from '../razorpay/dto/confirm-payment.dto';
 
 @Controller('bookings')
 export class BookingController {
@@ -15,6 +16,11 @@ export class BookingController {
     @Get()
     async findAll(): Promise<Booking[]> {
         return this.bookingService.findAll();
+    }
+
+    @Post('confirm-payment')
+    async confirmPayment(@Body() confirmPaymentDto: ConfirmPaymentDto): Promise<Booking> {
+        return this.bookingService.confirmPayment(confirmPaymentDto);
     }
 }
 

@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { BookingModule } from './admin-side/booking.ticket/booking.ticket.module'; 
 import { StayCategoryModule } from './admin-side/stay.category/stay.category.module';
 import { CouponModule } from './admin-side/coupon/coupon.module';
+import { RazorpayModule } from './admin-side/razorpay/razorpay.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { CouponModule } from './admin-side/coupon/coupon.module';
     TicketCategoryModule,
     BookingModule,
     StayCategoryModule,
-    CouponModule
+    CouponModule,
+    RazorpayModule
   ],
   controllers: [AppController],
   providers: [AppService],

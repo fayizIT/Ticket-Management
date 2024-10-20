@@ -2,21 +2,26 @@
 const API_URL = 'http://localhost:3000/bookings'; // Replace with your backend URL
 
 export const createBooking = async (bookingData: any) => {
-  const response = await fetch('http://localhost:3000/bookings', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(bookingData),
-  });
+  try {
+    const response = await fetch('http://localhost:3000/bookings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookingData),
+    });
 
-  if (!response.ok) {
-    throw new Error('Failed to create booking');
+    if (!response.ok) {
+      throw new Error('Failed to create booking');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Network request failed:', error); // Log detailed error
+    throw error;
   }
-
-  return await response.json();
-
 }
+
 
   export const fetchBookings = async () => {
     const response = await fetch(API_URL);

@@ -113,7 +113,7 @@ const ReviewBookingPage: React.FC = () => {
       const result = await createBooking(bookingData);
       console.log("Booking Result:", result); // Debugging log
       dispatch(setBookingData(result));
-      navigate("/billing");
+      navigate("/");
     } catch (error) {
       console.error("Error creating booking:", error); // Debugging log
       alert("Error creating booking: " + error);
