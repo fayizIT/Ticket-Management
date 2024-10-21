@@ -1,7 +1,7 @@
-const BASE_URL = 'http://localhost:3000/admin/ticket-Category';
+const BASE_URL = "http://localhost:3000/admin/ticket-Category";
 
 interface CreateTicketCategoryDto {
-    id?:string;
+  id?: string;
   name: string;
   description: string;
   price: number;
@@ -9,70 +9,104 @@ interface CreateTicketCategoryDto {
 
 export const TicketCategoryService = {
   getAll: async () => {
-    const response = await fetch(BASE_URL, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch age categories');
+    try {
+      const response = await fetch(BASE_URL, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch ticket categories");
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching ticket categories:", error);
+      throw new Error(error instanceof Error ? error.message : "An unknown error occurred while fetching ticket categories.");
     }
-    return response.json();
   },
 
   create: async (data: CreateTicketCategoryDto) => {
-    const response = await fetch(BASE_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to create ticket  category');
+    try {
+      const response = await fetch(BASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create ticket category");
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error("Error creating ticket category:", error);
+      throw new Error(error instanceof Error ? error.message : "An unknown error occurred while creating ticket category.");
     }
-    return response.json();
   },
 
   getById: async (id: string) => {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch ticket  category');
+    try {
+      const response = await fetch(`${BASE_URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch ticket category");
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching ticket category by ID:", error);
+      throw new Error(error instanceof Error ? error.message : "An unknown error occurred while fetching ticket category.");
     }
-    return response.json();
   },
 
   update: async (id: string, data: CreateTicketCategoryDto) => {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to update ticket  category');
+    try {
+      const response = await fetch(`${BASE_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update ticket category");
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error("Error updating ticket category:", error);
+      throw new Error(error instanceof Error ? error.message : "An unknown error occurred while updating ticket category.");
     }
-    return response.json();
   },
-  
-  delete: async (id: string) => { // Change from number to string
-    const response = await fetch(`${BASE_URL}/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to delete ticket  category');
+
+  delete: async (id: string) => {
+    try {
+      const response = await fetch(`${BASE_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete ticket category");
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error("Error deleting ticket category:", error);
+      throw new Error(error instanceof Error ? error.message : "An unknown error occurred while deleting ticket category.");
     }
-    return response.json();
   },
-  
 };

@@ -23,7 +23,6 @@ import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
-import PaymentComponent from './pages/UserSide/PaymentComponent';
 import PaymentSuccess from './components/PaymentSuccess';
 import PaymentFailed from './components/PaymentFailed';
 
@@ -80,7 +79,6 @@ function MainLayout() {
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
           <Route path="/billing" element={<ReviewBookingPage />} />
-          <Route path="/payment/:bookingId" element={<PaymentComponent/>} />
           <Route path="/thank-you" element={<PaymentSuccess onClose={handleClose} />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="*" element={<NotFound />} />
