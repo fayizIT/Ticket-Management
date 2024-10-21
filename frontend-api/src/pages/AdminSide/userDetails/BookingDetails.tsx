@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import { fetchBookings } from '../../../services/BookingService'; 
-import { FaEye } from 'react-icons/fa';
-import ConfirmDialogBox from '../../../components/ConfirmDialogBox';
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { fetchBookings } from "../../../services/BookingService";
+import { FaEye } from "react-icons/fa";
+import ConfirmDialogBox from "../../../components/ConfirmDialogBox";
 
 interface Booking {
   _id: string;
@@ -11,10 +11,14 @@ interface Booking {
   email: string;
   dateOfVisit: Date;
   totalVisitors: number;
-  ticketCategories: { ticketCategoryId: string; quantity: number; price: number }[];
+  ticketCategories: {
+    ticketCategoryId: string;
+    quantity: number;
+    price: number;
+  }[];
   stayCategories: { stayCategoryId: string; quantity: number; price: number }[];
   couponDiscountId: string | null;
-  paymentStatus: boolean;  // Add paymentStatus field
+  paymentStatus: boolean;
 }
 
 const BookingDetails: React.FC = () => {
@@ -30,7 +34,7 @@ const BookingDetails: React.FC = () => {
         setBookings(data);
       } catch (error) {
         console.error(error);
-        toast.error('Failed to fetch bookings. Please try again later.');
+        toast.error("Failed to fetch bookings. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -44,7 +48,6 @@ const BookingDetails: React.FC = () => {
     setIsDialogOpen(true);
   };
 
-  // Loading Spinner
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -60,21 +63,26 @@ const BookingDetails: React.FC = () => {
         <h3>Full Name: {selectedBooking.fullName}</h3>
         <p>Phone Number: {selectedBooking.phoneNumber}</p>
         <p>Email: {selectedBooking.email}</p>
-        <p>Date of Visit: {new Date(selectedBooking.dateOfVisit).toLocaleDateString("en-GB")}</p>
+        <p>
+          Date of Visit:{" "}
+          {new Date(selectedBooking.dateOfVisit).toLocaleDateString("en-GB")}
+        </p>
         <p>Total Visitors: {selectedBooking.totalVisitors}</p>
         <h4>Ticket Categories:</h4>
         <ul>
-          {selectedBooking.ticketCategories.map(ticket => (
+          {selectedBooking.ticketCategories.map((ticket) => (
             <li key={ticket.ticketCategoryId}>
-              ID: {ticket.ticketCategoryId}, Quantity: {ticket.quantity}, Price: ₹{ticket.price.toFixed(2)}
+              ID: {ticket.ticketCategoryId}, Quantity: {ticket.quantity}, Price:
+              ₹{ticket.price.toFixed(2)}
             </li>
           ))}
         </ul>
         <h4>Stay Categories:</h4>
         <ul>
-          {selectedBooking.stayCategories.map(stay => (
+          {selectedBooking.stayCategories.map((stay) => (
             <li key={stay.stayCategoryId}>
-              ID: {stay.stayCategoryId}, Quantity: {stay.quantity}, Price: ₹{stay.price.toFixed(2)}
+              ID: {stay.stayCategoryId}, Quantity: {stay.quantity}, Price: ₹
+              {stay.price.toFixed(2)}
             </li>
           ))}
         </ul>
@@ -104,7 +112,7 @@ const BookingDetails: React.FC = () => {
         </thead>
         <tbody>
           {bookings.map((booking) => (
-            <tr key={booking._id} className='align-middle text-center'>
+            <tr key={booking._id} className="align-middle text-center">
               <td className="border border-gray-300 p-4 text-center">
                 <button
                   onClick={() => handleViewDetails(booking)}
@@ -114,14 +122,24 @@ const BookingDetails: React.FC = () => {
                 </button>
               </td>
               <td className="border border-gray-300 p-4">{booking.fullName}</td>
-              <td className="border border-gray-300 p-4">{booking.phoneNumber}</td>
+              <td className="border border-gray-300 p-4">
+                {booking.phoneNumber}
+              </td>
               <td className="border border-gray-300 p-4">{booking.email}</td>
               <td className="border border-gray-300 p-4">
                 {new Date(booking.dateOfVisit).toLocaleDateString("en-GB")}
               </td>
-              <td className="border border-gray-300 p-4">{booking.totalVisitors}</td>
-              <td className={`border border-gray-300 p-4 ${booking.paymentStatus ? 'text-green-600' : 'text-red-600'}`}>
-              {booking.paymentStatus ? "Payment completed" : "Payment not completed"}
+              <td className="border border-gray-300 p-4">
+                {booking.totalVisitors}
+              </td>
+              <td
+                className={`border border-gray-300 p-4 ${
+                  booking.paymentStatus ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {booking.paymentStatus
+                  ? "Payment completed"
+                  : "Payment not completed"}
               </td>
             </tr>
           ))}
@@ -129,7 +147,7 @@ const BookingDetails: React.FC = () => {
       </table>
 
       <ConfirmDialogBox
-        isOpen={isDialogOpen} 
+        isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onConfirm={() => setIsDialogOpen(false)}
         title="Booking Details"
@@ -139,7 +157,6 @@ const BookingDetails: React.FC = () => {
       />
     </div>
   );
-
-}; 
+};
 
 export default BookingDetails;

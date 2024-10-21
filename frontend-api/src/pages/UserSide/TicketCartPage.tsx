@@ -40,7 +40,6 @@ const TicketCartPage: React.FC = () => {
     const fetchCoupons = async () => {
       try {
         const fetchedCoupons = await CouponService.fetchCoupons();
-        console.log("Fetched Coupons:", fetchedCoupons);
         setCoupons(fetchedCoupons as React.SetStateAction<never[]>);
       } catch (error) {
         toast.error("Failed to fetch coupons");
@@ -59,7 +58,6 @@ const TicketCartPage: React.FC = () => {
     } else {
       dispatch(decrementTicket(id));
     }
-    console.log("Current tickets:", tickets);
   };
 
   const handleConfirm = () => {
@@ -75,7 +73,6 @@ const TicketCartPage: React.FC = () => {
       setCurrentStep(currentStep + 1);
     }
     navigate("/stay-categories");
-    console.log("Confirmed tickets:", tickets);
   };
 
   const handleStepClick = (step: number) => {
@@ -109,7 +106,6 @@ const TicketCartPage: React.FC = () => {
       toast.error("Please add at least one ticket before applying a coupon.");
     }
   };
-  
 
   const totalTickets = Object.values(tickets).reduce(
     (sum: number, count) => sum + (count as number),
@@ -119,13 +115,9 @@ const TicketCartPage: React.FC = () => {
     return sum + category.price * (tickets[category._id] || 0);
   }, 0);
 
-  // Log all relevant data when the component renders
   useEffect(() => {
-    console.log("Tickets:", tickets);
-    console.log("Calculated total:", calculatedTotal);
-    console.log("Discounted total:", discountedTotal);
-    console.log("Coupons:", coupons);
-    console.log("Active Coupon:", activeCoupon);
+    // Log all relevant data when the component renders
+    // Removed console.log statements
   }, [tickets, calculatedTotal, discountedTotal, coupons, activeCoupon]);
 
   if (loading) return <p>Loading...</p>;
@@ -150,27 +142,26 @@ const TicketCartPage: React.FC = () => {
                 Trending Coupons
               </h3>
               <div className="flex flex-wrap justify-between space-x-4">
-                {/* Map through your coupon data */}
                 {coupons
-                  .filter((coupon: any) => coupon.isActive === true) 
-                .map((coupon: any) => (
-                  <div
-                    key={coupon.code} 
-                    className={`flex-1 cursor-pointer border p-4 rounded-md text-sm m-2 ${
-                      activeCoupon?.code === coupon.code
-                        ? "bg-orange-100 border-orange-300"
-                        : "bg-orange-50"
-                    }`}
-                    onClick={() =>
-                      handleCouponClick(coupon._id, coupon.code, coupon.discount)
-                    }
-                  >
-                    <h4 className="font-bold text-gray-800">{coupon.code}</h4>
-                    <p className="text-gray-600">
-                      {coupon.discount}% off on Regular Tickets
-                    </p>
-                  </div>
-                ))}
+                  .filter((coupon: any) => coupon.isActive === true)
+                  .map((coupon: any) => (
+                    <div
+                      key={coupon.code}
+                      className={`flex-1 cursor-pointer border p-4 rounded-md text-sm m-2 ${
+                        activeCoupon?.code === coupon.code
+                          ? "bg-orange-100 border-orange-300"
+                          : "bg-orange-50"
+                      }`}
+                      onClick={() =>
+                        handleCouponClick(coupon._id, coupon.code, coupon.discount)
+                      }
+                    >
+                      <h4 className="font-bold text-gray-800">{coupon.code}</h4>
+                      <p className="text-gray-600">
+                        {coupon.discount}% off on Regular Tickets
+                      </p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

@@ -6,11 +6,11 @@ import NotFound from './components/NotFound';
 import CreateTicketCategory from './pages/AdminSide/TicketCategory/CreateTicketCategory';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import TicketCartPage from './pages/UserSide/TicketCartPage';
-import ParkRulesPage from './pages/UserSide/ParkRulePage';
+// import TicketCartPage from './pages/UserSide/TicketCartPage';
+import ParkRulesPage from './pages/UserSide/ParkRules/ParkRulePage';
 import AdminSidebar from './components/AdminSidebar';
-import HomePage from './pages/UserSide/HomePage';
-import DateSelector from './pages/UserSide/DateSelector';
+import HomePage from './pages/UserSide/Homepage/HomePage';
+import DateSelector from './pages/UserSide/DateSelector/DateSelector';
 import Dashboard from './pages/AdminSide/Dashboard'; 
 import StayCategoryList from './pages/AdminSide/StayCategory/StayCategoryList';
 import EditStayCategory from './pages/AdminSide/StayCategory/EditStayCategory';
@@ -25,6 +25,7 @@ import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 import PaymentSuccess from './components/PaymentSuccess';
 import PaymentFailed from './components/PaymentFailed';
+import TicketCartPage from './pages/UserSide/TicketCartPage';
 
 
 
