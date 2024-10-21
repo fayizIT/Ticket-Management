@@ -1,11 +1,10 @@
-// src/components/StayCategoryList.tsx
-import React, { useEffect, useState } from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { StayCategoryService } from '../../../services/StayCategoryService';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import React, { useEffect, useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { StayCategoryService } from "../../../services/StayCategoryService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ConfirmDialog from "../../../components/ConfirmDialog";
 
 interface StayCategory {
   _id: string;
@@ -18,7 +17,9 @@ const StayCategoryList: React.FC = () => {
   const [stayCategories, setStayCategories] = useState<StayCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const StayCategoryList: React.FC = () => {
         setStayCategories(data);
       } catch (error) {
         console.error(error);
-        toast.error('Failed to fetch stay categories. Please try again later.');
+        toast.error("Failed to fetch stay categories. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -63,7 +64,6 @@ const StayCategoryList: React.FC = () => {
     setIsDialogOpen(true);
   };
 
-  // Loading Spinner
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -80,7 +80,7 @@ const StayCategoryList: React.FC = () => {
       <div className="mb-4">
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={() => navigate('/admin/addStayCategory')}
+          onClick={() => navigate("/admin/addStayCategory")}
         >
           Create Category
         </button>
@@ -113,14 +113,15 @@ const StayCategoryList: React.FC = () => {
                 </button>
               </td>
               <td className="border border-gray-300 p-4">{category.name}</td>
-              <td className="border border-gray-300 p-4">{category.description}</td>
+              <td className="border border-gray-300 p-4">
+                {category.description}
+              </td>
               <td className="border border-gray-300 p-4">{category.price}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Confirmation Dialog */}
       <ConfirmDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}

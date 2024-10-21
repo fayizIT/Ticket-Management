@@ -1,14 +1,12 @@
-// src/components/CreateCouponCode.tsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import CouponService from '../../../services/CouponService'; // Import the service
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CouponService from "../../../services/CouponService";
 
 const CreateCouponCode: React.FC = () => {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [discount, setDiscount] = useState<number | undefined>(undefined);
-  const [expiryDate, setExpiryDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 
@@ -16,20 +14,18 @@ const CreateCouponCode: React.FC = () => {
     e.preventDefault();
     try {
       if (discount === undefined) {
-        throw new Error('Discount is required');
+        throw new Error("Discount is required");
       }
       const newCoupon = { code, discount, isActive };
       await CouponService.create(newCoupon);
-      toast.success('Coupon code created successfully!');
+      toast.success("Coupon code created successfully!");
 
-      // Delay navigation to allow the toast to show
       setTimeout(() => {
-        navigate('/admin/coupon-code');
-      }, 2000); // Delay for 2 seconds
-
+        navigate("/admin/coupon-code");
+      }, 2000);
     } catch (error) {
       console.error(error);
-      toast.error('Failed to create coupon code. Please try again.');
+      toast.error("Failed to create coupon code. Please try again.");
     }
   };
 
@@ -52,8 +48,10 @@ const CreateCouponCode: React.FC = () => {
           <label className="block text-gray-700">Discount (%)</label>
           <input
             type="number"
-            value={discount === undefined ? '' : discount}
-            onChange={(e) => setDiscount(e.target.value ? Number(e.target.value) : undefined)}
+            value={discount === undefined ? "" : discount}
+            onChange={(e) =>
+              setDiscount(e.target.value ? Number(e.target.value) : undefined)
+            }
             required
             className="border border-gray-300 rounded w-full px-4 py-2"
           />
@@ -67,7 +65,10 @@ const CreateCouponCode: React.FC = () => {
             className="ml-2"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
           Create Coupon Code
         </button>
       </form>

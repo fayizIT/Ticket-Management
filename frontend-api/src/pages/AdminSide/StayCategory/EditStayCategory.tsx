@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { StayCategoryService } from '../../../services/StayCategoryService';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Swal from 'sweetalert2'; // Import SweetAlert
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { StayCategoryService } from "../../../services/StayCategoryService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 const EditStayCategory: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState<number>(0); // Initialize as number
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const category = await StayCategoryService.fetchById(id!); // Fetch category by ID
+        const category = await StayCategoryService.fetchById(id!);
         setName(category.name);
         setDescription(category.description);
-        setPrice(category.price); // Set price directly as a number
+        setPrice(category.price);
       } catch (error) {
-        console.error('Error fetching category:', error); // Log the error details
-        toast.error('Failed to fetch stay category. Please try again.');
+        console.error("Error fetching category:", error);
+        toast.error("Failed to fetch stay category. Please try again.");
       }
     };
 
@@ -31,14 +31,14 @@ const EditStayCategory: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Show SweetAlert for confirmation
+
     const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won’t be able to revert this!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "You won’t be able to revert this!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Update',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: "Update",
+      cancelButtonText: "Cancel",
     });
 
     if (result.isConfirmed) {
@@ -48,20 +48,19 @@ const EditStayCategory: React.FC = () => {
           description,
           price,
         };
-        await StayCategoryService.update(id!, updatedCategory); // Update the category
-        
-        // Show success message using SweetAlert
+        await StayCategoryService.update(id!, updatedCategory);
+
         Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Stay category updated successfully!',
-          confirmButtonText: 'OK',
+          icon: "success",
+          title: "Success!",
+          text: "Stay category updated successfully!",
+          confirmButtonText: "OK",
         });
 
-        navigate('/admin/stay-category'); // Redirect to the list page
+        navigate("/admin/stay-category");
       } catch (error) {
         console.error(error);
-        toast.error('Failed to update stay category. Please try again.');
+        toast.error("Failed to update stay category. Please try again.");
       }
     }
   };
@@ -94,13 +93,16 @@ const EditStayCategory: React.FC = () => {
           <label className="block text-gray-700">Price</label>
           <input
             type="number"
-            value={price} // Value is a number
-            onChange={(e) => setPrice(Number(e.target.value) || 0)} // Ensure it's always a number
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value) || 0)}
             required
             className="border border-gray-300 rounded w-full px-4 py-2"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
           Update Category
         </button>
       </form>

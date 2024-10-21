@@ -1,24 +1,23 @@
 // src/redux/dateSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DateState {
-    selectedDate: string | null |any; // Change to string type
-  }
-  
+  selectedDate: string | null | any;
+}
+
 const initialState: DateState = {
-    selectedDate: null,
+  selectedDate: null,
 };
 
 const dateSlice = createSlice({
-    name: 'date',
-    initialState,
-    reducers: {
-      setDate: (state, action: PayloadAction<string>) => {
-        state.selectedDate = action.payload; // Store the ISO string directly
-      },
+  name: "date",
+  initialState,
+  reducers: {
+    setDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload;
     },
-  });
-  
+  },
+});
 
 export const { setDate } = dateSlice.actions;
-export default dateSlice.reducer; // This is what you're importing as dateReducer
+export default dateSlice.reducer;

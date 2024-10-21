@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-import Swal from 'sweetalert2';
-import CouponService from '../../../services/CouponService';
+import Swal from "sweetalert2";
+import CouponService from "../../../services/CouponService";
 
 const EditCouponCode: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    code: '',
+    code: "",
     discount: 0,
     isActive: false,
   });
@@ -19,7 +19,7 @@ const EditCouponCode: React.FC = () => {
         const coupon = await CouponService.getById(id as string);
         setFormData(coupon);
       } catch (error) {
-        console.error('Failed to fetch coupon code:', error);
+        console.error("Failed to fetch coupon code:", error);
       }
     };
 
@@ -30,21 +30,25 @@ const EditCouponCode: React.FC = () => {
     const { name, type, value, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? Number(value) : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "number"
+          ? Number(value)
+          : value,
     }));
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Show SweetAlert for confirmation
     const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won’t be able to revert this!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "You won’t be able to revert this!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Update',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: "Update",
+      cancelButtonText: "Cancel",
     });
 
     if (result.isConfirmed) {
@@ -56,18 +60,18 @@ const EditCouponCode: React.FC = () => {
     try {
       await CouponService.update(id as string, formData);
       Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Coupon code updated successfully!',
-        confirmButtonText: 'OK',
+        icon: "success",
+        title: "Success!",
+        text: "Coupon code updated successfully!",
+        confirmButtonText: "OK",
       });
-      navigate('/admin/coupon-code');
+      navigate("/admin/coupon-code");
     } catch (error) {
-      console.error('Failed to update coupon code:', error);
+      console.error("Failed to update coupon code:", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to update coupon code. Please try again.',
+        icon: "error",
+        title: "Error",
+        text: "Failed to update coupon code. Please try again.",
       });
     }
   };
@@ -97,7 +101,7 @@ const EditCouponCode: React.FC = () => {
             required
           />
         </div>
-       
+
         <div>
           <label className="block text-gray-700">Is Active?</label>
           <input
@@ -109,7 +113,10 @@ const EditCouponCode: React.FC = () => {
           />
         </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
           Update Coupon Code
         </button>
       </form>

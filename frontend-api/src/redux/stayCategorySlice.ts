@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface StayCategory {
-  _id: string; 
+  _id: string;
   name: string;
   price: number;
   description: string;
@@ -27,9 +27,9 @@ const initialState: StayCategoryState = {
 
 // Thunk to fetch stay categories
 export const fetchStayCategories = createAsyncThunk(
-  'stayCategory/fetchStayCategories',
+  "stayCategory/fetchStayCategories",
   async () => {
-    const response = await fetch('http://localhost:3000/admin/stay-categories');
+    const response = await fetch("http://localhost:3000/admin/stay-categories");
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -39,16 +39,16 @@ export const fetchStayCategories = createAsyncThunk(
 );
 
 const stayCategorySlice = createSlice({
-  name: 'stayCategory',
+  name: "stayCategory",
   initialState,
   reducers: {
     incrementStay: (state, action: PayloadAction<string>) => {
       const stayId = action.payload;
       state.tickets[stayId] = (state.tickets[stayId] || 0) + 1;
       // Update total price
-      const stay = state.stayCategories.find(cat => cat._id === stayId);
+      const stay = state.stayCategories.find((cat) => cat._id === stayId);
       if (stay) {
-        state.total += stay.price
+        state.total += stay.price;
       }
     },
     decrementStay: (state, action: PayloadAction<string>) => {
@@ -56,23 +56,22 @@ const stayCategorySlice = createSlice({
       if (state.tickets[stayId] > 0) {
         state.tickets[stayId] -= 1;
         // Update total price
-        const stay = state.stayCategories.find(cat => cat._id === stayId);
+        const stay = state.stayCategories.find((cat) => cat._id === stayId);
         if (stay) {
           state.total -= stay.price;
         }
       }
     },
-  
+
     resetCart: (state) => {
       state.tickets = {};
       state.total = 0;
     },
     setStayCategories: (state, action: PayloadAction<StayCategory[]>) => {
       state.stayCategories = action.payload;
-    }
     },
-   
-  
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchStayCategories.pending, (state) => {
@@ -80,15 +79,15 @@ const stayCategorySlice = createSlice({
       })
       .addCase(fetchStayCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.stayCategories = action.payload; // Ensure this is structured correctly
+        state.stayCategories = action.payload;
       })
       .addCase(fetchStayCategories.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch stay categories';
+        state.error = action.error.message || "Failed to fetch stay categories";
       });
   },
 });
 
-export const { incrementStay, decrementStay, resetCart } = stayCategorySlice.actions;
+export const { incrementStay, decrementStay, resetCart } =
+  stayCategorySlice.actions;
 export default stayCategorySlice.reducer;
-

@@ -18,10 +18,10 @@ const AdminLogin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); 
+    setError("");
 
     try {
-      const data = await login(email, password); 
+      const data = await login(email, password);
       localStorage.setItem("accessToken", data.access_token.access_token);
       navigate("/admin/dashboard");
     } catch (err: any) {

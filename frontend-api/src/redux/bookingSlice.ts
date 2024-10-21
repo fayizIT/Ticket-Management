@@ -1,5 +1,4 @@
-// src/redux/bookingSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface BookingState {
   bookingData: any | null;
@@ -10,7 +9,7 @@ const initialState: BookingState = {
 };
 
 const bookingSlice = createSlice({
-  name: 'booking',
+  name: "booking",
   initialState,
   reducers: {
     setBookingData: (state, action: PayloadAction<any>) => {
