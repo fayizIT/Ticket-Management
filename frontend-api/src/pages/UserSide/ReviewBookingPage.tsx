@@ -84,41 +84,145 @@ const ReviewBookingPage: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleConfirm = async () => {
+  //   if (!formData.fullName || !formData.phoneNumber || !formData.email || !formData.pinCode) {
+  //     alert("Please fill in all fields.");
+  //     return;
+  //   }
+  
+  //   const bookingData = {
+  //     ...formData,
+  //     dateOfVisit: selectedDate,
+  //     totalVisitors: totalTicketCount,
+  //     ticketCategories: Object.keys(ticket).map((categoryId) => ({
+  //       ticketCategoryId: categoryId,
+  //       quantity: ticket[categoryId],
+  //       price: categories.find((cat: any) => cat._id === categoryId)?.price,
+  //     })),
+  //     stayCategories: Object.keys(stayTickets).map((categoryId) => ({
+  //       stayCategoryId: categoryId,
+  //       quantity: stayTickets[categoryId],
+  //       price: stayCategories.find((cat: any) => cat._id === categoryId)?.price,
+  //     })),
+  //     couponDiscountId: activeCouponId || null,
+  //   };
+  
+  //   console.log("Booking Data:", bookingData); // Debugging log
+  
+  //   try {
+  //     const result = await createBooking(bookingData);
+  //     console.log("Booking Result:", result); // Debugging log
+  //     dispatch(setBookingData(result));
+  //     navigate("/booking");
+  //   } catch (error) {
+  //     console.error("Error creating booking:", error); // Debugging log
+  //     alert("Error creating booking: " + error);
+  //   }
+  // };
+
+
+
   const handleConfirm = async () => {
     if (!formData.fullName || !formData.phoneNumber || !formData.email || !formData.pinCode) {
-      alert("Please fill in all fields.");
-      return;
+        alert("Please fill in all fields.");
+        return;
     }
-  
+
     const bookingData = {
-      ...formData,
-      dateOfVisit: selectedDate,
-      totalVisitors: totalTicketCount,
-      ticketCategories: Object.keys(ticket).map((categoryId) => ({
-        ticketCategoryId: categoryId,
-        quantity: ticket[categoryId],
-        price: categories.find((cat: any) => cat._id === categoryId)?.price,
-      })),
-      stayCategories: Object.keys(stayTickets).map((categoryId) => ({
-        stayCategoryId: categoryId,
-        quantity: stayTickets[categoryId],
-        price: stayCategories.find((cat: any) => cat._id === categoryId)?.price,
-      })),
-      couponDiscountId: activeCouponId || null,
+        ...formData,
+        dateOfVisit: selectedDate,
+        totalVisitors: totalTicketCount,
+        ticketCategories: Object.keys(ticket).map((categoryId) => ({
+            ticketCategoryId: categoryId,
+            quantity: ticket[categoryId],
+            price: categories.find((cat: any) => cat._id === categoryId)?.price,
+        })),
+        stayCategories: Object.keys(stayTickets).map((categoryId) => ({
+            stayCategoryId: categoryId,
+            quantity: stayTickets[categoryId],
+            price: stayCategories.find((cat: any) => cat._id === categoryId)?.price,
+        })),
+        couponDiscountId: activeCouponId || null,
     };
-  
+
     console.log("Booking Data:", bookingData); // Debugging log
-  
+
     try {
-      const result = await createBooking(bookingData);
-      console.log("Booking Result:", result); // Debugging log
-      dispatch(setBookingData(result));
-      navigate("/");
+        // Create booking and get payment order details
+        const result = await createBooking(bookingData);
+        console.log("Booking Result:", result); // Debugging log
+
+        // Ensure the result contains the bookingId
+        if (!result.bookingId) {
+            console.error("Booking ID is undefined.");
+            alert("Failed to retrieve booking ID.");
+            return;
+        }
+
+        // Open Razorpay Payment Popup
+        const options = {
+            key: "rzp_test_vGGGd2XhY2l19v",
+            amount: (result.grandTotal * 100).toString(), // Amount in paise
+            currency: "INR",
+            name: "Foggy Mountain",
+            description: "Booking for " + result.totalVisitors + " visitors",
+            order_id: result.orderId, // This should be the order ID returned by Razorpay
+            handler: async function(response: any) {
+                console.log("Payment successful:", response);
+                alert("Payment successful!");
+                dispatch(setBookingData(result));
+
+                // Log the booking ID for confirmation
+                console.log("Booking ID:", result.bookingId);
+
+                // Call API to confirm payment
+                try {
+                    const paymentResponse = await fetch(`http://localhost:3000/bookings/${result.bookingId}/confirm-payment`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ paymentStatus: true }), // You can send additional data if needed
+                    });
+
+                    if (!paymentResponse.ok) {
+                        throw new Error('Failed to update payment status');
+                    }
+
+                    console.log("Payment status updated successfully");
+                } catch (error) {
+                    console.error("Error confirming payment:", error);
+                    alert("Payment confirmed, but failed to update the status.");
+                }
+
+                navigate("/thank-you");
+            },
+            prefill: {
+                name: formData.fullName,
+                email: formData.email,
+                contact: formData.phoneNumber,
+            },
+            theme: {
+                color: "#F37254",
+            }
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+
+        razorpay.on('payment.failed', function(response: any) {
+            console.error("Payment failed:", response);
+            navigate("/payment-failed");
+        });
+
     } catch (error) {
-      console.error("Error creating booking:", error); // Debugging log
-      alert("Error creating booking: " + error);
+        console.error("Error creating booking:", error);
+        alert("Error creating booking: " + error);
     }
-  };
+};
+
+
+  
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);

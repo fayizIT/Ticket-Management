@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/store';
 import AdminLogin from './pages/AdminSide/AdminLogin/AdminLogin'; 
@@ -23,6 +23,9 @@ import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
+import PaymentComponent from './pages/UserSide/PaymentComponent';
+import PaymentSuccess from './components/PaymentSuccess';
+import PaymentFailed from './components/PaymentFailed';
 
 
 
@@ -39,12 +42,17 @@ function App() {
 
 function MainLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Array of routes where the sidebar should NOT be displayed
   const noSidebarRoutes = ['/admin/login']; 
 
   // Check if the current path is an admin route and not in the noSidebarRoutes
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
+
+  const handleClose = () => {
+    navigate("/"); // Navigate to home page
+  };
 
   return (
     <div className="flex" >
@@ -72,14 +80,15 @@ function MainLayout() {
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
           <Route path="/billing" element={<ReviewBookingPage />} />
+          <Route path="/payment/:bookingId" element={<PaymentComponent/>} />
+          <Route path="/thank-you" element={<PaymentSuccess onClose={handleClose} />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
   );
 }
-
-
 export default App;
 
 

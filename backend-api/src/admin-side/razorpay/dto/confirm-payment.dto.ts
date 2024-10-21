@@ -1,9 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class ConfirmPaymentDto {
-    @IsNotEmpty()
+    @IsString()
     bookingId: string;
 
-    @IsNotEmpty()
+    @IsString()
     paymentId: string;
 }

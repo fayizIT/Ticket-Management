@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { TicketCategory } from 'src/admin-side/ticket.category/entities/ticket.category.entity'; 
-import { StayCategory } from 'src/admin-side/stay.category/entities/stay.category.entity'; 
-import { Coupon } from 'src/admin-side/coupon/entities/coupon.entity';
 
 export type BookingDocument = Booking & Document;
 
@@ -52,6 +49,8 @@ export class Booking {
 
     @Prop()
     razorpayPaymentId: string; 
+    _id: any;
+
 }
 
 export const BookingSchema = SchemaFactory.createForClass(Booking);

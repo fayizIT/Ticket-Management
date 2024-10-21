@@ -14,6 +14,7 @@ interface Booking {
   ticketCategories: { ticketCategoryId: string; quantity: number; price: number }[];
   stayCategories: { stayCategoryId: string; quantity: number; price: number }[];
   couponDiscountId: string | null;
+  paymentStatus: boolean;  // Add paymentStatus field
 }
 
 const BookingDetails: React.FC = () => {
@@ -119,7 +120,9 @@ const BookingDetails: React.FC = () => {
                 {new Date(booking.dateOfVisit).toLocaleDateString("en-GB")}
               </td>
               <td className="border border-gray-300 p-4">{booking.totalVisitors}</td>
-              <td className="border border-gray-300 p-4 text-red-500">Not completed</td>
+              <td className={`border border-gray-300 p-4 ${booking.paymentStatus ? 'text-green-600' : 'text-red-600'}`}>
+              {booking.paymentStatus ? "Payment completed" : "Payment not completed"}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -137,4 +140,6 @@ const BookingDetails: React.FC = () => {
     </div>
   );
 
-};export default BookingDetails;
+}; 
+
+export default BookingDetails;

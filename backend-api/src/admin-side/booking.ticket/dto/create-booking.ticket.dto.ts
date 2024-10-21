@@ -33,12 +33,12 @@ export class CreateBookingDto {
 
     @IsArray()
     stayCategories: {
-        stayCategoryId: Types.ObjectId; // Update to Types.ObjectId
+        stayCategoryId: Types.ObjectId; 
         quantity: number;
         price: number;
     }[];
 
     @IsString()
     @IsOptional()
-    couponDiscountId?: Types.ObjectId; // Update to Types.ObjectId
+    couponDiscountId?: Types.ObjectId;
 }

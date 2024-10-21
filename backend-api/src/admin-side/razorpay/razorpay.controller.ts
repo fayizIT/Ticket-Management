@@ -6,14 +6,15 @@ import { CreateRazorpayOrderDto } from './dto/create-razorpay.dto';
 export class RazorpayController {
     constructor(private readonly razorpayService: RazorpayService) {}
 
-    @Post('create-bookedTicket')
+    @Post('create-order')
     async createOrder(@Body() createRazorpayOrderDto: CreateRazorpayOrderDto) {
-        const bookedTicket = await this.razorpayService.createOrder(createRazorpayOrderDto.amount, createRazorpayOrderDto.currency);
+        const order = await this.razorpayService.createOrder(createRazorpayOrderDto.amount, createRazorpayOrderDto.currency);
         return {
-            id: bookedTicket.id,
-            amount: bookedTicket.amount / 100, // Convert back to INR for response
-            currency: bookedTicket.currency,
-            receipt: bookedTicket.receipt,
+            id: order.id,
+            amount: order.amount / 100, 
+            currency: order.currency,
+            receipt: order.receipt,
         };
     }
+    
 }
