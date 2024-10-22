@@ -22,11 +22,10 @@ import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
-import PaymentSuccess from './components/PaymentSuccess';
 import PaymentFailed from './components/PaymentFailed';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
-
-
+import PaymentSuccess from './components/PaymentSuccess';
+import { useState } from 'react'; // Import useState for managing booking data
 
 function App() {
   return (
@@ -42,11 +41,10 @@ function App() {
 function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const [bookingData, setBookingData] = useState<any>(null); // State to hold booking data
 
   const noSidebarRoutes = ['/admin/login']; 
 
- 
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
 
   const handleClose = () => {
@@ -54,9 +52,9 @@ function MainLayout() {
   };
 
   return (
-    <div className="flex" >
+    <div className="flex">
       {isAdminRoute && <AdminSidebar />}
-      <div className=" flex-grow">
+      <div className="flex-grow">
         <Routes>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -71,15 +69,16 @@ function MainLayout() {
           <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
           <Route path="/admin/booking-ticket" element={<BookingDetails />} />
 
-
-          
           <Route path="/" element={<HomePage />} />
           <Route path="/date-selector" element={<DateSelector />} />
           <Route path="/ticket-cart" element={<TicketCartPage />} />
           <Route path="/park-rules" element={<ParkRulesPage />} />
           <Route path="/stay-categories" element={<StayCart />} />
           <Route path="/billing" element={<ReviewBookingPage />} />
-          <Route path="/thank-you" element={<PaymentSuccess onClose={handleClose} />} />
+          <Route 
+            path="/thank-you" 
+            element={<PaymentSuccess onClose={handleClose} bookingData={bookingData} />} 
+          />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -87,6 +86,5 @@ function MainLayout() {
     </div>
   );
 }
+
 export default App;
-
-

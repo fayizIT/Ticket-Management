@@ -94,6 +94,18 @@ const ReviewBookingPage: React.FC = () => {
     try {
       const result = await createBooking(bookingData);
 
+         // Combine form data with booking details
+    const combinedData = {
+      bookingId: result.bookingId,
+      grandTotal: result.grandTotal,
+      orderId: result.orderId,
+      dateOfVisit: selectedDate,
+      totalVisitors: totalTicketCount,
+      ...formData, // Spread the form data here
+    };
+    console.log(combinedData,"get dataaaaaaaaa");
+    
+
       if (!result.bookingId) {
         alert("Failed to retrieve booking ID.");
         return;
@@ -107,6 +119,7 @@ const ReviewBookingPage: React.FC = () => {
         description: `Booking for ${result.totalVisitors} visitors`,
         order_id: result.orderId,
         handler: async function (response: any) {
+          alert("Payment successful!");
           dispatch(setBookingData(result));
 
           try {
@@ -128,7 +141,9 @@ const ReviewBookingPage: React.FC = () => {
             alert("Payment confirmed, but failed to update the status.");
           }
 
-          navigate("/thank-you");
+          navigate("/thank-you", { state: { bookingData: combinedData,result } });
+          console.log(result,"gettttttttttttt");
+          
         },
         prefill: {
           name: formData.fullName,
