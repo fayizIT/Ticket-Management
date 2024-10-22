@@ -6,7 +6,6 @@ import NotFound from './components/NotFound';
 import CreateTicketCategory from './pages/AdminSide/TicketCategory/CreateTicketCategory';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-// import TicketCartPage from './pages/UserSide/TicketCartPage';
 import ParkRulesPage from './pages/UserSide/ParkRules/ParkRulePage';
 import AdminSidebar from './components/AdminSidebar';
 import HomePage from './pages/UserSide/Homepage/HomePage';
@@ -15,7 +14,7 @@ import Dashboard from './pages/AdminSide/Dashboard';
 import StayCategoryList from './pages/AdminSide/StayCategory/StayCategoryList';
 import EditStayCategory from './pages/AdminSide/StayCategory/EditStayCategory';
 import CreateStayCategory from './pages/AdminSide/StayCategory/CreateStayCategory';
-import StayCart from './pages/UserSide/StayCart';
+import StayCart from './pages/UserSide/StayCart/StayCart';
 import EditTicketCategory from './pages/AdminSide/TicketCategory/EditTicketCategory';
 import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCategory';
 import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
@@ -44,14 +43,14 @@ function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Array of routes where the sidebar should NOT be displayed
+
   const noSidebarRoutes = ['/admin/login']; 
 
-  // Check if the current path is an admin route and not in the noSidebarRoutes
+ 
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
 
   const handleClose = () => {
-    navigate("/"); // Navigate to home page
+    navigate("/"); 
   };
 
   return (
