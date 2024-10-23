@@ -26,29 +26,25 @@ import PaymentFailed from './components/PaymentFailed';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
 import { useState } from 'react'; 
-
-
+// import Datatable from './pages/AdminSide/sample';
 
 function App() {
   return (
     <Provider store={store}>
-    <Router>
-      <MainLayout />
-      <ToastContainer />
-    </Router>
-  </Provider>
+      <Router>
+        <MainLayout />
+        <ToastContainer />
+      </Router>
+    </Provider>
   );
 }
 
 function MainLayout() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const noSidebarRoutes = ['/admin/login']; 
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
-
-
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -56,7 +52,7 @@ function MainLayout() {
 
   return (
     <div className="flex">
-      {/* Hamburger Button */}
+      {/* Hamburger Button for small screens */}
       {isAdminRoute && (
         <button onClick={toggleSidebar} className="md:hidden p-2">
           <span className="material-icons">menu</span>
@@ -65,18 +61,16 @@ function MainLayout() {
 
       {/* Sidebar */}
       {isAdminRoute && (
-        <div className={`fixed inset-0 z-50 flex md:flex-none ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
-          <div className="w-72 h-screen border-r border-gray-300 bg-sky-100 overflow-y-auto">
-            <AdminSidebar />
-          </div>
-          <div className="flex-grow bg-black opacity-50" onClick={toggleSidebar}></div>
+        <div className={`fixed z-50 h-screen overflow-y-auto border-r border-gray-300 bg-sky-100 ${isSidebarOpen ? 'block' : 'hidden'} md:block w-72`}>
+          <AdminSidebar />
         </div>
       )}
 
       {/* Main Content */}
-      <div className={`flex-grow ${isAdminRoute ? 'ml-72' : ''}`}>
+      <div className={`flex-grow ${isAdminRoute ? 'md:ml-72' : ''}`}>
         <div className={isAdminRoute ? 'h-screen overflow-y-auto' : ''}>
           <Routes>
+            {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/add-ticket-category" element={<CreateTicketCategory />} />
@@ -89,11 +83,9 @@ function MainLayout() {
             <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
             <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
             <Route path="/admin/booking-ticket" element={<BookingDetails />} />
+            {/* <Route path="/admin/sample" element={<Datatable/>} /> */}
 
-
-
-
-
+            {/* User Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/date-selector" element={<DateSelector />} />
             <Route path="/ticket-cart" element={<TicketCartPage />} />
@@ -102,6 +94,8 @@ function MainLayout() {
             <Route path="/billing" element={<ReviewBookingPage />} />
             <Route path="/thank-you" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
+
+            {/* Not Found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
@@ -109,4 +103,5 @@ function MainLayout() {
     </div>
   );
 }
+
 export default App;
