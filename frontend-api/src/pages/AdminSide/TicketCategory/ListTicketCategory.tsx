@@ -32,7 +32,9 @@ interface TicketCategory {
 
 const TicketCategoriesList: React.FC = () => {
   const navigate = useNavigate();
-  const [ticketCategories, setTicketCategories] = useState<TicketCategory[]>([]);
+  const [ticketCategories, setTicketCategories] = useState<TicketCategory[]>(
+    []
+  );
   const [page, setPage] = useState(1);
   const PAGE_SIZES = [10, 20, 30, 50, 100];
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
@@ -40,12 +42,16 @@ const TicketCategoriesList: React.FC = () => {
   const [query, setQuery] = useState("");
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [debouncedQuery] = useDebouncedValue(query, 200);
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+  const [sortStatus, setSortStatus] = useState<
+    DataTableSortStatus<TicketCategory>
+  >({
     columnAccessor: "name",
     direction: "asc",
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
 
@@ -74,8 +80,12 @@ const TicketCategoriesList: React.FC = () => {
     const sortedData = filteredData.sort((a, b) => {
       const accessor = sortStatus.columnAccessor as keyof TicketCategory;
       return sortStatus.direction === "asc"
-        ? a[accessor] > b[accessor] ? 1 : -1
-        : a[accessor] < b[accessor] ? 1 : -1;
+        ? a[accessor] > b[accessor]
+          ? 1
+          : -1
+        : a[accessor] < b[accessor]
+        ? 1
+        : -1;
     });
 
     setRecords(sortedData.slice((page - 1) * pageSize, page * pageSize));
@@ -90,8 +100,8 @@ const TicketCategoriesList: React.FC = () => {
 
     try {
       await TicketCategoryService.delete(selectedCategoryId);
-      setTicketCategories(prevCategories =>
-        prevCategories.filter(category => category._id !== selectedCategoryId)
+      setTicketCategories((prevCategories) =>
+        prevCategories.filter((category) => category._id !== selectedCategoryId)
       );
       toast.success("Category deleted successfully!");
     } catch (error) {
@@ -124,24 +134,23 @@ const TicketCategoriesList: React.FC = () => {
       title: "Actions",
       render: ({ _id }) => (
         <div className="flex items-center space-x-1">
-        <ActionIcon 
-          onClick={() => handleEdit(_id)} 
-          title="Edit" 
-          className="text-blue-500" // Set a suitable color for the edit icon
-          variant="transparent"
-        >
-          <FiEdit />
-        </ActionIcon>
-        <ActionIcon 
-          onClick={() => openDialog(_id)} 
-          title="Delete" 
-          className="text-red-500" 
-          variant="transparent"
-        >
-          <RiDeleteBin6Line />
-        </ActionIcon>
-      </div>
-      
+          <ActionIcon
+            onClick={() => handleEdit(_id)}
+            title="Edit"
+            className="text-blue-500"
+            variant="transparent"
+          >
+            <FiEdit />
+          </ActionIcon>
+          <ActionIcon
+            onClick={() => openDialog(_id)}
+            title="Delete"
+            className="text-red-500"
+            variant="transparent"
+          >
+            <RiDeleteBin6Line />
+          </ActionIcon>
+        </div>
       ),
     },
     { accessor: "name", title: "Name" },
@@ -173,13 +182,13 @@ const TicketCategoriesList: React.FC = () => {
           Create Category
         </button>
 
-        <Flatpickr
+        {/* <Flatpickr
           options={{ mode: "range", dateFormat: "Y-m-d" }}
           value={dateRange}
           onChange={setDateRange}
           className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
           placeholder="Select date range"
-        />
+        /> */}
 
         <div className="lg:w-1/4 sm:w-full">
           <Dropdown
@@ -199,9 +208,13 @@ const TicketCategoriesList: React.FC = () => {
                       <label className="cursor-pointer mb-0">
                         <input
                           type="checkbox"
-                          checked={!hiddenColumns.includes(col.accessor as string)}
+                          checked={
+                            !hiddenColumns.includes(col.accessor as string)
+                          }
                           className="form-checkbox"
-                          onChange={() => toggleColumnVisibility(col.accessor as string)}
+                          onChange={() =>
+                            toggleColumnVisibility(col.accessor as string)
+                          }
                         />
                         <span className="ml-2">
                           {(col.title as string) || (col.accessor as string)}
@@ -233,7 +246,7 @@ const TicketCategoriesList: React.FC = () => {
         />
       </div>
 
-      <DataTable
+      <DataTable<TicketCategory>
         className="whitespace-nowrap"
         records={records}
         columns={columns.filter(

@@ -36,9 +36,11 @@ const StayCategoryList: React.FC = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
   const [records, setRecords] = useState<StayCategory[]>([]);
   const [query, setQuery] = useState("");
-  const [dateRange, setDateRange] = useState<Date[]>([]); // Ensure this is defined in your component
+  const [dateRange, setDateRange] = useState<Date[]>([]);
   const [debouncedQuery] = useDebouncedValue(query, 200);
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+  const [sortStatus, setSortStatus] = useState<
+    DataTableSortStatus<StayCategory>
+  >({
     columnAccessor: "name",
     direction: "asc",
   });
@@ -136,7 +138,7 @@ const StayCategoryList: React.FC = () => {
           <ActionIcon
             onClick={() => handleEdit(_id)}
             title="Edit"
-            className="text-blue-500" // Set a suitable color for the edit icon
+            className="text-blue-500"
             variant="transparent"
           >
             <FiEdit />
@@ -180,13 +182,13 @@ const StayCategoryList: React.FC = () => {
         >
           Create Category
         </button>
-        <Flatpickr
+        {/* <Flatpickr
           options={{ mode: "range", dateFormat: "Y-m-d" }}
           value={dateRange}
           onChange={handleDateChange}
           className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
           placeholder="Select date range"
-        />
+        /> */}
 
         <div className="lg:w-1/4 sm:w-full">
           <Dropdown
@@ -244,7 +246,7 @@ const StayCategoryList: React.FC = () => {
         />
       </div>
 
-      <DataTable
+      <DataTable<StayCategory>
         className="whitespace-nowrap"
         records={records}
         columns={columns.filter(

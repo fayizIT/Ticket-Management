@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { ActionIcon, TextInput } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
-import { FaEdit, FaTrash } from "react-icons/fa";
 import Flatpickr from "react-flatpickr";
-import CouponService from "../../../services/CouponService"; // Import your CouponService
+import CouponService from "../../../services/CouponService";
 import { ToastContainer, toast } from "react-toastify";
-import ConfirmDialog from "../../../components/ConfirmDialog"; // Import your ConfirmDialog component
+import ConfirmDialog from "../../../components/ConfirmDialog";
 import { useNavigate } from "react-router-dom";
-import {
-  DataTable,
-  DataTableColumn,
-  DataTableSortStatus,
-} from "mantine-datatable";
+import {DataTable,DataTableColumn,DataTableSortStatus,} from "mantine-datatable";
 import { IoIosArrowDown } from "react-icons/io";
 import Dropdown from "../../../Layouts/Dropdown";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import "@mantine/core/styles.css";
 import "mantine-datatable/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "flatpickr/dist/flatpickr.css";
 import "flatpickr/dist/themes/material_green.css";
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 interface Coupon {
   _id: string;
@@ -41,10 +37,11 @@ const CouponCodeList: React.FC = () => {
   const [query, setQuery] = useState("");
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [debouncedQuery] = useDebouncedValue(query, 200);
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<Coupon>>({
     columnAccessor: "code",
     direction: "asc",
   });
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -54,8 +51,8 @@ const CouponCodeList: React.FC = () => {
     const fetchCoupons = async () => {
       setLoading(true);
       try {
-        const data = await CouponService.fetchCoupons(); // Adjust based on your service
-        setCoupons(data);
+        const data = await CouponService.fetchCoupons(); 
+        setCoupons(data as Coupon[]);
       } catch (error) {
         console.error("Error fetching coupons:", error);
         toast.error("Failed to fetch coupons");
@@ -113,7 +110,7 @@ const CouponCodeList: React.FC = () => {
       const updatedCoupon = await CouponService.updateCouponStatus(
         id,
         !currentStatus
-      ); // Update status in the backend
+      ); 
       setCoupons((prevCoupons) =>
         prevCoupons.map((coupon) =>
           coupon._id === id ? updatedCoupon : coupon
@@ -168,7 +165,6 @@ const CouponCodeList: React.FC = () => {
     },
     { accessor: "code", title: "Code" },
     { accessor: "discount", title: "Discount" },
-
     {
       accessor: "isActive",
       title: "Status",
@@ -206,13 +202,13 @@ const CouponCodeList: React.FC = () => {
           Create Coupon
         </button>
 
-        <Flatpickr
+        {/* <Flatpickr
           options={{ mode: "range", dateFormat: "Y-m-d" }}
           value={dateRange}
           onChange={setDateRange}
           className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
           placeholder="Select date range"
-        />
+        /> */}
 
         <div className="lg:w-1/4 sm:w-full">
           <Dropdown
@@ -250,38 +246,48 @@ const CouponCodeList: React.FC = () => {
           </Dropdown>
         </div>
 
-        <TextInput
-          placeholder="Search..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          icon={<IconSearch size={14} />}
-          rightSection={
-            <ActionIcon
-              onClick={() => setQuery("")}
-              title="Clear search"
-              size="sm"
-              variant="transparent"
-            >
-              <IconX size={14} />
-            </ActionIcon>
-          }
-        />
+        <div className="relative">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+            <IconSearch size={14} />
+          </div>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pl-10 pr-10 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <ActionIcon
+            onClick={() => setQuery("")}
+            title="Clear search"
+            size="sm"
+            variant="transparent"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2"
+          >
+            <IconX size={14} />
+          </ActionIcon>
+        </div>
       </div>
 
-      <DataTable
+      <DataTable<Coupon>
         records={records}
         columns={columns.filter(
           (col) => !hiddenColumns.includes(col.accessor as string)
         )}
-        pagination={{
-          page,
-          onPageChange: setPage,
-          totalRecords: coupons.length,
-          recordsPerPage: pageSize,
-          onRecordsPerPageChange: setPageSize,
-        }}
+        page={page}
+        onPageChange={setPage}
+        totalRecords={coupons.length}
+        recordsPerPage={pageSize}
+        onRecordsPerPageChange={setPageSize}
+        recordsPerPageOptions={[10, 20, 30, 50, 100]}
         sortStatus={sortStatus}
-        onSortStatusChange={setSortStatus}
+        onSortStatusChange={(newSortStatus: DataTableSortStatus<Coupon>) => {
+          setSortStatus(newSortStatus);
+        }}
+        withTableBorder={true}
+        paginationText={({ from, to, totalRecords }) =>
+          `Showing ${from} to ${to} of ${totalRecords} entries`
+        }
       />
 
       <ConfirmDialog
