@@ -123,19 +123,30 @@ const StayCategoryList: React.FC = () => {
     setDateRange(selectedDates);
   };
 
+  const handleEdit = (id: string) => {
+    navigate(`/admin/editStayCategory/${id}`);
+  };
+
   const columns: DataTableColumn<StayCategory>[] = [
     {
       accessor: "actions",
       title: "Actions",
       render: ({ _id }) => (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <ActionIcon
-            onClick={() => navigate(`/admin/editStayCategory/${_id}`)}
+            onClick={() => handleEdit(_id)}
             title="Edit"
+            className="text-blue-500" // Set a suitable color for the edit icon
+            variant="transparent"
           >
             <FiEdit />
           </ActionIcon>
-          <ActionIcon onClick={() => openDialog(_id)} title="Delete">
+          <ActionIcon
+            onClick={() => openDialog(_id)}
+            title="Delete"
+            className="text-red-500"
+            variant="transparent"
+          >
             <RiDeleteBin6Line />
           </ActionIcon>
         </div>
@@ -170,12 +181,12 @@ const StayCategoryList: React.FC = () => {
           Create Category
         </button>
         <Flatpickr
-  options={{ mode: "range", dateFormat: "Y-m-d" }}
-  value={dateRange}
-  onChange={handleDateChange}  // Use the handle function
-  className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
-  placeholder="Select date range"
-/>
+          options={{ mode: "range", dateFormat: "Y-m-d" }}
+          value={dateRange}
+          onChange={handleDateChange}
+          className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
+          placeholder="Select date range"
+        />
 
         <div className="lg:w-1/4 sm:w-full">
           <Dropdown
