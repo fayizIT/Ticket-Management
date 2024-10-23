@@ -182,13 +182,13 @@ const StayCategoryList: React.FC = () => {
         >
           Create Category
         </button>
-        {/* <Flatpickr
+        <Flatpickr
           options={{ mode: "range", dateFormat: "Y-m-d" }}
           value={dateRange}
           onChange={handleDateChange}
           className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
           placeholder="Select date range"
-        /> */}
+        />
 
         <div className="lg:w-1/4 sm:w-full">
           <Dropdown

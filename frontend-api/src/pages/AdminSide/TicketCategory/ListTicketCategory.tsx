@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ActionIcon, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import Flatpickr from "react-flatpickr";
 import { TicketCategoryService } from "../../../services/TicketCategoryService";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,6 +13,8 @@ import {
   DataTableColumn,
   DataTableSortStatus,
 } from "mantine-datatable";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import Dropdown from "../../../Layouts/Dropdown";
 import "@mantine/core/styles.css";
@@ -20,8 +22,6 @@ import "mantine-datatable/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "flatpickr/dist/flatpickr.css";
 import "flatpickr/dist/themes/material_green.css";
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface TicketCategory {
   _id: string;
@@ -32,9 +32,7 @@ interface TicketCategory {
 
 const TicketCategoriesList: React.FC = () => {
   const navigate = useNavigate();
-  const [ticketCategories, setTicketCategories] = useState<TicketCategory[]>(
-    []
-  );
+  const [ticketCategories, setTicketCategories] = useState<TicketCategory[]>([]);
   const [page, setPage] = useState(1);
   const PAGE_SIZES = [10, 20, 30, 50, 100];
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
@@ -42,16 +40,12 @@ const TicketCategoriesList: React.FC = () => {
   const [query, setQuery] = useState("");
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [debouncedQuery] = useDebouncedValue(query, 200);
-  const [sortStatus, setSortStatus] = useState<
-    DataTableSortStatus<TicketCategory>
-  >({
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<TicketCategory>>({
     columnAccessor: "name",
     direction: "asc",
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null
-  );
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
 
@@ -128,6 +122,14 @@ const TicketCategoriesList: React.FC = () => {
     });
   };
 
+  const toggleSelectAllColumns = (isChecked: boolean) => {
+    if (isChecked) {
+      setHiddenColumns([]); // Show all columns
+    } else {
+      setHiddenColumns(columns.map(col => col.accessor as string)); // Hide all columns
+    }
+  };
+
   const columns: DataTableColumn<TicketCategory>[] = [
     {
       accessor: "actions",
@@ -173,52 +175,58 @@ const TicketCategoriesList: React.FC = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <ToastContainer />
-      <h2 className="text-2xl font-bold mb-4">Ticket Categories</h2>
-      <div className="grid grid-cols-1 sm:flex justify-between gap-5 mb-4">
+      <h2 className="text-2xl font-bold mb-4">
+        Ticket Categories</h2>
+
+      <div className="flex flex-wrap justify-between gap-4 mb-4">
         <button
-          className="lg:w-1/4 sm:w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-          onClick={() => navigate("/admin/add-ticket-category")}
+          className="flex-1 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center"
+          onClick={() => {
+            /* Navigate to add booking */
+          }}
         >
-          Create Category
+          <FaPlus className="mr-2" /> Create Booking
         </button>
 
-        {/* <Flatpickr
+        <Flatpickr
           options={{ mode: "range", dateFormat: "Y-m-d" }}
           value={dateRange}
           onChange={setDateRange}
-          className="lg:w-1/4 sm:w-full form-input border border-gray-300 rounded-md py-2 px-3"
+          className="flex-1 form-input border border-gray-300 rounded-md py-2 px-3"
           placeholder="Select date range"
-        /> */}
+        />
 
-        <div className="lg:w-1/4 sm:w-full">
+        <div className="flex-1">
           <Dropdown
             btnClassName="w-full flex items-center border border-gray-300 rounded-md px-4 py-2 text-sm bg-white shadow-sm hover:bg-gray-100"
-            button={
-              <>
-                <span className="mr-1">Columns</span>
-                <IoIosArrowDown />
-              </>
-            }
+            button={<span>Columns</span>}
           >
             <div className="absolute z-10 bg-white bg-opacity-80 rounded-md shadow-md p-4">
               <ul className="min-w-[300px] max-h-60 overflow-y-auto">
+                <li className="flex flex-col">
+                  <div className="flex items-center px-4 py-1">
+                    <label className="cursor-pointer mb-0">
+                      <input
+                        type="checkbox"
+                        checked={hiddenColumns.length === 0} // Select All checkbox
+                        className="form-checkbox"
+                        onChange={(e) => toggleSelectAllColumns(e.target.checked)}
+                      />
+                      <span className="ml-2">Select All</span>
+                    </label>
+                  </div>
+                </li>
                 {columns.map((col, index) => (
                   <li key={index} className="flex flex-col">
                     <div className="flex items-center px-4 py-1">
                       <label className="cursor-pointer mb-0">
                         <input
                           type="checkbox"
-                          checked={
-                            !hiddenColumns.includes(col.accessor as string)
-                          }
+                          checked={!hiddenColumns.includes(col.accessor as string)}
                           className="form-checkbox"
-                          onChange={() =>
-                            toggleColumnVisibility(col.accessor as string)
-                          }
+                          onChange={() => toggleColumnVisibility(col.accessor as string)}
                         />
-                        <span className="ml-2">
-                          {(col.title as string) || (col.accessor as string)}
-                        </span>
+                        <span className="ml-2">{col.title || col.accessor}</span>
                       </label>
                     </div>
                   </li>
@@ -229,7 +237,7 @@ const TicketCategoriesList: React.FC = () => {
         </div>
 
         <TextInput
-          placeholder="Search..."
+          placeholder="Search by full name..."
           value={query}
           onChange={(e) => setQuery(e.currentTarget.value)}
           leftSection={<IconSearch size={16} />}
@@ -242,7 +250,7 @@ const TicketCategoriesList: React.FC = () => {
               <IconX size={14} />
             </ActionIcon>
           }
-          className="lg:w-1/4 sm:w-full"
+          className="flex-1"
         />
       </div>
 

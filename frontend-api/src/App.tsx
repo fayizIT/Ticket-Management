@@ -26,7 +26,6 @@ import PaymentFailed from './components/PaymentFailed';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
 import { useState } from 'react'; 
-// import Datatable from './pages/AdminSide/sample';
 
 function App() {
   return (
@@ -83,7 +82,6 @@ function MainLayout() {
             <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
             <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
             <Route path="/admin/booking-ticket" element={<BookingDetails />} />
-            {/* <Route path="/admin/sample" element={<Datatable/>} /> */}
 
             {/* User Routes */}
             <Route path="/" element={<HomePage />} />
