@@ -3,6 +3,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import JsBarcode from 'jsbarcode';
+import 'jspdf-autotable';
 import logo from '../../public/assets/clientlogo.png';
 
 const PaymentSuccess: React.FC = () => {
@@ -21,21 +22,42 @@ const PaymentSuccess: React.FC = () => {
     const logoImg = new Image();
     logoImg.src = logo; // Use the imported logo path
     logoImg.onload = () => {
-      doc.addImage(logoImg, 'PNG', 5, 5, 50, 20); // Adjusted position
+      doc.addImage(logoImg, 'PNG', 10, 10, 50, 20); // Adjusted position
 
       // Title
       doc.setFontSize(22);
-      doc.text("Booking Confirmation", 100, 30, { align: 'center' }); // Increase x-coordinate
+      doc.text("Booking Confirmation", 105, 35, { align: 'center' });
 
-      // Booking Details
-      doc.setFontSize(12);
-      doc.text(`Name: ${bookingData.fullName}`, 20, 60);
-      doc.text(`Email: ${bookingData.email}`, 20, 70);
-      doc.text(`Total Amount: ₹ ${bookingData.grandTotal}`, 20, 80);
-      doc.text(`Booking ID: ${bookingData.bookingId}`, 20, 90);
-      doc.text(`Date of Visit: ${new Date(bookingData.dateOfVisit).toLocaleDateString()}`, 20, 100);
-      doc.text(`PIN Code: ${bookingData.pinCode}`, 20, 110);
-      doc.text(`Payment ID: ${bookingData.orderId}`, 20, 120);
+      // Table for Booking Details
+      const tableData = [
+        { detail: 'Name', info: bookingData.fullName },
+        { detail: 'Email', info: bookingData.email },
+        { detail: 'Total Amount', info: `'₹' ${bookingData.grandTotal}` },
+        { detail: 'Booking ID', info: bookingData.bookingId },
+        { detail: 'Date of Visit', info: new Date(bookingData.dateOfVisit).toLocaleDateString() },
+        { detail: 'PIN Code', info: bookingData.pinCode },
+        { detail: 'Payment ID', info: bookingData.orderId },
+      ];
+
+      (doc as any).autoTable({
+        head: [['Detail', 'Information']],
+        body: tableData.map(item => [item.detail, item.info]),
+        startY: 50, // Start the table below the title
+        theme: 'grid',
+        styles: {
+          halign: 'left',
+          fontSize: 12,
+        },
+        headStyles: {
+          fillColor: [22, 160, 133],
+          textColor: [255, 255, 255],
+          fontSize: 14,
+        },
+        alternateRowStyles: {
+          fillColor: [240, 240, 240],
+        },
+        margin: { top: 20 },
+      });
 
       // Generate a barcode
       const barcodeCanvas = document.createElement("canvas");
@@ -48,31 +70,35 @@ const PaymentSuccess: React.FC = () => {
       });
 
       const barcodeDataUrl = barcodeCanvas.toDataURL("image/png");
-      doc.addImage(barcodeDataUrl, 'PNG', 20, 130, 180, 30);
+      doc.addImage(barcodeDataUrl, 'PNG', 20, (doc as any).lastAutoTable.finalY + 10, 180, 30);
 
       // Save the PDF
       doc.save("booking_confirmation.pdf");
-    };
-  };
+    };  };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto text-center">
-        <FaCheckCircle className="text-green-500 text-6xl mb-4" />
-        <h2 className="text-3xl font-bold mb-2">Payment Successful!</h2>
-        <p className="text-gray-600 mb-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4 md:p-10">
+      <div className="bg-white rounded-lg shadow-lg p-6 md:p-10 w-full max-w-lg lg:max-w-3xl text-center">
+        {/* Success Icon */}
+        <FaCheckCircle className="text-green-500 text-6xl md:text-9xl mb-6" />
+        
+        {/* Success Message */}
+        <h2 className="text-2xl md:text-5xl font-bold mb-4">Payment Successful!</h2>
+        <p className="text-gray-600 text-base md:text-xl mb-8">
           Thank you for your payment. Your booking has been confirmed!
         </p>
-        <div className="space-y-2">
+        
+        {/* Buttons */}
+        <div className="space-y-4">
           <button
             onClick={handleGeneratePdf}
-            className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-300"
+            className="w-full py-3 md:py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 text-base md:text-lg"
           >
             Generate PDF Ticket
           </button>
           <button
             onClick={handleRedirect}
-            className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300"
+            className="w-full py-3 md:py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 text-base md:text-lg"
           >
             Go to Home
           </button>

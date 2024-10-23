@@ -25,66 +25,88 @@ import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 import PaymentFailed from './components/PaymentFailed';
 import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
-import { useState } from 'react'; // Import useState for managing booking data
+import { useState } from 'react'; 
+
+
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <MainLayout />
-        <ToastContainer />
-      </Router>
-    </Provider>
+    <Router>
+      <MainLayout />
+      <ToastContainer />
+    </Router>
+  </Provider>
   );
 }
 
 function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [bookingData, setBookingData] = useState<any>(null); // State to hold booking data
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const noSidebarRoutes = ['/admin/login']; 
-
   const isAdminRoute = location.pathname.startsWith('/admin') && !noSidebarRoutes.includes(location.pathname);
 
-  const handleClose = () => {
-    navigate("/"); 
+
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <div className="flex">
-      {isAdminRoute && <AdminSidebar />}
-      <div className="flex-grow">
-        <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/add-ticket-category" element={<CreateTicketCategory />} />
-          <Route path="/admin/ticket-Category" element={<TicketCategoriesList />} />
-          <Route path="/admin/edit-ticket-Category/:id" element={<EditTicketCategory />} />
-          <Route path="/admin/stay-category" element={<StayCategoryList />} />
-          <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
-          <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
-          <Route path="/admin/coupon-code" element={<CouponCodeList />} />
-          <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
-          <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
-          <Route path="/admin/booking-ticket" element={<BookingDetails />} />
+      {/* Hamburger Button */}
+      {isAdminRoute && (
+        <button onClick={toggleSidebar} className="md:hidden p-2">
+          <span className="material-icons">menu</span>
+        </button>
+      )}
 
-          <Route path="/" element={<HomePage />} />
-          <Route path="/date-selector" element={<DateSelector />} />
-          <Route path="/ticket-cart" element={<TicketCartPage />} />
-          <Route path="/park-rules" element={<ParkRulesPage />} />
-          <Route path="/stay-categories" element={<StayCart />} />
-          <Route path="/billing" element={<ReviewBookingPage />} />
-          <Route 
-            path="/thank-you" 
-            element={<PaymentSuccess onClose={handleClose} bookingData={bookingData} />} 
-          />
-          <Route path="/payment-failed" element={<PaymentFailed />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      {/* Sidebar */}
+      {isAdminRoute && (
+        <div className={`fixed inset-0 z-50 flex md:flex-none ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
+          <div className="w-72 h-screen border-r border-gray-300 bg-sky-100 overflow-y-auto">
+            <AdminSidebar />
+          </div>
+          <div className="flex-grow bg-black opacity-50" onClick={toggleSidebar}></div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className={`flex-grow ${isAdminRoute ? 'ml-72' : ''}`}>
+        <div className={isAdminRoute ? 'h-screen overflow-y-auto' : ''}>
+          <Routes>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/add-ticket-category" element={<CreateTicketCategory />} />
+            <Route path="/admin/ticket-Category" element={<TicketCategoriesList />} />
+            <Route path="/admin/edit-ticket-Category/:id" element={<EditTicketCategory />} />
+            <Route path="/admin/stay-category" element={<StayCategoryList />} />
+            <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
+            <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
+            <Route path="/admin/coupon-code" element={<CouponCodeList />} />
+            <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
+            <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
+            <Route path="/admin/booking-ticket" element={<BookingDetails />} />
+
+
+
+
+
+            <Route path="/" element={<HomePage />} />
+            <Route path="/date-selector" element={<DateSelector />} />
+            <Route path="/ticket-cart" element={<TicketCartPage />} />
+            <Route path="/park-rules" element={<ParkRulesPage />} />
+            <Route path="/stay-categories" element={<StayCart />} />
+            <Route path="/billing" element={<ReviewBookingPage />} />
+            <Route path="/thank-you" element={<PaymentSuccess />} />
+            <Route path="/payment-failed" element={<PaymentFailed />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );
 }
-
 export default App;
