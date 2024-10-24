@@ -50,7 +50,7 @@ function MainLayout() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex ">
       {/* Hamburger Button for small screens */}
       {isAdminRoute && (
         <button onClick={toggleSidebar} className="md:hidden p-2">

@@ -186,7 +186,7 @@ const TicketCategoriesList: React.FC = () => {
 
   const columns: DataTableColumn<TicketCategory>[] = [
     {
-      accessor: "selectAll",
+      accessor: "select",
       title: (
         <input
           type="checkbox"
