@@ -4,7 +4,6 @@ const LeftPanel: React.FC = () => {
   return (
     <div className="bg-white p-2 md:p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[500px] md:h-[400px] w-full max-w-md mx-auto md:mx-0 -mt-8">
       {" "}
-      {/* Reduced size */}
       {/* Header */}
       <h2
         className="text-2xl font-bold mb-2 font-panton-narrow text-blue-800"

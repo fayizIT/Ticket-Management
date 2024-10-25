@@ -57,9 +57,9 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
         backgroundPosition: 'center',
       }}
     >
-      <h2 className="text-xl font-semibold mb-3 text-gray-800">Grab Your Tickets</h2>
-      <p className="text-gray-600 mb-4 leading-relaxed text-xs">
-        Wonderla provides regular tickets, fast track tickets for queue skipping, and Special Offer tickets.
+      <h2 className="text-xl font-bold mb-3 text-blue-900">Grab Your Tickets</h2>
+      <p className="text-blue-800 mb-4 leading-relaxed text-sm">
+      Grab your tickets for a weekend of excitement, and fun. Our tickets run out fast so book now.
       </p>
       <h3 className="text-lg text-center font-bold text-black-900 mb-3">Trending Coupons</h3>
 
