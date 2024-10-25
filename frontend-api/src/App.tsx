@@ -23,9 +23,10 @@ import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
 import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 import PaymentFailed from './components/PaymentFailed';
-import TicketCartPage from './pages/UserSide/TicketCartPage';
+// import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
 import { useState } from 'react'; 
+import TicketCartPage from './pages/UserSide/TicketCart/TicketCartPage';
 
 function App() {
   return (

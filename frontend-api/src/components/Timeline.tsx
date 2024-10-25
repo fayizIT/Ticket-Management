@@ -30,7 +30,7 @@ const Timeline: React.FC<{
   };
 
   return (
-    <div className="flex justify-center items-center w-full max-w-5xl mx-auto p-4">
+    <div className="flex justify-center items-center w-full max-w-2xl mx-auto p-4 mb-4">
       <div className="flex items-center w-full justify-between relative">
         {steps.map((step, index) => (
           <React.Fragment key={step}>
@@ -40,11 +40,11 @@ const Timeline: React.FC<{
                 className={`absolute h-1 transition-colors duration-300 
                   ${index <= currentStep ? "bg-blue-500" : "bg-gray-300"}`}
                 style={{
-                  width: "calc(100% - 40px)", // Adjust line width to leave space for circles
-                  top: "35%", // Center the line vertically relative to the circles
-                  zIndex: "0", // Place line behind the circles
-                  transform: "translateY(-50%)", // Center the line vertically
-                  left: `${index * 25 - 0}px`, // Center line based on circle width
+                  width: "calc(101% - 120px)",
+                  top: "35%",
+                  zIndex: "0",
+                  transform: "translateY(-50%)",
+                  left: `${index * 25 - 2}px`, 
                 }}
               />
             )}
@@ -53,7 +53,9 @@ const Timeline: React.FC<{
               <div
                 className={`rounded-full h-10 w-10 flex items-center justify-center border-2 transition duration-300 
                   ${index === currentStep ? "border-blue-500 bg-white" : "border-gray-300 bg-gray-100"}
-                  ${index <= currentStep ? "cursor-pointer" : "cursor-not-allowed"}`}
+                  ${index <= currentStep ? "cursor-pointer" : "cursor-not-allowed"}
+                  `}
+
                 onClick={() => handleStepClick(index)}
               >
                 {index < currentStep ? (
@@ -66,7 +68,7 @@ const Timeline: React.FC<{
               </div>
 
               <span
-                className={`mt-2 text-sm text-center ${
+                className={`mt-1 text-xs md:text-sm text-center ${
                   index <= currentStep ? "font-bold text-blue-500" : "text-gray-400"
                 }`}
               >
@@ -81,3 +83,19 @@ const Timeline: React.FC<{
 };
 
 export default Timeline;
+
+
+
+// {index > 0 && (
+//   <div
+//     className={`absolute h-1 transition-colors duration-300 
+//       ${index <= currentStep ? "bg-blue-500" : "bg-gray-300"}`}
+//     style={{
+//       width: "calc(101% - 120px)",
+//       top: "40%",
+//       zIndex: "0",
+//       transform: "translateY(-50%)",
+//       left: `${index * 25 - 2}px`, 
+//     }}
+//   />
+// )}
