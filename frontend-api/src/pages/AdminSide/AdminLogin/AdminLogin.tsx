@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import { login } from "../../../services/authService"; // Import the service
+import { login } from "../../../services/authService"; 
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");

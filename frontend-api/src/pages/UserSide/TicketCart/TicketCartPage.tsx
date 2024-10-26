@@ -58,7 +58,7 @@ const TicketCartPage: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-center items-stretch p-8 space-y-6 md:space-y-0 md:space-x-6 mt-3">
         <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
           <LeftPanel setCouponCode={setCouponCode} />
-          <div className="mt-4 text-start text-blue-900 space-y-2">
+          <div className="mt-1 text-start text-blue-900 space-y-2">
             <h2 className="text-sm md:text-sm font-bold flex items-center">
               Know More About Us
               <GoChevronRight className="ml-1 text-blue-900" />
@@ -67,12 +67,12 @@ const TicketCartPage: React.FC = () => {
               Contact Us
               <GoChevronRight className="ml-1 text-blue-500" />
             </h2>
-            <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" />
+            {/* <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" /> */}
             </div>
         </div>
         <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
           <RightPanel handleConfirm={handleConfirm} couponCode={couponCode} setCouponCode={setCouponCode} />
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-1">
             <div className="flex-1 flex justify-end items-center">
               <img src={Image} alt="Logo" className="h-16 md:h-20 lg:h-24" />
             </div>

@@ -96,50 +96,41 @@ const DateSelector: React.FC = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
+<div
+  className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
+  style={{ backgroundImage: `url(${backgroundImage})` }}
+>
+  <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
-      {/* Main container with 80% width */}
-      <div className="w-4/5 mx-auto mt-4 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-4">
-        {/* Left Panel */}
-        <div className="flex-1 max-w-md w-full h-auto">
-          <LeftPanel />
-          <div className="mt-4 text-start text-blue-900 space-y-2">
-            <h2 className="text-sm md:text-sm font-bold border-blue-700 flex items-center">
-              Know More About Us
-              <GoChevronRight className="ml-1 text-blue-700" />
-            </h2>
-            <h2 className="text-sm md:text-sm font-bold border-blue-700 flex items-center">
-              Contact Us
-              <GoChevronRight className="ml-1 text-blue-700" />
-            </h2>
-            <hr className="border-t-2 border-gray-300 w-[183%] my-2 mx-auto" />
-          </div>
-        </div>
-
-        {/* Right Panel */}
-        <div className="flex-1 max-w-md w-full h-auto">
-          <RightPanel
-            selectedDate={selectedDate}
-            onDateChange={handleDateChange}
-            onConfirm={handleConfirm}
-          />
-          {/* Adjusted the logo section for alignment */}
-          <div className="flex justify-center mt-4">
-            <div className="flex-1 flex justify-end items-center">
-              <img src={Image} alt="Logo" className="h-16 md:h-20 lg:h-24" />
-            </div>
-          </div>
-        </div>
+  <div className="w-full sm:w-4/5 mx-auto mt-4 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-4 px-2 sm:px-0">
+    {/* Updated styling to make both panels the same width */}
+    <div className="flex-1 max-w-full md:max-w-md w-full h-auto">
+      <LeftPanel />
+      <div className="mt-1 text-start text-blue-900 space-y-2">
+        <h2 className="text-sm md:text-sm font-bold border-blue-700 flex items-center">
+          Know More About Us
+          <GoChevronRight className="ml-1 text-blue-700" />
+        </h2>
+        <h2 className="text-sm md:text-sm font-bold border-blue-700 flex items-center">
+          Contact Us
+          <GoChevronRight className="ml-1 text-blue-700" />
+        </h2>
       </div>
     </div>
+
+    <div className="flex-1 max-w-full md:max-w-md w-full h-auto">
+      <RightPanel
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
+        onConfirm={handleConfirm}
+      />
+      <div className="flex justify-end mt-1">
+        <img src={Image} alt="Logo" className="h-10 sm:h-16 md:h-20 lg:h-24" />
+      </div>
+    </div>
+  </div>
+</div>
   );
 };
 
 export default DateSelector;
-
-
-

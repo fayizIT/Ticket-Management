@@ -68,7 +68,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
         dots={true}
         infinite={true}
         speed={500}
-        slidesToShow={1}
+        slidesToShow={2} // Display two coupons at once
         slidesToScroll={1}
         arrows={true}
         appendDots={(dots: any) => (
@@ -84,7 +84,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
               key={coupon.code}
               className={`flex-shrink-0 cursor-pointer border p-2 rounded-md text-xs m-2 transition-all duration-300 ease-in-out transform ${
                 activeCoupon?.code === coupon.code
-                  ? "bg-orange-100 border-orange-300"
+                  ? "bg-orange-100 border-orange-500"
                   : "bg-orange-50 hover:bg-orange-100"
               }`}
               onClick={() => handleCouponClick(coupon._id, coupon.code, coupon.discount)}
