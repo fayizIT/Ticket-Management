@@ -20,13 +20,14 @@ import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCat
 import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
 import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
-import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
+// import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 import PaymentFailed from './components/PaymentFailed';
 // import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
 import { useState } from 'react'; 
 import TicketCartPage from './pages/UserSide/TicketCart/TicketCartPage';
+import ReviewBookingPage from './pages/UserSide/ReviewBooking/ReviewBookingPage';
 
 function App() {
   return (

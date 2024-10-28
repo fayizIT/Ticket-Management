@@ -29,7 +29,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ activeSection, toggleSection, o
 
       <div className="flex justify-end mt-2">
         <button
-          className="bg-blue-700 text-white py-2 px-4 rounded-md hover:bg-blue-800 text-sm w-full md:w-auto"
+          className="bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-900 text-sm w-full md:w-auto"
           onClick={onConfirm}
         >
           Agree & Proceed
