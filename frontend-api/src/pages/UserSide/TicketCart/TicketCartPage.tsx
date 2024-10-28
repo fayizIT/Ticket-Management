@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTicketCategories, applyDiscount, removeDiscount } from "../../../redux/ticketSlice";
+import {
+  fetchTicketCategories,
+  applyDiscount,
+  removeDiscount,
+} from "../../../redux/ticketSlice";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +14,13 @@ import { GoChevronRight } from "react-icons/go";
 import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
 
-
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
-  const { tickets, activeCoupon, discountedTotal, categories } = useSelector((state: any) => state.ticketCategory);
+  const { tickets, activeCoupon, discountedTotal, categories } = useSelector(
+    (state: any) => state.ticketCategory
+  );
   const [couponCode, setCouponCode] = useState("");
 
   useEffect(() => {
@@ -52,8 +57,10 @@ const TicketCartPage: React.FC = () => {
   return (
     <div
       className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
-      style={{ backgroundImage: `url(${backgroundImage})`,
-       backgroundAttachment: "fixed", }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
       <Timeline currentStep={1} onStepClick={() => {}} />
       <div className="flex flex-col md:flex-row justify-center items-stretch p-8 space-y-6 md:space-y-0 md:space-x-6 mt-3">
@@ -69,10 +76,14 @@ const TicketCartPage: React.FC = () => {
               <GoChevronRight className="ml-1 text-blue-500" />
             </h2>
             <hr className="border-t border-gray-300 w-[90%] md:w-[185%] my-2 mx-auto border-t-2" />
-            </div>
+          </div>
         </div>
         <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
-          <RightPanel handleConfirm={handleConfirm} couponCode={couponCode} setCouponCode={setCouponCode} />
+          <RightPanel
+            handleConfirm={handleConfirm}
+            couponCode={couponCode}
+            setCouponCode={setCouponCode}
+          />
           <div className="flex justify-center mt-1">
             <div className="flex-1 flex justify-end items-center ">
               <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />

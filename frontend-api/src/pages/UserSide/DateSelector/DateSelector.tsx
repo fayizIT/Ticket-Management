@@ -52,10 +52,10 @@ const DateSelector: React.FC = () => {
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
       <div className="w-full sm:w-4/5 mx-auto mt-4 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-4 px-2 sm:px-0">
-      <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
-        <LeftPanel />
-        <LeftContent /> 
-      </div>
+        <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
+          <LeftPanel />
+          <LeftContent />
+        </div>
 
         <div className="flex-1 max-w-full md:max-w-md w-full h-auto">
           <RightPanel
@@ -63,8 +63,7 @@ const DateSelector: React.FC = () => {
             onDateChange={handleDateChange}
             onConfirm={handleConfirm}
           />
-            <RightFooter imageSrc={Image} /> 
-         
+          <RightFooter imageSrc={Image} />
         </div>
       </div>
     </div>

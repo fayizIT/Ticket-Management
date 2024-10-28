@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFlag } from "react-icons/fa"; // Example for Indian flag icon
+import { FaFlag } from "react-icons/fa";
 
 interface BillingInformationProps {
   formData: {
@@ -8,14 +8,22 @@ interface BillingInformationProps {
     email: string;
     pinCode: string;
   };
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   handleConfirm: () => void;
 }
 
-const BillingInformation: React.FC<BillingInformationProps> = ({ formData, handleChange, handleConfirm }) => {
+const BillingInformation: React.FC<BillingInformationProps> = ({
+  formData,
+  handleChange,
+  handleConfirm,
+}) => {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[480px] md:h-[575px] w-[450px]">
-      <h2 className="text-xl font-semibold mb-4 text-center text-blue-900">Enter Your Details</h2>
+    <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[480px] md:h-[575px] w-[450px]">
+      <h2 className="text-xl font-bold mb-4  text-blue-900">
+        Enter Your Details
+      </h2>
       <form className="space-y-3">
         <div>
           <label className="block text-blue-900 text-sm">Full Name</label>
@@ -25,7 +33,7 @@ const BillingInformation: React.FC<BillingInformationProps> = ({ formData, handl
             value={formData.fullName}
             onChange={handleChange}
             className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 bg-blue-50"
-            placeholder="Enter your full name"
+            placeholder="Enter full name"
           />
         </div>
         <div>
@@ -52,7 +60,7 @@ const BillingInformation: React.FC<BillingInformationProps> = ({ formData, handl
             value={formData.email}
             onChange={handleChange}
             className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 bg-blue-50"
-            placeholder="Enter your email address"
+            placeholder="Enter  email address"
           />
         </div>
         <div>
@@ -62,13 +70,14 @@ const BillingInformation: React.FC<BillingInformationProps> = ({ formData, handl
             value={formData.pinCode}
             onChange={handleChange}
             className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 h-12 resize-none bg-blue-50"
-            placeholder="Enter your PIN"
+            placeholder="Enter PIN Code"
           />
         </div>
       </form>
 
       <p className="text-xs text-gray-600 text-center mt-3">
-        You will receive a confirmation mail with your tickets as soon as the payment is complete
+        You will receive a confirmation mail with your tickets as soon as the
+        payment is complete
       </p>
 
       <div className="flex justify-center mt-4">

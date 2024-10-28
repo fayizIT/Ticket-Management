@@ -45,7 +45,7 @@ const RightPanel: React.FC<{
       if (activeCoupon && activeCoupon.code === couponCode) {
         dispatch(removeDiscount());
         toast.success("Coupon removed");
-        setCouponCode(""); 
+        setCouponCode("");
       } else {
         const coupon = categories.find((c: any) => c.code === couponCode);
         if (coupon) {
@@ -108,16 +108,13 @@ const RightPanel: React.FC<{
                 </button>
               </div>
             </div>
-
             {index < categories.length - 1 && (
               <hr className="border-t border-gray-300 my-3" />
             )}{" "}
-         
           </React.Fragment>
         ))}
       </div>
 
-    
       <div className="flex items-center bg-blue-50 p-2 rounded-md mb-3">
         <input
           type="text"

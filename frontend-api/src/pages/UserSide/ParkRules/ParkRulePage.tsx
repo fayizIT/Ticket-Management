@@ -60,7 +60,11 @@ const ParkRulesPage: React.FC = () => {
             onConfirm={handleConfirm}
           />
           <div className="flex justify-center lg:justify-end mt-2">
-            <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16 object-contain" />
+            <img
+              src={Image}
+              alt="Logo"
+              className="h-8 sm:h-12 md:h-16 object-contain"
+            />
           </div>
         </div>
       </div>

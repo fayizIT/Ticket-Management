@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrementStay, fetchStayCategories, incrementStay } from "../../../redux/stayCategorySlice";
+import {
+  decrementStay,
+  fetchStayCategories,
+  incrementStay,
+} from "../../../redux/stayCategorySlice";
 import Timeline from "../../../components/Timeline";
 import Modal from "react-modal";
-import StayCartLeft from "./StayCartLeft"; 
-import StayCartRight from "./StayCartRight"; 
+import StayCartLeft from "./StayCartLeft";
+import StayCartRight from "./StayCartRight";
 import { useNavigate } from "react-router-dom";
-
 
 const StayCart: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,7 +33,10 @@ const StayCart: React.FC = () => {
     dispatch(fetchStayCategories() as any);
   }, [dispatch]);
 
-  const handleCountChange = (id: string, operation: "increment" | "decrement") => {
+  const handleCountChange = (
+    id: string,
+    operation: "increment" | "decrement"
+  ) => {
     if (operation === "increment") {
       dispatch(incrementStay(id));
     } else {
@@ -49,7 +55,13 @@ const StayCart: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const openModal = (category: { _id: string; image: string; name: string; price: number; description: string }) => {
+  const openModal = (category: {
+    _id: string;
+    image: string;
+    name: string;
+    price: number;
+    description: string;
+  }) => {
     setSelectedCategory(category);
     setModalIsOpen(true);
   };
@@ -59,8 +71,14 @@ const StayCart: React.FC = () => {
     setSelectedCategory(null);
   };
 
-  if (loading) return <p className="text-center">Loading stays, please wait...</p>;
-  if (error) return <p className="text-center text-red-500">Error loading stay categories: {error}</p>;
+  if (loading)
+    return <p className="text-center">Loading stays, please wait...</p>;
+  if (error)
+    return (
+      <p className="text-center text-red-500">
+        Error loading stay categories: {error}
+      </p>
+    );
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -68,13 +86,13 @@ const StayCart: React.FC = () => {
       <div className="bg-gray-100 min-h-screen p-4 sm:p-8 mt-12">
         <div className="flex flex-col lg:flex-row justify-center items-start space-y-8 lg:space-y-0 lg:space-x-8">
           <StayCartLeft />
-          <StayCartRight 
-            stayCategories={stayCategories} 
-            tickets={tickets} 
-            total={total} 
-            handleCountChange={handleCountChange} 
-            openModal={openModal} 
-            handleConfirm={handleConfirm} 
+          <StayCartRight
+            stayCategories={stayCategories}
+            tickets={tickets}
+            total={total}
+            handleCountChange={handleCountChange}
+            openModal={openModal}
+            handleConfirm={handleConfirm}
           />
         </div>
       </div>
@@ -95,7 +113,9 @@ const StayCart: React.FC = () => {
               className="w-full h-48 object-cover mb-4 rounded"
             />
             <p className="text-gray-700 mb-4">{selectedCategory.description}</p>
-            <p className="text-lg font-bold">Price: ₹{selectedCategory.price.toFixed(2)}</p>
+            <p className="text-lg font-bold">
+              Price: ₹{selectedCategory.price.toFixed(2)}
+            </p>
             <button
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               onClick={closeModal}

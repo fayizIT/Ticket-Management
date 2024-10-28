@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createBooking } from "../../../services/BookingService"; 
-import BookingSummary from "./BookingSummary"; 
+import { createBooking } from "../../../services/BookingService";
+import BookingSummary from "./BookingSummary";
 import BillingInformation from "./BillingInformation";
 import { decrementStay, incrementStay } from "../../../redux/stayCategorySlice";
 import { decrementTicket, incrementTicket } from "../../../redux/ticketSlice";
 import { setBookingData } from "../../../redux/bookingSlice";
 import Image from "../../../../public/assets/clientlogo.png";
-
 import backgroundImage from "../../../../public/assets/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
@@ -18,21 +17,35 @@ const ReviewBookingPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { tickets: ticket, categories, discountedTotal: ticketDiscountedTotal, activeCoupon } = useSelector((state: any) => state.ticketCategory);
-  const { stayCategories, tickets: stayTickets, total: stayTotal } = useSelector((state: any) => state.stayCategory);
+  const {
+    tickets: ticket,
+    categories,
+    discountedTotal: ticketDiscountedTotal,
+    activeCoupon,
+  } = useSelector((state: any) => state.ticketCategory);
+  const {
+    stayCategories,
+    tickets: stayTickets,
+    total: stayTotal,
+  } = useSelector((state: any) => state.stayCategory);
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   const originalTicketTotal = categories.reduce(
-    (total: number, category: any) => total + category.price * (ticket[category._id] || 0),
+    (total: number, category: any) =>
+      total + category.price * (ticket[category._id] || 0),
     0
   );
 
   const discountAmount = originalTicketTotal - ticketDiscountedTotal;
-  const ticketTotalAfterDiscount = ticketDiscountedTotal > 0 ? ticketDiscountedTotal : originalTicketTotal;
+  const ticketTotalAfterDiscount =
+    ticketDiscountedTotal > 0 ? ticketDiscountedTotal : originalTicketTotal;
   const grandTotal = ticketTotalAfterDiscount + stayTotal;
   const gst = (grandTotal * 0.18).toFixed(2);
   const amountToBePaid = (grandTotal + parseFloat(gst)).toFixed(2);
-  const totalTicketCount = Object.values(ticket).reduce((sum: number, count: any) => sum + count, 0);
+  const totalTicketCount = Object.values(ticket).reduce(
+    (sum: number, count: any) => sum + count,
+    0
+  );
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -49,21 +62,28 @@ const ReviewBookingPage: React.FC = () => {
     }
   }, [ticket, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleConfirm = async () => {
-    if (!formData.fullName || !formData.phoneNumber || !formData.email || !formData.pinCode) {
+    if (
+      !formData.fullName ||
+      !formData.phoneNumber ||
+      !formData.email ||
+      !formData.pinCode
+    ) {
       toast.error("Please fill in all fields");
       return;
     }
-    if (formData.pinCode.length > 6 || formData.pinCode.length < 6 ) {
+    if (formData.pinCode.length > 6 || formData.pinCode.length < 6) {
       toast.error("Invalid Pincode");
       return;
     }
-    if (formData.phoneNumber.length > 10||formData.phoneNumber.length <10) {
+    if (formData.phoneNumber.length > 10 || formData.phoneNumber.length < 10) {
       toast.error("Invalid Mobile Number");
       return;
     }
@@ -132,10 +152,14 @@ const ReviewBookingPage: React.FC = () => {
               throw new Error("Failed to update payment status");
             }
           } catch (error) {
-            toast.success("Payment confirmed, but failed to update the status.");
+            toast.success(
+              "Payment confirmed, but failed to update the status."
+            );
           }
 
-          navigate("/thank-you", { state: { bookingData: combinedData, result } });
+          navigate("/thank-you", {
+            state: { bookingData: combinedData, result },
+          });
         },
         prefill: {
           name: formData.fullName,
@@ -153,23 +177,32 @@ const ReviewBookingPage: React.FC = () => {
       razorpay.on("payment.failed", function (response: any) {
         navigate("/payment-failed");
       });
-
     } catch (error) {
       toast.error("Error creating booking: " + error);
     }
   };
 
-  const updateTicketCount = (categoryId: string, action: 'increment' | 'decrement') => {
-    action === 'increment' ? dispatch(incrementTicket(categoryId)) : dispatch(decrementTicket(categoryId));
+  const updateTicketCount = (
+    categoryId: string,
+    action: "increment" | "decrement"
+  ) => {
+    action === "increment"
+      ? dispatch(incrementTicket(categoryId))
+      : dispatch(decrementTicket(categoryId));
   };
 
-  const updateStayCount = (categoryId: string, action: 'increment' | 'decrement') => {
-    action === 'increment' ? dispatch(incrementStay(categoryId)) : dispatch(decrementStay(categoryId));
+  const updateStayCount = (
+    categoryId: string,
+    action: "increment" | "decrement"
+  ) => {
+    action === "increment"
+      ? dispatch(incrementStay(categoryId))
+      : dispatch(decrementStay(categoryId));
   };
 
   const handleDecrementWithCheck = (categoryId: any) => {
     if (ticket[categoryId] > 0) {
-      updateTicketCount(categoryId, 'decrement');
+      updateTicketCount(categoryId, "decrement");
     } else {
       alert("Quantity cannot be less than 0");
     }
@@ -190,27 +223,25 @@ const ReviewBookingPage: React.FC = () => {
       }}
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
-      
 
-<div className="w-full sm:w-4/5 mx-auto mt-6 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-0 px-2 sm:px-0">
-
-  <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col">
-    <BookingSummary 
-      selectedDate={selectedDate}
-      totalTicketCount={totalTicketCount}
-      originalTicketTotal={originalTicketTotal}
-      ticket={ticket}
-      categories={categories}
-      stayTickets={stayTickets}
-      stayCategories={stayCategories}
-      gst={gst}
-      discountAmount={discountAmount}
-      amountToBePaid={amountToBePaid}
-      updateTicketCount={updateTicketCount}
-      updateStayCount={updateStayCount}
-      handleDecrementWithCheck={handleDecrementWithCheck}
-    />
-    <div className="mt-1 text-start text-blue-900 space-y-2">
+      <div className="w-full sm:w-4/5 mx-auto mt-6 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-0 px-2 sm:px-0">
+        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col">
+          <BookingSummary
+            selectedDate={selectedDate}
+            totalTicketCount={totalTicketCount}
+            originalTicketTotal={originalTicketTotal}
+            ticket={ticket}
+            categories={categories}
+            stayTickets={stayTickets}
+            stayCategories={stayCategories}
+            gst={gst}
+            discountAmount={discountAmount}
+            amountToBePaid={amountToBePaid}
+            updateTicketCount={updateTicketCount}
+            updateStayCount={updateStayCount}
+            handleDecrementWithCheck={handleDecrementWithCheck}
+          />
+          <div className="mt-1 text-start text-blue-900 space-y-2">
             <h2 className="text-xs md:text-sm font-bold flex items-center">
               Know More About Us
               <GoChevronRight className="ml-1 text-blue-900" />
@@ -221,22 +252,21 @@ const ReviewBookingPage: React.FC = () => {
             </h2>
             <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" />
           </div>
-  </div>
-  <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col ">
-    <BillingInformation 
-      formData={formData}
-      handleChange={handleChange}
-      handleConfirm={handleConfirm}
-    />
-    {/* <div className="flex justify-end mt-1"> */}
-    <div className="flex justify-end md:justify-end mt-1 mr-12">
-      <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
+        </div>
+        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col ">
+          <BillingInformation
+            formData={formData}
+            handleChange={handleChange}
+            handleConfirm={handleConfirm}
+          />
+          {/* <div className="flex justify-end mt-1"> */}
+          <div className="flex justify-end md:justify-end mt-1 mr-12">
+            <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-    </div>
-  );  
+  );
 };
 
 export default ReviewBookingPage;

@@ -7,8 +7,8 @@ const LeftPanel: React.FC = () => {
         Plan Your Visit
       </h2>
       <p className="mb-4 leading-relaxed text-sm sm:text-lg text-blue-900 font-panton-narrow">
-        Prepare for 7 hours of continuous enjoyment, with exhilarating ups and 
-        downs and fantastic thrills at every turn! Brace yourself to be blown 
+        Prepare for 7 hours of continuous enjoyment, with exhilarating ups and
+        downs and fantastic thrills at every turn! Brace yourself to be blown
         away by the incredible rides that lie ahead!
       </p>
       <hr className="border-t border-gray-300 my-4" />

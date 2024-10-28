@@ -1,30 +1,32 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import parkRuleImage from "../../../../public/assets/parkRules.png";
-import icon from '../../../../public/assets/backwardicon.png'; 
+import icon from "../../../../public/assets/backwardicon.png";
 
 const LeftPanel: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleIconClick = () => {
-    navigate("/ticket-cart"); 
+    navigate("/ticket-cart");
   };
 
   return (
-    <div className="p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[500px] md:h-[400px] w-full mx-auto"
+    <div
+      className="p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[500px] md:h-[400px] w-full mx-auto"
       style={{
         backgroundImage: `url(${parkRuleImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-      }}>
+      }}
+    >
       <div className="bg-white bg-opacity-30 rounded-xl flex flex-col">
         <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-900  flex items-center ">
-          <img 
-            src={icon} 
-            alt="Park Icon" 
-            className="mr-2 w-8 h-8 cursor-pointer" 
-            onClick={handleIconClick} 
+          <img
+            src={icon}
+            alt="Park Icon"
+            className="mr-2 w-8 h-8 cursor-pointer"
+            onClick={handleIconClick}
           />
           Park Rules & Guides
         </h2>

@@ -23,7 +23,10 @@ const StayCartRight: React.FC<StayCartRightProps> = ({
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 flex flex-col h-auto lg:h-[31.7rem] overflow-y-auto">
       {stayCategories.map((category) => (
-        <div key={category._id} className="border border-gray-300 rounded-md p-4 mb-4">
+        <div
+          key={category._id}
+          className="border border-gray-300 rounded-md p-4 mb-4"
+        >
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <img
@@ -32,8 +35,12 @@ const StayCartRight: React.FC<StayCartRightProps> = ({
                 className="w-16 h-16 object-cover mr-4 rounded-md border-2 border-gray-300 p-2 mb-4"
               />
               <div>
-                <h4 className="font-bold text-sm sm:text-base">{category.name}</h4>
-                <p className="text-base sm:text-lg">₹{category.price.toFixed(2)}</p>
+                <h4 className="font-bold text-sm sm:text-base">
+                  {category.name}
+                </h4>
+                <p className="text-base sm:text-lg">
+                  ₹{category.price.toFixed(2)}
+                </p>
                 <button
                   className="bg-blue-500 text-white py-1 px-3 rounded-md shadow hover:bg-blue-600 transition duration-200"
                   onClick={() => openModal(category)}
@@ -66,7 +73,9 @@ const StayCartRight: React.FC<StayCartRightProps> = ({
         </div>
       ))}
       <div className="flex justify-between items-center mt-4">
-        <p className="text-base sm:text-lg font-bold">Total: ₹{total.toFixed(2)}</p>
+        <p className="text-base sm:text-lg font-bold">
+          Total: ₹{total.toFixed(2)}
+        </p>
         <button
           className="bg-blue-700 text-white py-2 px-4 rounded-full hover:bg-blue-800 transition-colors duration-200 text-sm sm:text-base"
           onClick={handleConfirm}

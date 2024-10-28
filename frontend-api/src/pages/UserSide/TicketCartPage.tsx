@@ -17,14 +17,8 @@ const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    categories,
-    loading,
-    error,
-    tickets,
-    activeCoupon,
-    discountedTotal,
-  } = useSelector((state: any) => state.ticketCategory);
+  const { categories, loading, error, tickets, activeCoupon, discountedTotal } =
+    useSelector((state: any) => state.ticketCategory);
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -79,7 +73,11 @@ const TicketCartPage: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const handleCouponClick = (id: string, code: string, discountAmount: number) => {
+  const handleCouponClick = (
+    id: string,
+    code: string,
+    discountAmount: number
+  ) => {
     const totalTickets = Object.values(tickets).reduce(
       (sum: number, count) => sum + (count as number),
       0
@@ -153,7 +151,11 @@ const TicketCartPage: React.FC = () => {
                           : "bg-orange-50"
                       }`}
                       onClick={() =>
-                        handleCouponClick(coupon._id, coupon.code, coupon.discount)
+                        handleCouponClick(
+                          coupon._id,
+                          coupon.code,
+                          coupon.discount
+                        )
                       }
                     >
                       <h4 className="font-bold text-gray-800">{coupon.code}</h4>
@@ -227,7 +229,11 @@ const TicketCartPage: React.FC = () => {
                   value={activeCoupon?.code || ""}
                   onChange={(e) =>
                     dispatch(
-                      applyDiscount({ id: null, code: e.target.value, discount: 0 })
+                      applyDiscount({
+                        id: null,
+                        code: e.target.value,
+                        discount: 0,
+                      })
                     )
                   }
                 />

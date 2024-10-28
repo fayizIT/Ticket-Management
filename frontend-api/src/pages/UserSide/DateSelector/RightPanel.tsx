@@ -52,7 +52,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           }}
           value={selectedDate}
           tileClassName={({ date }: { date: Date }) =>
-            isPastDate(date) 
+            isPastDate(date)
               ? "bg-gray-200 text-gray-500 text-xs"
               : isSelectedDate(date)
               ? "bg-blue-900 text-white text-xs"
