@@ -40,9 +40,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
   const formattedSelectedDate = selectedDate ? formatDate(selectedDate) : "";
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg w-full md:h-[425px] border border-gray-300">
+    <div className="bg-white p-4 rounded-3xl shadow-lg w-full md:h-[425px] border border-gray-300">
       <h3 className="text-center text-lg sm:text-xl font-bold mb-3 text-blue-900">
-        Choose a Date to Visit
+        Choose a date to visit
       </h3>
       <div className="flex justify-center mb-4">
         <Calendar
@@ -64,7 +64,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
       </div>
       <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-2 sm:space-y-0 sm:space-x-2">
         <h6 className="text-xs sm:text-sm font-bold text-blue-900 text-center sm:text-left">
-          You have selected:{" "}
+          You selected{" "}
           <span className="font-semibold">{formattedSelectedDate}</span>
         </h6>
         <button

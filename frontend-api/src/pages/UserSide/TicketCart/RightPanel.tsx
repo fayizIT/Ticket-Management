@@ -67,7 +67,7 @@ const RightPanel: React.FC<{
   };
 
   return (
-    <div className="bg-white p-2 md:p-3 rounded-lg shadow-md w-full h-auto md:h-[380px] border border-gray-200 flex-grow -mt-6">
+    <div className="bg-white p-2 md:p-3 rounded-3xl shadow-md w-full h-auto md:h-[380px] border border-gray-300 flex-grow -mt-6">
       <h3 className="text-lg font-semibold mb-2 text-blue-900">
         Choose your tickets
       </h3>
@@ -76,12 +76,12 @@ const RightPanel: React.FC<{
           <React.Fragment key={category._id}>
             <div className="flex justify-between items-center py-1">
               <div className="flex items-center">
-                <FaUser className="w-5 h-5 mr-2 text-gray-500" />
+                <FaUser className="w-5 h-5 mr-2 text-blue-900" />
                 <div>
-                  <h4 className="font-medium text-sm text-gray-800">
+                  <h4 className="font-medium text-sm text-blue-900">
                     {category.name}
                   </h4>
-                  <p className="text-xs text-gray-700">
+                  <p className="text-xs text-blue-900">
                     ₹{category.price.toFixed(2)}
                   </p>
                 </div>
@@ -121,7 +121,7 @@ const RightPanel: React.FC<{
       <div className="flex items-center bg-blue-50 p-2 rounded-md mb-3">
         <input
           type="text"
-          className="bg-transparent border-none flex-grow text-xs focus:outline-none placeholder-gray-500"
+          className="bg-transparent border-none flex-grow text-xs focus:outline-none placeholder-blue-900"
           placeholder="Enter a Coupon code"
           value={couponCode}
           onChange={(e) => setCouponCode(e.target.value)}

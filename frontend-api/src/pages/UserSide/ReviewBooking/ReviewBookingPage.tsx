@@ -101,7 +101,7 @@ const ReviewBookingPage: React.FC = () => {
       };
 
       if (!result.bookingId) {
-        alert("Failed to retrieve booking ID.");
+        toast.error("Failed to retrieve booking ID.");
         return;
       }
 
@@ -113,7 +113,7 @@ const ReviewBookingPage: React.FC = () => {
         description: `Booking for ${result.totalVisitors} visitors`,
         order_id: result.orderId,
         handler: async function (response: any) {
-          alert("Payment successful!");
+          toast.success("Payment successful!");
           dispatch(setBookingData(result));
 
           try {
@@ -132,7 +132,7 @@ const ReviewBookingPage: React.FC = () => {
               throw new Error("Failed to update payment status");
             }
           } catch (error) {
-            alert("Payment confirmed, but failed to update the status.");
+            toast.success("Payment confirmed, but failed to update the status.");
           }
 
           navigate("/thank-you", { state: { bookingData: combinedData, result } });
@@ -219,6 +219,7 @@ const ReviewBookingPage: React.FC = () => {
               Contact Us
               <GoChevronRight className="ml-1 text-blue-900" />
             </h2>
+            <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" />
           </div>
   </div>
   <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col ">

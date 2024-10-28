@@ -8,7 +8,7 @@ import Timeline from "../../../components/Timeline";
 import { toast } from "react-toastify";
 import { GoChevronRight } from "react-icons/go";
 import Image from "../../../../public/assets/clientlogo.png";
-import backgroundImage from "../../../../public/assets/TicketFramee.png";
+import backgroundImage from "../../../../public/assets/TicketFrame.png";
 
 
 const TicketCartPage: React.FC = () => {
@@ -52,7 +52,8 @@ const TicketCartPage: React.FC = () => {
   return (
     <div
       className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ backgroundImage: `url(${backgroundImage})`,
+       backgroundAttachment: "fixed", }}
     >
       <Timeline currentStep={1} onStepClick={() => {}} />
       <div className="flex flex-col md:flex-row justify-center items-stretch p-8 space-y-6 md:space-y-0 md:space-x-6 mt-3">
@@ -67,7 +68,7 @@ const TicketCartPage: React.FC = () => {
               Contact Us
               <GoChevronRight className="ml-1 text-blue-500" />
             </h2>
-            {/* <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" /> */}
+            <hr className="border-t border-gray-300 w-[90%] md:w-[185%] my-2 mx-auto border-t-2" />
             </div>
         </div>
         <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">

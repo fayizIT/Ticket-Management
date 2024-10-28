@@ -7,12 +7,15 @@ import couponBg from '../../../../public/assets/CouponBackgroundimage.png';
 import Slider from "react-slick"; 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import icon from '../../../../public/assets/backwardicon.png'; 
+import { useNavigate } from "react-router-dom";
 
 interface LeftPanelProps {
   setCouponCode: (code: string) => void; 
 }
 
 const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
   const { activeCoupon, tickets } = useSelector((state: any) => state.ticketCategory);
   const [coupons, setCoupons] = React.useState([]);
@@ -46,22 +49,37 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
     }
   };
 
+  const handleIconClick = () => {
+    navigate("/date-selector"); 
+  };
+
   return (
     <div
-      className="bg-white p-2 md:p-3 rounded-lg shadow-md w-full h-auto md:h-[380px] border border-gray-200 flex-grow -mt-6 relative"
+      className="bg-white p-2 md:p-3 rounded-3xl shadow-md w-full h-auto md:h-[380px] border border-gray-300 flex-grow -mt-6 relative"
       style={{
         backgroundImage: `url(${couponBg})`, 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <h2 className="text-xl font-bold mb-3 text-blue-900">Grab Your Tickets</h2>
+      {/* Flex container for icon and title */}
+      <div className="flex items-center mb-2">
+        <img 
+          src={icon} 
+          alt="Park Icon" 
+          className="mr-2 w-8 h-8 cursor-pointer" 
+          onClick={handleIconClick} 
+        />
+        <h2 className="text-xl font-bold text-blue-900">
+          Grab Your Tickets
+        </h2>
+      </div>
+      
       <p className="text-blue-800 mb-4 leading-relaxed text-sm">
-      Grab your tickets for a weekend of excitement, and fun. Our tickets run out fast so book now.
+        Grab your tickets for a weekend of excitement, and fun. Our tickets run out fast so book now.
       </p>
       <h3 className="text-lg text-center font-bold text-black-900 mb-3">Trending Coupons</h3>
 
-      {/* Carousel for coupons */}
       <Slider
         dots={true}
         infinite={true}

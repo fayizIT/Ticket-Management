@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/store';
 import AdminLogin from './pages/AdminSide/AdminLogin/AdminLogin'; 
@@ -20,10 +20,8 @@ import TicketCategoriesList from './pages/AdminSide/TicketCategory/ListTicketCat
 import CouponCodeList from './pages/AdminSide/CouponCode/CouponCodeList';
 import CreateCouponCode from './pages/AdminSide/CouponCode/CreateCouponCode';
 import EditCouponCode from './pages/AdminSide/CouponCode/EditCouponCode';
-// import ReviewBookingPage from './pages/UserSide/ReviewBookingPage';
 import BookingDetails from './pages/AdminSide/userDetails/BookingDetails';
 import PaymentFailed from './components/PaymentFailed';
-// import TicketCartPage from './pages/UserSide/TicketCartPage';
 import PaymentSuccess from './components/PaymentSuccess';
 import { useState } from 'react'; 
 import TicketCartPage from './pages/UserSide/TicketCart/TicketCartPage';
@@ -53,7 +51,7 @@ function MainLayout() {
 
   return (
     <div className="flex ">
-      {/* Hamburger Button for small screens */}
+     
       {isAdminRoute && (
         <button onClick={toggleSidebar} className="md:hidden p-2">
           <span className="material-icons">menu</span>
@@ -67,7 +65,7 @@ function MainLayout() {
         </div>
       )}
 
-      {/* Main Content */}
+      
       <div className={`flex-grow ${isAdminRoute ? 'md:ml-72' : ''}`}>
         <div className={isAdminRoute ? 'h-screen overflow-y-auto' : ''}>
           <Routes>

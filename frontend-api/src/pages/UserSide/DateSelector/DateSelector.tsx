@@ -6,9 +6,11 @@ import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
-import backgroundImage from "../../../../public/assets/TicketFramee.png";
+import backgroundImage from "../../../../public/assets/TicketFrame.png";
 import Image from "../../../../public/assets/clientlogo.png";
 import { GoChevronRight } from "react-icons/go";
+import LeftContent from "../../../components/LeftFooter";
+import RightFooter from "../../../components/RightFooter";
 
 const DateSelector: React.FC = () => {
   const navigate = useNavigate();
@@ -50,19 +52,10 @@ const DateSelector: React.FC = () => {
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
       <div className="w-full sm:w-4/5 mx-auto mt-4 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-4 px-2 sm:px-0">
-        <div className="flex-1 max-w-full md:max-w-md w-full h-auto">
-          <LeftPanel />
-          <div className="mt-1 text-start text-blue-900 space-y-2">
-            <h2 className="text-xs md:text-sm font-bold flex items-center">
-              Know More About Us
-              <GoChevronRight className="ml-1 text-blue-700" />
-            </h2>
-            <h2 className="text-xs md:text-sm font-bold flex items-center">
-              Contact Us
-              <GoChevronRight className="ml-1 text-blue-700" />
-            </h2>
-          </div>
-        </div>
+      <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
+        <LeftPanel />
+        <LeftContent /> 
+      </div>
 
         <div className="flex-1 max-w-full md:max-w-md w-full h-auto">
           <RightPanel
@@ -70,9 +63,8 @@ const DateSelector: React.FC = () => {
             onDateChange={handleDateChange}
             onConfirm={handleConfirm}
           />
-          <div className="flex justify-center md:justify-end mt-1">
-            <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
-          </div>
+            <RightFooter imageSrc={Image} /> 
+         
         </div>
       </div>
     </div>

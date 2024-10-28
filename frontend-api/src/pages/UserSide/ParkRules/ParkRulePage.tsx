@@ -5,7 +5,7 @@ import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { GoChevronRight } from "react-icons/go";
 import Image from "../../../../public/assets/clientlogo.png";
-import backgroundImage from "../../../../public/assets/TicketFramee.png";
+import backgroundImage from "../../../../public/assets/TicketFrame.png";
 
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const ParkRulesPage: React.FC = () => {
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
-      <div className="w-full sm:w-4/5 mx-auto mt-4 flex flex-col lg:flex-row justify-center items-start space-y-4 lg:space-y-0 lg:space-x-4 px-2">
+      <div className="w-full sm:w-4/5 mx-auto flex flex-col lg:flex-row justify-center items-start space-y-4 lg:space-y-0 lg:space-x-4 px-2">
         <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
           <LeftPanel />
           <div className="mt-2 text-start text-blue-900 space-y-2">
@@ -49,6 +49,7 @@ const ParkRulesPage: React.FC = () => {
               Contact Us
               <GoChevronRight className="ml-1 text-blue-700" />
             </h2>
+            <hr className="border-t border-gray-300 w-[90%] md:w-[185%] my-2 mx-auto border-t-2" />
           </div>
         </div>
 

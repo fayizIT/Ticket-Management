@@ -8,8 +8,8 @@ interface RightPanelProps {
 
 const RightPanel: React.FC<RightPanelProps> = ({ activeSection, toggleSection, onConfirm }) => {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[400px] w-full mx-auto">
-      <h3 className="text-lg lg:text-xl font-bold mb-2 text-blue-900 text-center">More Information</h3>
+    <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[400px] w-full mx-auto">
+      <div className="text-lg lg:text-xl font-bold mb-8 text-blue-900 text-center"/>
 
       <div className="flex-grow overflow-y-auto mb-4 pr-2">
         {renderSection("Dress Code Of Fun", "dressCode", activeSection, toggleSection, 
@@ -29,10 +29,10 @@ const RightPanel: React.FC<RightPanelProps> = ({ activeSection, toggleSection, o
 
       <div className="flex justify-end mt-2">
         <button
-          className="bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-900 text-sm w-full md:w-auto"
+          className="bg-blue-900 text-white py-2 px-4 rounded-3xl hover:bg-blue-900 text-sm w-full md:w-auto"
           onClick={onConfirm}
         >
-          Agree & Proceed
+          Continue
         </button>
       </div>
     </div>
