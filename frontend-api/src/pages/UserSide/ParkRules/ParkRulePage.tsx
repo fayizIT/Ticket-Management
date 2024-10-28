@@ -29,7 +29,7 @@ const ParkRulesPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center "
+      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundAttachment: "fixed",
@@ -37,36 +37,29 @@ const ParkRulesPage: React.FC = () => {
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
-      <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8  bg-opacity-75">
-        {/* Left Panel */}
-        <div className="flex-1 max-w-md w-full">
+      <div className="w-full sm:w-4/5 mx-auto mt-4 flex flex-col lg:flex-row justify-center items-start space-y-4 lg:space-y-0 lg:space-x-4 px-2">
+        <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
           <LeftPanel />
-
-          {/* "Know More About Us" and "Contact Us" Section */}
-          <div className="mt-4 text-start text-blue-900 space-y-2">
-            <h2 className="text-sm md:text-base font-bold flex items-center">
+          <div className="mt-2 text-start text-blue-900 space-y-2">
+            <h2 className="text-xs md:text-sm font-bold flex items-center">
               Know More About Us
-              <GoChevronRight className="ml-1 text-blue-900" />
+              <GoChevronRight className="ml-1 text-blue-700" />
             </h2>
-            <h2 className="text-sm md:text-base font-bold flex items-center">
+            <h2 className="text-xs md:text-sm font-bold flex items-center">
               Contact Us
-              <GoChevronRight className="ml-1 text-blue-900" />
+              <GoChevronRight className="ml-1 text-blue-700" />
             </h2>
-            {/* <hr className="border-t border-gray-300 w-full md:w-full my-2 mx-auto border-t-2" /> */}
           </div>
         </div>
 
-        {/* Right Panel */}
-        <div className="flex-1 max-w-md w-full">
+        <div className="flex-1 max-w-full lg:max-w-md w-full h-auto">
           <RightPanel
             activeSection={activeSection}
             toggleSection={toggleSection}
             onConfirm={handleConfirm}
           />
-
-         
-          <div className="flex justify-end mt-2">
-            <img src={Image} alt="Logo" className="h-16 sm:h-20 sm:h-24" />
+          <div className="flex justify-center lg:justify-end mt-2">
+            <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16 object-contain" />
           </div>
         </div>
       </div>
