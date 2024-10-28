@@ -15,7 +15,7 @@ const Timeline: React.FC<{
           navigate("/");
           break;
         case 1:
-          navigate("/add-tickets");
+          navigate("/ticket-cart");
           break;
         case 2:
           navigate("/park-rules");

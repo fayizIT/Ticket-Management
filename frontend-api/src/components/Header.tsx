@@ -13,7 +13,6 @@ const Header: React.FC = () => {
     <header className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white fixed top-0 left-0 w-full z-20 shadow-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <div className="text-3xl font-extrabold">
             <Link
               to="/"
@@ -23,7 +22,6 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMenu}
             className="text-2xl md:hidden text-white hover:text-yellow-300 transition duration-300"
@@ -31,7 +29,6 @@ const Header: React.FC = () => {
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
 
-          {/* Nav Links - Mobile and Desktop */}
           <nav
             className={`absolute md:relative top-full left-0 w-full md:w-auto bg-purple-700 md:bg-transparent ${
               isMenuOpen ? "block" : "hidden"
@@ -74,7 +71,6 @@ const Header: React.FC = () => {
           </nav>
         </div>
 
-        {/* Contact Info */}
         <div className="text-sm mt-4 md:mt-2 text-center md:text-right">
           <span className="block md:inline bg-indigo-500 py-1 px-3 rounded-full">
             Call us: +91 999 44 66 777

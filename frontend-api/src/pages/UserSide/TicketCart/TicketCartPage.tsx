@@ -46,7 +46,7 @@ const TicketCartPage: React.FC = () => {
       return;
     }
 
-    navigate("/stay-categories");
+    navigate("/park-rules");
   };
 
   return (
@@ -74,7 +74,7 @@ const TicketCartPage: React.FC = () => {
           <RightPanel handleConfirm={handleConfirm} couponCode={couponCode} setCouponCode={setCouponCode} />
           <div className="flex justify-center mt-1">
             <div className="flex-1 flex justify-end items-center ">
-              <img src={Image} alt="Logo" className="h-16 sm:h-20 sm:h-24" />
+              <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
             </div>
           </div>
         </div>

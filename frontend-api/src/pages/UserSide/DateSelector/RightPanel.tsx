@@ -68,7 +68,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           <span className="font-semibold">{formattedSelectedDate}</span>
         </h6>
         <button
-          className="w-full sm:w-auto bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-700 transition duration-200"
+          className="w-full sm:w-auto bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-900 transition duration-200"
           onClick={onConfirm}
         >
           Proceed to Buy Tickets

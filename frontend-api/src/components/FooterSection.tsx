@@ -4,10 +4,9 @@ const FooterSection: React.FC = () => {
   return (
     <footer className="bg-gray-800 text-white py-6 relative">
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-        {/* Left Section: Copyright Text */}
         <div className="text-center sm:text-left flex items-center space-x-2">
           <p className="text-sm">&copy; 2024 Designed and Developed by</p>
-          {/* Company Icon */}
+
           <img
             src="/assets/companylogo.png"
             alt="Company Logo"
@@ -15,7 +14,6 @@ const FooterSection: React.FC = () => {
           />
         </div>
 
-        {/* Right Section: Company Icon */}
         <div className="mt-4 sm:mt-0">
           <img
             src="/assets/clientlogo.png"

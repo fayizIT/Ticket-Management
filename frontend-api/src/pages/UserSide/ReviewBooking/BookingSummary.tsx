@@ -1,6 +1,5 @@
-
 import React from "react";
-import { FaUser, FaUserFriends } from "react-icons/fa";
+import { FaBed, FaUser, FaUserFriends } from "react-icons/fa";
 
 interface TicketCategory {
   _id: string;
@@ -14,8 +13,8 @@ interface BookingSummaryProps {
   originalTicketTotal: number;
   ticket: { [key: string]: number };
   categories: TicketCategory[];
-  stayTickets: { [key: string]: number };
   stayCategories: TicketCategory[];
+  stayTickets: { [key: string]: number };
   gst: string;
   discountAmount: number;
   amountToBePaid: string;
@@ -23,10 +22,7 @@ interface BookingSummaryProps {
     categoryId: string,
     action: "increment" | "decrement"
   ) => void;
-  updateStayCount: (
-    categoryId: string,
-    action: "increment" | "decrement"
-  ) => void;
+  updateStayCount: (categoryId: string, action: 'increment' | 'decrement') => void;
   handleDecrementWithCheck: (categoryId: string) => void;
 }
 
@@ -36,20 +32,23 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   originalTicketTotal,
   ticket,
   categories,
+  stayTickets,
+  stayCategories,
   gst,
   discountAmount,
   amountToBePaid,
   updateTicketCount,
+  updateStayCount,
   handleDecrementWithCheck,
 }) => {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[500px] md:h-[585px] w-[450px] mx-auto md:mx-0">
-      <h2 className="text-lg font-semibold mb-4 text-center">
+    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[480px] md:h-[575px] w-[450px]  mx-auto md:mx-10">
+      <h2 className="text-lg font-semibold mb-4 text-center text-blue-900">
         Booking Summary
       </h2>
 
       <div className="mb-4 text-center">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start text-blue-900">
           <div className="flex flex-col items-center">
             <p className="text-xs">Date of Visit:</p>
             <span className="font-bold text-sm">
@@ -63,7 +62,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
           <div className="flex flex-col items-center mt-2 md:mt-0">
             <div className="flex items-center">
-              <FaUserFriends className="text-xl mr-1 text-gray-600" />
+              <FaUserFriends className="text-xl mr-1 text-blue-900" />
               <p className="text-xs font-bold">Visitors:</p>
             </div>
             <span className="font-bold text-sm ml-1">{totalTicketCount}</span>
@@ -78,7 +77,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         </div>
       </div>
 
-      <h2 className="text-md font-semibold mt-4 mb-2">Ticket Summary</h2>
+      <h2 className="text-md font-semibold mt-4 mb-2 text-blue-900">Ticket Summary</h2>
       {Object.keys(ticket).length > 0 ? (
         Object.keys(ticket)
           .filter((categoryId) => ticket[categoryId] > 0)
@@ -91,13 +90,13 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
               return (
                 <div
                   key={category._id}
-                  className="flex justify-between items-center py-2 border-b border-gray-300"
+                  className="flex justify-between items-center py-2 border-b border-gray-300 text-blue-900"
                 >
                   <div className="flex items-center">
-                    <FaUser className="w-6 h-6 text-gray-500" />
+                    <FaUser className="w-6 h-6  text-blue-900" />
                     <div className="ml-2">
                       <h4 className="font-bold text-sm">{category.name}</h4>
-                      <p className="text-gray-600 text-xs">
+                      <p className="text-xs text-blue-900">
                         ₹{category.price.toFixed(2)}
                       </p>
                     </div>
@@ -133,15 +132,95 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         <p className="text-gray-500 text-xs">No tickets added.</p>
       )}
 
-      <div className="mt-3  pt-1" />
-      <h4 className="text-xs font-bold">Ticket GST (18%): ₹{gst}</h4>
-      <h4 className="text-xs font-bold text-red-600">
-        Coupon Discount: ₹-{discountAmount.toFixed(2)}
+{/* <h2 className="text-md font-semibold mt-4 mb-2">Stays Summary</h2>
+    {Object.keys(stayTickets).length > 0 && Object.values(stayTickets).some((count: any) => count > 0) ? (
+      stayCategories
+        .filter((category: any) => stayTickets[category._id] > 0)
+        .map((category: any) => (
+          <div key={category._id} className="flex justify-between items-center py-2 border-b border-gray-300">
+            <div className="flex items-center">
+              <FaBed className="w-6 h-6 text-gray-500" />
+              <div className="ml-2">
+                <h4 className="font-bold text-sm">{category.name}</h4>
+                <p className="text-gray-600 text-xs">₹{category.price.toFixed(2)}</p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <button
+                className="px-2 py-1 bg-blue-500 text-white rounded-l"
+                onClick={() => updateStayCount(category._id, 'decrement')}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                className="w-12 text-center border-t border-b"
+                value={stayTickets[category._id] || 0}
+                readOnly
+              />
+              <button
+                className="px-2 py-1 bg-blue-500 text-white rounded-r"
+                onClick={() => updateStayCount(category._id, 'increment')}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        ))
+    ) : (
+      <p className="text-gray-500 text-xs">No tickets added in stay cart.</p>
+    )} */}
+
+      {/* <div className="mt-3 pt-1" />
+      <h4 className="text-md font-bold text-blue-900">Ticket GST (18%)</h4>
+      
+      <span className="text-md font-bold  ">
+      ₹{gst}
+        </span>
+
+      <h4 className="text-md font-bold text-red-600">
+        Coupon Discount: 
+
+        <span className="text-md font-bold ">
+        ₹-{discountAmount.toFixed(2)}
+        </span>
       </h4>
       <div className="border-t border-gray-300 my-4" />
-      <h4 className="text-md font-bold mt-14">
-        Grand Total: ₹{amountToBePaid}
-      </h4>
+
+      <div className="flex justify-between items-center text-blue-900">
+        <h4 className="text-md font-bold">Final Summary:</h4>
+        <span className="text-md font-bold ">
+          ₹{amountToBePaid}
+        </span>
+      </div> */}
+
+<div className="mt-3 pt-1 flex justify-between items-center">
+  <h4 className="text-md font-bold text-blue-900">Ticket GST (18%):</h4>
+  <span className="text-md font-bold text-blue-900">
+    ₹{gst}
+  </span>
+</div>
+
+<div className="mt-2 flex justify-between items-center">
+  <h4 className="text-md font-bold text-red-600">
+    Coupon Discount:
+  </h4>
+  <span className="text-md font-bold text-red-600">
+    ₹-{discountAmount.toFixed(2)}
+  </span>
+</div>
+
+<div className="border-t border-gray-300 my-4" />
+
+<div className="flex justify-between items-center text-blue-900 rounded-lg bg-blue-50 p-2 shadow-sm">
+  <h4 className="text-lg font-bold">Final Summary:</h4>
+  <div className=" text-blue-900 ">
+    <span className="text-lg font-bold">
+      ₹{amountToBePaid}
+    </span>
+  </div>
+</div>
+
     </div>
   );
 };

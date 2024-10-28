@@ -10,7 +10,7 @@ import backgroundImage from "../../../../public/assets/TicketFramee.png";
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const toggleSection = (section: string) => {
     setActiveSection(activeSection === section ? null : section);
