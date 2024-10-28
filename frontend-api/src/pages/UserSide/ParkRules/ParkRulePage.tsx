@@ -5,7 +5,7 @@ import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { GoChevronRight } from "react-icons/go";
 import Image from "../../../../public/assets/clientlogo.png";
-import backgroundImage from "../../../../public/assets/TicketFramee.png"; 
+import backgroundImage from "../../../../public/assets/TicketFramee.png";
 
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,12 +29,15 @@ const ParkRulesPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center "
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 
-      <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8 bg-gray-50 bg-opacity-75">
+      <div className="flex flex-col md:flex-row justify-center items-start p-8 space-y-6 md:space-y-0 md:space-x-6 mt-8  bg-opacity-75">
         {/* Left Panel */}
         <div className="flex-1 max-w-md w-full">
           <LeftPanel />
@@ -47,9 +50,9 @@ const ParkRulesPage: React.FC = () => {
             </h2>
             <h2 className="text-sm md:text-base font-bold flex items-center">
               Contact Us
-              <GoChevronRight className="ml-1 text-blue-500" />
+              <GoChevronRight className="ml-1 text-blue-900" />
             </h2>
-            <hr className="border-t border-gray-300 w-full md:w-full my-2 mx-auto border-t-2" />
+            {/* <hr className="border-t border-gray-300 w-full md:w-full my-2 mx-auto border-t-2" /> */}
           </div>
         </div>
 
@@ -61,9 +64,9 @@ const ParkRulesPage: React.FC = () => {
             onConfirm={handleConfirm}
           />
 
-          {/* Logo Section */}
-          <div className="flex justify-center mt-4">
-            <img src={Image} alt="Logo" className="h-16 md:h-20 lg:h-24" />
+         
+          <div className="flex justify-end mt-2">
+            <img src={Image} alt="Logo" className="h-16 sm:h-20 sm:h-24" />
           </div>
         </div>
       </div>

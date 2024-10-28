@@ -2,15 +2,16 @@ import React from "react";
 
 const LeftPanel: React.FC = () => {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[500px] md:h-[375px] w-full mx-auto md:mx-0">
-      <h2 className="text-xl sm:text-2xl font-bold mb-2 font-panton-narrow text-blue-800">
+    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex flex-col h-auto max-h-[500px] md:h-[425px] w-full mx-auto md:mx-0">
+      <h2 className="text-xl sm:text-2xl font-bold mb-2 font-panton-narrow text-blue-900">
         Plan Your Visit
       </h2>
-      <p className="mb-2 leading-relaxed text-sm sm:text-lg text-blue-800 font-panton-narrow">
-        Prepare for 7 hours of continuous enjoyment, with exhilarating ups and downs and fantastic thrills at every turn!
+      <p className="mb-2 leading-relaxed text-sm sm:text-lg text-blue-900 font-panton-narrow">
+        Prepare for 7 hours of continuous enjoyment, with exhilarating ups and
+        downs and fantastic thrills at every turn!
       </p>
       <hr className="border-t border-gray-300 my-2" />
-      <h3 className="text-base sm:text-lg text-blue-800 font-semibold mb-2 font-panton-narrow">
+      <h3 className="text-base sm:text-lg text-blue-900 font-semibold mb-2 font-panton-narrow">
         Our Timings
       </h3>
       <div className="bg-sky-50 p-2 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-700">

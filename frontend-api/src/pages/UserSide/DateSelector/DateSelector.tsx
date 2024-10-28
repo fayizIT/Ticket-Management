@@ -98,7 +98,10 @@ const DateSelector: React.FC = () => {
   return (
     <div
       className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
 

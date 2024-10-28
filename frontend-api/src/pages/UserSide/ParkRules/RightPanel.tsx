@@ -51,7 +51,7 @@ const renderSection = (
 ) => (
   <div className="mb-4 border border-gray-300 rounded-lg p-4 bg-gray-50">
     <button
-      className={`w-full text-left font-semibold text-blue-700 flex justify-between items-center text-sm ${contentClass}`}
+      className={`w-full text-left font-semibold text-blue-900 flex justify-between items-center text-sm ${contentClass}`}
       onClick={() => toggleSection(sectionKey)}
     >
       {title}

@@ -40,7 +40,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   const formattedSelectedDate = selectedDate ? formatDate(selectedDate) : "";
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg w-full h-auto border border-gray-300">
+    <div className="bg-white p-4 rounded-xl shadow-lg w-full md:h-[425px] border border-gray-300">
       <h3 className="text-center text-lg sm:text-xl font-bold mb-3 text-blue-900">
         Choose a Date to Visit
       </h3>
@@ -55,16 +55,17 @@ const RightPanel: React.FC<RightPanelProps> = ({
             isPastDate(date)
               ? "bg-gray-200 text-gray-500 text-xs"
               : isSelectedDate(date)
-              ? "bg-blue-600 text-white text-xs"
+              ? "bg-blue-900 text-white text-xs"
               : "bg-white text-xs"
           }
           tileDisabled={({ date }: { date: Date }) => isPastDate(date)}
-          className="w-full text-xs"
+          className="w-82 h-14, text-xs"
         />
       </div>
       <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-2 sm:space-y-0 sm:space-x-2">
         <h6 className="text-xs sm:text-sm font-bold text-blue-900 text-center sm:text-left">
-          You have selected: <span className="font-semibold">{formattedSelectedDate}</span>
+          You have selected:{" "}
+          <span className="font-semibold">{formattedSelectedDate}</span>
         </h6>
         <button
           className="w-full sm:w-auto bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-700 transition duration-200"

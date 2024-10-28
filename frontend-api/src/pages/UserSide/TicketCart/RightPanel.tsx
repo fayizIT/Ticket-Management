@@ -45,7 +45,7 @@ const RightPanel: React.FC<{
       if (activeCoupon && activeCoupon.code === couponCode) {
         dispatch(removeDiscount());
         toast.success("Coupon removed");
-        setCouponCode(""); // Clear the input after removing the coupon
+        setCouponCode(""); 
       } else {
         const coupon = categories.find((c: any) => c.code === couponCode);
         if (coupon) {
@@ -108,16 +108,16 @@ const RightPanel: React.FC<{
                 </button>
               </div>
             </div>
-            {/* Add margin on the top of the line to create space */}
+
             {index < categories.length - 1 && (
               <hr className="border-t border-gray-300 my-3" />
             )}{" "}
-            {/* Increased vertical margin */}
+         
           </React.Fragment>
         ))}
       </div>
 
-      {/* Input for Coupon Code */}
+    
       <div className="flex items-center bg-blue-50 p-2 rounded-md mb-3">
         <input
           type="text"

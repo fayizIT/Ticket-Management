@@ -4,14 +4,12 @@ import { toast } from "react-toastify";
 import CouponService from "../../../services/CouponService";
 import { applyDiscount, removeDiscount } from "../../../redux/ticketSlice";
 import couponBg from '../../../../public/assets/CouponBackgroundimage.png';
-import Slider from "react-slick"; // Import the carousel component
-
-// Import slick carousel styles
+import Slider from "react-slick"; 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
 interface LeftPanelProps {
-  setCouponCode: (code: string) => void; // Accept setCouponCode as a prop
+  setCouponCode: (code: string) => void; 
 }
 
 const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
@@ -37,11 +35,11 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
       if (activeCoupon && activeCoupon.code === code) {
         dispatch(removeDiscount());
         toast.success("Coupon removed");
-        setCouponCode(""); // Clear coupon code when removed
+        setCouponCode(""); 
       } else {
         dispatch(applyDiscount({ id, code, discount: discountAmount }));
         toast.success(`Coupon applied: ${code}`);
-        setCouponCode(code); // Set coupon code when applied
+        setCouponCode(code); 
       }
     } else {
       toast.error("Please add at least one ticket before applying a coupon.");
@@ -52,7 +50,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
     <div
       className="bg-white p-2 md:p-3 rounded-lg shadow-md w-full h-auto md:h-[380px] border border-gray-200 flex-grow -mt-6 relative"
       style={{
-        backgroundImage: `url(${couponBg})`, // Use the imported image
+        backgroundImage: `url(${couponBg})`, 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -68,7 +66,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
         dots={true}
         infinite={true}
         speed={500}
-        slidesToShow={2} // Display two coupons at once
+        slidesToShow={2} 
         slidesToScroll={1}
         arrows={true}
         appendDots={(dots: any) => (
