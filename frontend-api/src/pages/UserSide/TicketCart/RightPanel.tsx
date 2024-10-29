@@ -142,7 +142,7 @@ const RightPanel: React.FC<{
             : calculatedTotal.toFixed(2)}
         </p>
         <button
-          className="flex justify-center bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-800 text-xs transition duration-300"
+          className="flex justify-center font-bold bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-800 text-xs transition duration-300"
           onClick={handleConfirm}
         >
           Continue

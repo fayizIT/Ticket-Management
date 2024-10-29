@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -13,6 +13,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   onDateChange,
   onConfirm,
 }) => {
+  const [clickedDates, setClickedDates] = useState<Date[]>([]); // Array to store clicked dates
+
   const isPastDate = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -39,25 +41,34 @@ const RightPanel: React.FC<RightPanelProps> = ({
 
   const formattedSelectedDate = selectedDate ? formatDate(selectedDate) : "";
 
+  const handleDateClick = (date: Date) => {
+    // Update clicked dates when a date is selected
+    if (!clickedDates.some((d) => d.toDateString() === date.toDateString())) {
+      setClickedDates((prev) => [...prev, date]);
+    }
+    onDateChange(date);
+  };
+
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg w-full md:h-[425px] border border-gray-300">
       <h3 className="text-lg sm:text-xl font-bold mb-3 text-blue-900">
         Choose a date to visit
       </h3>
       <div className="flex justify-center mb-4">
-      <Calendar
+        <Calendar
           onChange={(value) => {
-            if (value instanceof Date) onDateChange(value);
+            if (value instanceof Date) handleDateClick(value); // Call the new handler
             else if (Array.isArray(value)) onDateChange(value[0]);
           }}
           value={selectedDate}
           tileClassName={({ date }: { date: Date }) =>
             `${isPastDate(date) ? "bg-gray-200 text-gray-500 text-xs" : 
             isSelectedDate(date) ? "bg-blue-900 text-white text-xs font-semibold" : 
+            clickedDates.some((d) => d.toDateString() === date.toDateString()) ? "bg-blue-100 text-blue-900 text-xs font-semibold" : 
             "bg-blue-100 text-blue-700 text-xs "} m-0.5 rounded-md p-2 flex items-center justify-center`
           }
           tileDisabled={({ date }: { date: Date }) => isPastDate(date)}
-className="w-full max-w-xs text-xs sm:text-sm grid gap-2" 
+          className="w-full max-w-xs text-xs sm:text-sm grid gap-2" 
           calendarType="gregory"
           navigationLabel={({ label }) => (
             <span className="font-semibold text-blue-900">{label}</span>
@@ -78,8 +89,10 @@ className="w-full max-w-xs text-xs sm:text-sm grid gap-2"
           <span className="font-semibold">{formattedSelectedDate}</span>
         </h6>
         <button
-          className="w-full sm:w-auto bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-900 transition duration-200"
-          onClick={onConfirm}
+          className={`w-full sm:w-auto font-semibold bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-900 transition duration-200 ${selectedDate ? "text-blue-900" : ""}`}
+          onClick={() => {
+            onConfirm(); // Call the onConfirm function
+          }}
         >
           Continue
         </button>
