@@ -41,7 +41,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg w-full md:h-[425px] border border-gray-300">
-      <h3 className="text-center text-lg sm:text-xl font-bold mb-3 text-blue-900">
+      <h3 className="text-lg sm:text-xl font-bold mb-3 text-blue-900">
         Choose a date to visit
       </h3>
       <div className="flex justify-center mb-4">

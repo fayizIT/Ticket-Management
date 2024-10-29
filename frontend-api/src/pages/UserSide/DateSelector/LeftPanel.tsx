@@ -3,7 +3,7 @@ import React from "react";
 const LeftPanel: React.FC = () => {
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[500px] md:h-[425px] w-full mx-auto md:mx-0">
-      <h2 className="text-xl sm:text-2xl font-bold mb-2 font-panton-narrow text-blue-900 text-center">
+      <h2 className="text-xl sm:text-2xl font-bold mb-2 font-panton-narrow text-blue-900 ">
         Plan Your Visit
       </h2>
       <p className="mb-4 leading-relaxed text-sm sm:text-lg text-blue-900 font-panton-narrow">
@@ -12,7 +12,7 @@ const LeftPanel: React.FC = () => {
         away by the incredible rides that lie ahead!
       </p>
       <hr className="border-t border-gray-300 my-4" />
-      <h3 className="text-base sm:text-lg text-blue-900 font-semibold mb-4 font-panton-narrow text-center">
+      <h3 className="text-base sm:text-lg text-blue-900 font-semibold mb-4 font-panton-narrow ">
         Our Timings
       </h3>
       <div className="bg-sky-50 p-4 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-700 overflow-x-auto">
@@ -20,10 +20,10 @@ const LeftPanel: React.FC = () => {
           <thead>
             <tr>
               <th className="font-medium text-blue-600 border-b border-gray-300"></th>
-              <th className="font-medium text-blue-300 border-b border-gray-300 text-center">
+              <th className="font-medium text-[#15196E] opacity-40 border-b border-gray-300 text-center">
                 Park Timing
               </th>
-              <th className="font-medium text-blue-300 border-b border-gray-300 text-center">
+              <th className="font-medium text-[#15196E] opacity-40 border-b border-gray-300 text-center">
                 Water Activities
               </th>
             </tr>

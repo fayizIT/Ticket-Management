@@ -11,7 +11,6 @@ import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
-import { GoChevronRight } from "react-icons/go";
 import RightFooter from "../../../components/RightFooter";
 import LeftFooter from "../../../components/LeftFooter";
 
@@ -56,7 +55,7 @@ const ReviewBookingPage: React.FC = () => {
     pinCode: "",
   });
 
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(3);
 
   useEffect(() => {
     if (!Object.keys(ticket).length) {

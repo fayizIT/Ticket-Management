@@ -9,7 +9,7 @@ module.exports = {
           'custom-blue': '#15196E', 
         },
         fontFamily: {
-          'panton-narrow': ['Panton Narrow', 'sans-serif'], // Add your custom font
+          'panton-narrow': ['Panton Narrow'], // Add your custom font
         },
       },
     },

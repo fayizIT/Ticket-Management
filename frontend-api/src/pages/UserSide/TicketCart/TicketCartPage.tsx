@@ -22,6 +22,7 @@ const TicketCartPage: React.FC = () => {
     (state: any) => state.ticketCategory
   );
   const [couponCode, setCouponCode] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
     if (!selectedDate) {
@@ -51,7 +52,15 @@ const TicketCartPage: React.FC = () => {
       return;
     }
 
+    if (currentStep < 5) {
+      setCurrentStep(currentStep + 1);
+    }
+
     navigate("/park-rules");
+  };
+
+  const handleStepClick = (step: number) => {
+    setCurrentStep(step);
   };
 
   return (
@@ -62,7 +71,7 @@ const TicketCartPage: React.FC = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      <Timeline currentStep={1} onStepClick={() => {}} />
+      <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
       <div className="flex flex-col md:flex-row justify-center items-stretch p-8 space-y-6 md:space-y-0 md:space-x-6 mt-3">
         <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
           <LeftPanel setCouponCode={setCouponCode} />
