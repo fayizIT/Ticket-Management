@@ -63,9 +63,9 @@ const Timeline: React.FC<{
                 {index < currentStep ? (
                   <div className="relative flex items-center justify-center">
                   {/* Outer Circle with Light Green Border */}
-                  <div className="absolute rounded-full h-12 w-12 border-4 border-green-600 flex items-center justify-center"> {/* Light green border */}
-                    <div className="rounded-full h-10 w-10 bg-green-500 flex items-center justify-center"> {/* Dark green background */}
-                      <span className="text-white text-lg">✓</span> {/* White checkmark */}
+                  <div className="absolute rounded-full h-12 w-12 border-4 border-[#318435] flex items-center justify-center"> 
+                    <div className="rounded-full h-10 w-10 bg-[#89C541] flex items-center justify-center"> 
+                      <span className="text-white text-lg">✓</span> 
                     </div>
                   </div>
                 </div>
@@ -96,16 +96,3 @@ const Timeline: React.FC<{
 
 export default Timeline;
 
-// {index > 0 && (
-//   <div
-//     className={`absolute h-1 transition-colors duration-300
-//       ${index <= currentStep ? "bg-blue-500" : "bg-gray-300"}`}
-//     style={{
-//       width: "calc(101% - 120px)",
-//       top: "40%",
-//       zIndex: "0",
-//       transform: "translateY(-50%)",
-//       left: `${index * 25 - 2}px`,
-//     }}
-//   />
-// )}

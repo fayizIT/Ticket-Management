@@ -127,7 +127,7 @@ const RightPanel: React.FC<{
           onChange={(e) => setCouponCode(e.target.value)}
         />
         <button
-          className="bg-blue-900 text-white rounded-md px-2 py-1 text-xs hover:bg-blue-600"
+          className="bg-blue-900 text-white rounded-md px-2 py-1 text-xs hover:bg-blue-900"
           onClick={handleApplyCoupon}
         >
           {activeCoupon ? "Remove" : "Apply"}

@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
 import Image from "../../../../public/assets/clientlogo.png";
-import { GoChevronRight } from "react-icons/go";
 import LeftFooter from "../../../components/LeftFooter";
 import RightFooter from "../../../components/RightFooter";
 
