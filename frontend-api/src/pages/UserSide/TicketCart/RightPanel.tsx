@@ -6,8 +6,9 @@ import {
   applyDiscount,
   removeDiscount,
 } from "../../../redux/ticketSlice";
-import { FaUser } from "react-icons/fa";
+import { FaPlus, FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { TiMinus } from "react-icons/ti";
 
 const RightPanel: React.FC<{
   handleConfirm: () => void;
@@ -86,26 +87,28 @@ const RightPanel: React.FC<{
                   </p>
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center justify-center w-1/3">
+              <div className="flex items-center bg-blue-900 rounded-full px-1 py-1">
                 <button
-                  className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-900 flex items-center justify-center"
+                   className="w-6 h-6 bg-white text-blue-900 rounded-full flex items-center justify-center hover:bg-blue-200"
                   onClick={() => handleCountChange(category._id, "decrement")}
                 >
-                  -
+                  <TiMinus size={12} />
                 </button>
                 <input
                   type="number"
-                  className="w-10 h-8 text-center border-t border-b border-gray-300 focus:outline-none text-xs rounded-md py-0.5 mt-0.5 mx-2 flex items-center justify-center"
+                  className="w-7 h-4 text-center bg-transparent text-white focus:outline-none text-xs mx-2"
                   value={tickets[category._id] || 0}
                   readOnly
                 />
 
                 <button
-                  className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-900 flex items-center justify-center"
+                 className="w-6 h-6 bg-white text-blue-900 rounded-full flex items-center justify-center hover:bg-blue-200"
                   onClick={() => handleCountChange(category._id, "increment")}
                 >
-                  +
+                  <FaPlus size={12} />
                 </button>
+              </div>
               </div>
             </div>
             {index < categories.length - 1 && (

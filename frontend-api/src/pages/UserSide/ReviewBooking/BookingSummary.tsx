@@ -1,7 +1,9 @@
 import React from "react";
-import { FaBed, FaUser, FaUserFriends } from "react-icons/fa";
+import { FaBed, FaPlus, FaUser, FaUserFriends } from "react-icons/fa";
 import icon from "../../../../public/assets/backwardicon.png";
 import { useNavigate } from "react-router-dom";
+// import { FiMinus } from "react-icons/fi";
+import { TiMinus } from "react-icons/ti";
 
 interface TicketCategory {
   _id: string;
@@ -31,7 +33,7 @@ interface BookingSummaryProps {
   handleDecrementWithCheck: (categoryId: string) => void;
 }
 
-const BookingSummary: React.FC<BookingSummaryProps> = ({
+export const BookingSummary: React.FC<BookingSummaryProps> = ({
   selectedDate,
   totalTicketCount,
   originalTicketTotal,
@@ -53,7 +55,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   };
 
   return (
-    <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[480px] md:h-[575px] w-[450px] mx-auto md:mx-10">
+    <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-full w-full md:w-[450px] mx-auto">
       <div className="flex items-center mb-4">
         <img
           src={icon}
@@ -65,9 +67,9 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
       </div>
 
       <div className="mb-4 text-center">
-        <div className="flex justify-between items-start text-blue-900">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-blue-900">
           <div className="flex flex-col items-center">
-            <p className="text-xs font-bold">Date of Visit</p>
+            <p className="text-[#15196E] opacity-40 text-md font-bold">Date of Visit</p>
             <span className="font-bold text-sm">
               {new Date(selectedDate).toLocaleDateString("en-GB", {
                 day: "numeric",
@@ -77,16 +79,16 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
             </span>
           </div>
 
-          <div className="flex flex-col items-center mt-2 md:mt-0">
+          <div className="flex flex-col items-center">
             <div className="flex items-center">
               <FaUserFriends className="text-xl mr-1 text-blue-900" />
-              <p className="text-xs font-bold">Visitors</p>
+              <p className="text-[#15196E] opacity-40 text-md font-bold" >Visitors</p>
             </div>
             <span className="font-bold text-sm ml-1">{totalTicketCount}</span>
           </div>
 
-          <div className="flex flex-col items-center mt-2 md:mt-0">
-            <p className="text-xs font-bold">Total</p>
+          <div className="flex flex-col items-center">
+            <p className="text-[#15196E] opacity-40 text-md font-bold">Total</p>
             <span className="font-bold text-sm">
               ₹{originalTicketTotal.toFixed(2)}
             </span>
@@ -94,14 +96,11 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         </div>
       </div>
 
-      {/* <h2 className="text-md font-semibold mt-4 mb-2 text-blue-900">Ticket Summary</h2> */}
       {Object.keys(ticket).length > 0 ? (
         Object.keys(ticket)
           .filter((categoryId) => ticket[categoryId] > 0)
           .map((categoryId) => {
-            const category = categories.find(
-              (cat: any) => cat._id === categoryId
-            );
+            const category = categories.find((cat) => cat._id === categoryId);
             if (category) {
               const count = ticket[categoryId];
               return (
@@ -109,7 +108,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
                   key={category._id}
                   className="flex justify-between items-center py-2 border-b border-gray-300 text-blue-900"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center w-1/2">
                     <FaUser className="w-6 h-6 text-blue-900" />
                     <div className="ml-2">
                       <h4 className="font-bold text-sm">{category.name}</h4>
@@ -118,187 +117,256 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <button
-                      className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-900 flex items-center justify-center"
-                      onClick={() => handleDecrementWithCheck(category._id)}
-                    >
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      className="w-10 h-8 text-center border-t border-b border-gray-300 focus:outline-none text-xs rounded-md py-0.5 mt-0.5 mx-2 flex items-center justify-center"
-                      value={count}
-                      readOnly
-                    />
-                    <button
-                      className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-900 flex items-center justify-center"
-                      onClick={() =>
-                        updateTicketCount(category._id, "increment")
-                      }
-                    >
-                      +
-                    </button>
+
+                  <div className="flex items-center justify-center w-1/3">
+                    <div className="flex items-center bg-blue-900 rounded-full px-1 py-1">
+                      <button
+                        className="w-6 h-6 bg-white text-blue-900 rounded-full flex items-center justify-center hover:bg-blue-200"
+                        onClick={() => handleDecrementWithCheck(category._id)}
+                      >
+                        <TiMinus size={12} />
+                      </button>
+                      <input
+                        type="number"
+                        className="w-7 h-4 text-center bg-transparent text-white focus:outline-none text-xs mx-2"
+                        value={count || 0}
+                        readOnly
+                      />
+                      <button
+                        className="w-6 h-6 bg-white text-blue-900 rounded-full flex items-center justify-center hover:bg-blue-200"
+                        onClick={() =>
+                          updateTicketCount(category._id, "increment")
+                        }
+                      >
+                        <FaPlus size={12} />
+                      </button>
+                    </div>
                   </div>
+
+                  <p className="text-xs text-blue-900 w-1/5 text-right">
+                    ₹{(count * category.price).toFixed(2)}
+                  </p>
                 </div>
               );
             }
             return null;
           })
       ) : (
-        <p className="text-gray-500 text-xs">No tickets added.</p>
+        <p className="text-gray-500 text-xs text-center">No tickets added.</p>
       )}
 
-      {/* <h2 className="text-md font-semibold mt-4 mb-2">Stays Summary</h2>
-    {Object.keys(stayTickets).length > 0 && Object.values(stayTickets).some((count: any) => count > 0) ? (
-      stayCategories
-        .filter((category: any) => stayTickets[category._id] > 0)
-        .map((category: any) => (
-          <div key={category._id} className="flex justify-between items-center py-2 border-b border-gray-300">
-            <div className="flex items-center">
-              <FaBed className="w-6 h-6 text-gray-500" />
-              <div className="ml-2">
-                <h4 className="font-bold text-sm">{category.name}</h4>
-                <p className="text-gray-600 text-xs">₹{category.price.toFixed(2)}</p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <button
-                className="px-2 py-1 bg-blue-500 text-white rounded-l"
-                onClick={() => updateStayCount(category._id, 'decrement')}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                className="w-12 text-center border-t border-b"
-                value={stayTickets[category._id] || 0}
-                readOnly
-              />
-              <button
-                className="px-2 py-1 bg-blue-500 text-white rounded-r"
-                onClick={() => updateStayCount(category._id, 'increment')}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        ))
-    ) : (
-      <p className="text-gray-500 text-xs">No tickets added in stay cart.</p>
-    )} */}
-
-      {/* <div className="mt-3 pt-1" />
-      <h4 className="text-md font-bold text-blue-900">Ticket GST (18%)</h4>
-      
-      <span className="text-md font-bold  ">
-      ₹{gst}
-        </span>
-
-      <h4 className="text-md font-bold text-red-600">
-        Coupon Discount: 
-
-        <span className="text-md font-bold ">
-        ₹-{discountAmount.toFixed(2)}
-        </span>
-      </h4>
-      <div className="border-t border-gray-300 my-4" />
-
-      <div className="flex justify-between items-center text-blue-900">
-        <h4 className="text-md font-bold">Final Summary:</h4>
-        <span className="text-md font-bold ">
-          ₹{amountToBePaid}
-        </span>
-      </div> */}
-
-      <div className="mt-3 pt-1 flex justify-between items-center">
-        <h4 className="text-md font-bold text-blue-900">Ticket GST (18%):</h4>
-        <span className="text-md font-bold text-blue-900">₹{gst}</span>
-      </div>
-
-      <div className="mt-2 flex justify-between items-center">
-        <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
-        <span className="text-md font-bold text-red-600">
-          ₹-{discountAmount.toFixed(2)}
-        </span>
-      </div>
-
-      <div className="border-t border-gray-300 my-4" />
-
-      <div className="flex justify-between items-center text-blue-900 rounded-lg bg-blue-50 p-2 shadow-sm">
-        <h4 className="text-lg font-bold">Final Summary</h4>
-        <div className="text-blue-900">
-          <span className="text-lg font-bold">₹{amountToBePaid}</span>
+      <div className="mt-3 pt-1 flex items-center justify-between">
+        <div className="flex items-center w-full">
+          <h4 className="text-md font-bold text-[#15196E] opacity-40 mr-2 whitespace-nowrap">
+            Ticket GST (18%):
+          </h4>
+          <div className="border-t-2 border-gray-300 flex-grow"></div>
         </div>
+        <span className="text-md font-bold text-blue-900 ml-4">₹{gst}</span>
       </div>
+
+      {discountAmount > 0 ? (
+        <div className="mt-2 flex justify-between items-center">
+          <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+          <span className="text-md font-bold text-red-600">
+            ₹-{discountAmount.toFixed(2)}
+          </span>
+        </div>
+      ) : (
+        <div className="mt-2 flex justify-between items-center">
+          <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+          <span className="text-[#15196E] opacity-40 text-md">No coupon applied</span>
+        </div>
+      )}
+
+      <div className="border-t border-gray-300 my-4" />
+
+      <div className="flex items-center text-blue-900 rounded-lg bg-blue-50 p-2 shadow-sm border border-gray-300">
+  <div className="flex items-center w-full">
+    <h4 className="text-lg font-bold mr-2 whitespace-nowrap">
+      Final Summary
+    </h4>
+    <div className="border-t border-gray-300 flex-grow"></div>
+  </div>
+  <div className="text-blue-900 ml-4">
+    <span className="text-lg font-bold">₹{amountToBePaid}</span>
+  </div>
+</div>
+
     </div>
   );
 };
 
-export default BookingSummary;
+// <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[480px] md:h-[575px] w-full md:w-[450px] mx-auto md:mx-10">
+//   <div className="flex items-center mb-4">
+//     <img
+//       src={icon}
+//       alt="Park Icon"
+//       className="mr-2 w-8 h-8 cursor-pointer"
+//       onClick={handleIconClick}
+//     />
+//     <h2 className="text-lg font-bold text-blue-900">Booking Summary</h2>
+//   </div>
 
+//   <div className="mb-4 text-center">
+//     <div className="flex flex-col md:flex-row justify-between items-start text-blue-900">
+//       <div className="flex flex-col items-center mb-2 md:mb-0">
+//         <p className="text-blue-200">Date of Visit</p>
+//         <span className="font-bold text-sm">
+//           {new Date(selectedDate).toLocaleDateString("en-GB", {
+//             day: "numeric",
+//             month: "long",
+//             year: "numeric",
+//           })}
+//         </span>
+//       </div>
+
+//       <div className="flex flex-col items-center mb-2 md:mb-0">
+//         <div className="flex items-center">
+//           <FaUserFriends className="text-xl mr-1 text-blue-900" />
+//           <p className="text-blue-200">Visitors</p>
+//         </div>
+//         <span className="font-bold text-sm ml-1">
+//           {totalTicketCount}
+//           {/* {categories.filter(category => ticket[category._id] > 0).map(category => category.name).join(', ')} */}
+//         </span>
+//       </div>
+
+//       <div className="flex flex-col items-center mb-2 md:mb-0">
+//         <p className="text-blue-300">Total</p>
+//         <span className="font-bold text-sm">
+//           ₹{originalTicketTotal.toFixed(2)}
+//         </span>
+//       </div>
+//     </div>
+//   </div>
+
+//   {Object.keys(ticket).length > 0 ? (
+//     Object.keys(ticket)
+//       .filter((categoryId) => ticket[categoryId] > 0)
+//       .map((categoryId) => {
+//         const category = categories.find(
+//           (cat: any) => cat._id === categoryId
+//         );
+//         if (category) {
+//           const count = ticket[categoryId];
+//           return (
+//             <div
+//               key={category._id}
+//               className="flex justify-between items-center py-2 border-b border-gray-300 text-blue-900"
+//             >
+//               <div className="flex items-center">
+//                 <FaUser className="w-6 h-6 text-blue-900" />
+//                 <div className="ml-2">
+//                   <h4 className="font-bold text-sm">{category.name}</h4>
+//                   <p className="text-xs text-blue-900">
+//                     ₹{category.price.toFixed(2)}
+//                   </p>
+//                 </div>
+//               </div>
+//               <div className="flex items-center justify-center ml-2">
+//                 <button
+//                   className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
+//                   onClick={() => handleDecrementWithCheck(category._id)}
+//                 >
+//                   -
+//                 </button>
+//                 <input
+//                   type="number"
+//                   className="w-10 h-8 text-center border border-gray-300 focus:outline-none text-xs rounded-md py-0.5 mx-2"
+//                   value={count}
+//                   readOnly
+//                 />
+//                 <button
+//                   className="w-8 h-8 bg-blue-900 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
+//                   onClick={() =>
+//                     updateTicketCount(category._id, "increment")
+//                   }
+//                 >
+//                   +
+//                 </button>
+//               </div>
+//               <p className="text-xs text-blue-900">₹{originalTicketTotal.toFixed(2)}</p>
+//             </div>
+//           );
+//         }
+//         return null;
+//       })
+//   ) : (
+//     <p className="text-gray-500 text-xs text-center">No tickets added.</p>
+//   )}
+
+{
+  /* Stay Summary Section */
+}
 {
   /* <h2 className="text-md font-semibold mt-4 mb-2">Stays Summary</h2>
-    {Object.keys(stayTickets).length > 0 && Object.values(stayTickets).some((count: any) => count > 0) ? (
-      stayCategories
-        .filter((category: any) => stayTickets[category._id] > 0)
-        .map((category: any) => (
-          <div key={category._id} className="flex justify-between items-center py-2 border-b border-gray-300">
-            <div className="flex items-center">
-              <FaBed className="w-6 h-6 text-gray-500" />
-              <div className="ml-2">
-                <h4 className="font-bold text-sm">{category.name}</h4>
-                <p className="text-gray-600 text-xs">₹{category.price.toFixed(2)}</p>
+      {Object.keys(stayTickets).length > 0 && Object.values(stayTickets).some((count: any) => count > 0) ? (
+        stayCategories
+          .filter((category: any) => stayTickets[category._id] > 0)
+          .map((category: any) => (
+            <div key={category._id} className="flex justify-between items-center py-2 border-b border-gray-300">
+              <div className="flex items-center">
+                <FaBed className="w-6 h-6 text-gray-500" />
+                <div className="ml-2">
+                  <h4 className="font-bold text-sm">{category.name}</h4>
+                  <p className="text-gray-600 text-xs">₹{category.price.toFixed(2)}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <button
+                  className="px-2 py-1 bg-blue-500 text-white rounded-l"
+                  onClick={() => updateStayCount(category._id, 'decrement')}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  className="w-12 text-center border-t border-b"
+                  value={stayTickets[category._id] || 0}
+                  readOnly
+                />
+                <button
+                  className="px-2 py-1 bg-blue-500 text-white rounded-r"
+                  onClick={() => updateStayCount(category._id, 'increment')}
+                >
+                  +
+                </button>
               </div>
             </div>
-            <div className="flex items-center">
-              <button
-                className="px-2 py-1 bg-blue-500 text-white rounded-l"
-                onClick={() => updateStayCount(category._id, 'decrement')}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                className="w-12 text-center border-t border-b"
-                value={stayTickets[category._id] || 0}
-                readOnly
-              />
-              <button
-                className="px-2 py-1 bg-blue-500 text-white rounded-r"
-                onClick={() => updateStayCount(category._id, 'increment')}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        ))
-    ) : (
-      <p className="text-gray-500 text-xs">No tickets added in stay cart.</p>
-    )} */
+          ))
+      ) : (
+        <p className="text-gray-500 text-xs">No tickets added in stay cart.</p>
+      )} */
 }
 
-{
-  /* <div className="mt-3 pt-1" />
-      <h4 className="text-md font-bold text-blue-900">Ticket GST (18%)</h4>
-      
-      <span className="text-md font-bold  ">
-      ₹{gst}
-        </span>
+//       <div className="mt-3 pt-1 flex justify-between items-center">
+//         <h4 className="text-md font-bold text-blue-900">Ticket GST (18%):</h4>
+//         <span className="text-md font-bold text-blue-900">₹{gst}</span>
+//       </div>
 
-      <h4 className="text-md font-bold text-red-600">
-        Coupon Discount: 
+//       {discountAmount > 0 ? (
+//         <div className="mt-2 flex justify-between items-center">
+//           <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+//           <span className="text-md font-bold text-red-600">
+//             ₹-{discountAmount.toFixed(2)}
+//           </span>
+//         </div>
+//       ) : (
+//         <div className="mt-2 flex justify-between items-center">
+//           <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+//           <span className="text-blue-200 text-md">No coupon applied</span>
+//         </div>
+//       )}
 
-        <span className="text-md font-bold ">
-        ₹-{discountAmount.toFixed(2)}
-        </span>
-      </h4>
-      <div className="border-t border-gray-300 my-4" />
+//       <div className="border-t border-gray-300 my-4" />
 
-      <div className="flex justify-between items-center text-blue-900">
-        <h4 className="text-md font-bold">Final Summary:</h4>
-        <span className="text-md font-bold ">
-          ₹{amountToBePaid}
-        </span>
-      </div> */
-}
+//       <div className="flex justify-between items-center text-blue-900 rounded-lg bg-blue-50 p-2 shadow-sm">
+//         <h4 className="text-lg font-bold">Final Summary</h4>
+//         <div className="text-blue-900">
+//           <span className="text-lg font-bold">₹{amountToBePaid}</span>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };

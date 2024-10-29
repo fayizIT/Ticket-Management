@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createBooking } from "../../../services/BookingService";
-import BookingSummary from "./BookingSummary";
+import { BookingSummary } from "./BookingSummary";
 import BillingInformation from "./BillingInformation";
 import { decrementStay, incrementStay } from "../../../redux/stayCategorySlice";
 import { decrementTicket, incrementTicket } from "../../../redux/ticketSlice";
@@ -12,6 +12,8 @@ import backgroundImage from "../../../../public/assets/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
 import { GoChevronRight } from "react-icons/go";
+import RightFooter from "../../../components/RightFooter";
+import LeftFooter from "../../../components/LeftFooter";
 
 const ReviewBookingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -240,18 +242,12 @@ const ReviewBookingPage: React.FC = () => {
             updateTicketCount={updateTicketCount}
             updateStayCount={updateStayCount}
             handleDecrementWithCheck={handleDecrementWithCheck}
-          />
-          <div className="mt-1 text-start text-blue-900 space-y-2">
-            <h2 className="text-xs md:text-sm font-bold flex items-center">
-              Know More About Us
-              <GoChevronRight className="ml-1 text-blue-900" />
-            </h2>
-            <h2 className="text-xs md:text-sm font-bold flex items-center">
-              Contact Us
-              <GoChevronRight className="ml-1 text-blue-900" />
-            </h2>
-            <hr className="border-t border-gray-300 w-[90%] md:w-[180%] my-2 mx-auto border-t-2" />
+          /> 
+          <div className="flex  bottom-10 w-full">
+          <LeftFooter  />
           </div>
+             
+          
         </div>
         <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col ">
           <BillingInformation
@@ -260,9 +256,8 @@ const ReviewBookingPage: React.FC = () => {
             handleConfirm={handleConfirm}
           />
           {/* <div className="flex justify-end mt-1"> */}
-          <div className="flex justify-end md:justify-end mt-1 mr-12">
-            <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
-          </div>
+          <RightFooter imageSrc={Image} />
+
         </div>
       </div>
     </div>

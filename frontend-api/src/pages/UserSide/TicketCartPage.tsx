@@ -294,4 +294,3 @@ const TicketCartPage: React.FC = () => {
   );
 };
 
-export default TicketCartPage;

@@ -5,7 +5,8 @@ module.exports = {
     theme: {
       extend: {
         colors: {
-          'dark-blue': '#003366', // Your custom dark blue color
+          'dark-blue': '#003366', 
+          'custom-blue': '#15196E', 
         },
         fontFamily: {
           'panton-narrow': ['Panton Narrow', 'sans-serif'], // Add your custom font

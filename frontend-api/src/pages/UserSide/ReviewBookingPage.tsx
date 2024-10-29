@@ -152,7 +152,6 @@ const ReviewBookingPage: React.FC = () => {
           navigate("/thank-you", {
             state: { bookingData: combinedData, result },
           });
-          console.log(result, "gettttttttttttt");
         },
         prefill: {
           name: formData.fullName,
@@ -416,4 +415,4 @@ const ReviewBookingPage: React.FC = () => {
   );
 };
 
-export default ReviewBookingPage;
+
