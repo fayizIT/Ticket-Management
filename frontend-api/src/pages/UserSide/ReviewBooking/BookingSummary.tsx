@@ -91,9 +91,9 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
             <span className="font-bold text-sm ml-1">{totalTicketCount}</span>
           </div>
 
-          <div className="flex flex-col items-center">
-            <p className="text-[#15196E] opacity-40 text-md font-bold">Total</p>
-            <span className="font-bold text-sm">
+          <div className="flex flex-col items-center ">
+            <p className="text-[#15196E] opacity-40 text-md font-bold ">Total</p>
+            <span className="font-bold text-sm mr-2">
               ₹{originalTicketTotal.toFixed(2)}
             </span>
           </div>
@@ -177,14 +177,18 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
 
       {discountAmount > 0 ? (
         <div className="mt-2 flex justify-between items-center">
-          <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+          <h4 className="text-md font-bold text-red-600 mr-2 whitespace-nowrap">Coupon Discount:</h4>
+          <div className="border-t-2 border-gray-300 flex-grow"></div>
           <span className="text-md font-bold text-red-600">
             ₹-{discountAmount.toFixed(2)}
           </span>
         </div>
       ) : (
         <div className="mt-2 flex justify-between items-center">
-          <h4 className="text-md font-bold text-red-600">Coupon Discount:</h4>
+          
+          <h4 className="text-md font-bold text-red-600 ">Coupon Discount:</h4>
+          
+
           <span className="text-[#15196E] opacity-40 text-md">
             No coupon applied
           </span>

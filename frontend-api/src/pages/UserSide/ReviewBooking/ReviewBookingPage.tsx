@@ -11,8 +11,7 @@ import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
-import RightFooter from "../../../components/RightFooter";
-import LeftFooter from "../../../components/LeftFooter";
+import Footer from "../../../components/userFooter";
 
 const ReviewBookingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -80,11 +79,11 @@ const ReviewBookingPage: React.FC = () => {
       toast.error("Please fill in all fields");
       return;
     }
-    if (formData.pinCode.length > 6 || formData.pinCode.length < 6) {
+    if (formData.pinCode.length !== 6) {
       toast.error("Invalid Pincode");
       return;
     }
-    if (formData.phoneNumber.length > 10 || formData.phoneNumber.length < 10) {
+    if (formData.phoneNumber.length !== 10) {
       toast.error("Invalid Mobile Number");
       return;
     }
@@ -242,23 +241,19 @@ const ReviewBookingPage: React.FC = () => {
             updateStayCount={updateStayCount}
             handleDecrementWithCheck={handleDecrementWithCheck}
           /> 
-          <div className="flex  bottom-10 w-full">
-          <LeftFooter  />
-          </div>
-             
-          
         </div>
-        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col ">
+
+        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col">
           <BillingInformation
             formData={formData}
             handleChange={handleChange}
             handleConfirm={handleConfirm}
           />
-          {/* <div className="flex justify-end mt-1"> */}
-          <RightFooter imageSrc={Image} />
-
         </div>
       </div>
+
+      {/* Unified Footer */}
+      <Footer imageSrc={Image} />
     </div>
   );
 };

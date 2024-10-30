@@ -81,7 +81,7 @@ const PaymentSuccess: React.FC = () => {
             </div>
           )}
 
-          {/* Buttons */}
+          
           <div className="space-y-3">
             <PdfGenerator bookingData={bookingData} />
           </div>

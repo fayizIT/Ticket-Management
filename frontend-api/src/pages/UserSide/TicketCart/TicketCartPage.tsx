@@ -65,10 +65,11 @@ const TicketCartPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
+      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full h-full"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundAttachment: "fixed",
+        backgroundSize: 'cover',
       }}
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
