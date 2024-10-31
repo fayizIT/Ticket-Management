@@ -1,5 +1,5 @@
 import React from "react";
-import bgImage from "../../public/assets/navbarBanner.png";
+import bgImage from "../../public/assets/images/navbarBanner.png";
 
 const Features: React.FC = () => {
   return (

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import CouponService from "../../../services/CouponService";
 import { applyDiscount, removeDiscount } from "../../../redux/ticketSlice";
-import couponBg from "../../../../public/assets/CouponBackgroundimage.png";
+import couponBg from "../../../../public/assets/images/CouponBackgroundimage.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import icon from "../../../../public/assets/backwardicon.png";
+import icon from "../../../../public/assets/images/backwardicon.png";
 import { useNavigate } from "react-router-dom";
 
 interface LeftPanelProps {

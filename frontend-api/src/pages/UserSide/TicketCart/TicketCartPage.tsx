@@ -8,8 +8,8 @@ import RightPanel from "./RightPanel";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../../components/Timeline";
 import { toast } from "react-toastify";
-import Image from "../../../../public/assets/clientlogo.png";
-import backgroundImage from "../../../../public/assets/TicketFrame.png";
+import Image from "../../../../public/assets/images/clientlogo.png";
+import backgroundImage from "../../../../public/assets/images/TicketFrame.png";
 import Footer from "../../../components/userFooter";
 import ToastModal from "../../../components/ToastModal";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../public/assets/navbarBanner.png";
+import image from "../../public/assets/images/navbarBanner.png";
 import { useNavigate } from "react-router-dom";
 
 const scrollToSection = (sectionId: string) => {
@@ -46,7 +46,7 @@ const BannerSection: React.FC = () => {
 
       <div className="relative z-10 text-center flex flex-col justify-center items-center h-full">
         <img
-          src="../assets/clientlogo.png"
+          src="../assets/images/clientlogo.png"
           alt="Foggy Mountain"
           className="mb-4 w-[150px] h-auto"
         />

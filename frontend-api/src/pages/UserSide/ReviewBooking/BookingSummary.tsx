@@ -1,6 +1,6 @@
 import React from "react";
 import { FaBed, FaPlus, FaUser, FaUserFriends } from "react-icons/fa";
-import icon from "../../../../public/assets/backwardicon.png";
+import icon from "../../../../public/assets/images/backwardicon.png";
 import { useNavigate } from "react-router-dom";
 // import { FiMinus } from "react-icons/fi";
 import { TiMinus } from "react-icons/ti";

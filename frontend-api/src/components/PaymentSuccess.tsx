@@ -2,9 +2,9 @@ import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { PdfGenerator } from "./PdfGenerator";
-import backgroundImage from "../../public/assets/TicketFrame.png";
+import backgroundImage from "../../public/assets/images/TicketFrame.png";
 import Timeline from "./Timeline";
-import Image from "../../public/assets/clientlogo.png";
+import Image from "../../public/assets/images/clientlogo.png";
 import Footer from "./userFooter";
 
 const PaymentSuccess: React.FC = () => {

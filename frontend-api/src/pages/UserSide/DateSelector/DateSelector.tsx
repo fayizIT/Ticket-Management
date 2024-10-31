@@ -6,9 +6,9 @@ import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
-import backgroundImage from "../../../../public/assets/TicketFrame.png";
+import backgroundImage from "../../../../public/assets/images/TicketFrame.png";
 import Footer from "../../../components/userFooter"; // Import Footer here
-import Image from "../../../../public/assets/clientlogo.png"; // Import image for footer
+import Image from "../../../../public/assets/images/clientlogo.png"; // Import image for footer
 import ToastModal from "../../../components/ToastModal";
 
 const DateSelector: React.FC = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import handIcon from '../../public/assets/Hold.png'; // Adjust the path as needed
+import handIcon from '../../public/assets/images/Hold.png'; // Adjust the path as needed
 
 interface ModalProps {
   message: string;

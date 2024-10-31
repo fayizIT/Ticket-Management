@@ -1,8 +1,17 @@
+/* src/App.css or src/index.css */
+
+@import './assets/fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* * {
-  font-family: Panton Narrow;
-} */
 
+@layer utilities {
+  .font-panton {
+    font-family: 'Panton Narrow', sans-serif;
+  }
+}
 
+body {
+  @apply font-panton;
+}

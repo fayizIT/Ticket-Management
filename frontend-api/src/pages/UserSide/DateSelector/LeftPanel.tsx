@@ -3,7 +3,7 @@ import React from "react";
 const LeftPanel: React.FC = () => {
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[500px] md:h-[425px] w-full mx-auto md:mx-0">
-      <h2 className="text-xl sm:text-2xl font-bold mb-2 font-panton-narrow text-blue-900 ">
+      <h2 className="text-xl sm:text-2xl font-extrabold mb-2 font-panton-narrow text-blue-900 ">
         Plan Your Visit
       </h2>
       <p className="mb-4 leading-relaxed text-sm sm:text-lg text-blue-900 font-panton-narrow">

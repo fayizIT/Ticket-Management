@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import JsBarcode from "jsbarcode";
 import "jspdf-autotable";
-import logo from "../../public/assets/clientlogo.png";
+import logo from "../../public/assets/images/clientlogo.png";
 import { useNavigate } from "react-router-dom";
 
 interface PdfGeneratorProps {

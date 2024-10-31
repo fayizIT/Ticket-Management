@@ -1,5 +1,5 @@
 import React from "react";
-import indiaFlag from '../../../../public/assets/flag.png'
+import indiaFlag from '../../../../public/assets//images/flag.png'
 
 interface BillingInformationProps {
   formData: {

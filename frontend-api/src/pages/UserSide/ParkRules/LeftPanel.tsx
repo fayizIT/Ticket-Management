@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import parkRuleImage from "../../../../public/assets/parkRules.png";
-import icon from "../../../../public/assets/backwardicon.png";
+import parkRuleImage from "../../../../public/assets/images/parkRules.png";
+import icon from "../../../../public/assets/images/backwardicon.png";
 
 const LeftPanel: React.FC = () => {
   const navigate = useNavigate();
