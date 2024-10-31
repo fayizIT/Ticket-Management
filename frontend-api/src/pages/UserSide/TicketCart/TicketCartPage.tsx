@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
 import Footer from "../../../components/userFooter";
+import Modal from "../../../components/HoldToast";
 
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const TicketCartPage: React.FC = () => {
   const { tickets } = useSelector((state: any) => state.ticketCategory);
   const [couponCode, setCouponCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+  const [showModal, setShowModal] = useState(false); 
+
 
   useEffect(() => {
     if (!selectedDate) {
@@ -44,7 +47,9 @@ const TicketCartPage: React.FC = () => {
     );
 
     if (totalTickets === 0) {
-      toast.error("Please add at least one ticket.");
+      console.log("gettttt");
+      
+      setShowModal(true); // Show the modal when no tickets are selected
       return;
     }
 
@@ -84,6 +89,12 @@ const TicketCartPage: React.FC = () => {
       <div className="flex flex-col md:flex-row w-full justify-between p-4 md:p-8">
         <Footer imageSrc={Image} />
       </div>
+      {showModal && (
+        <Modal
+          message="Please add at least one ticket."
+          onClose={() => setShowModal(false)} // Close the modal when clicking OK
+        />
+      )}
     </div>
   );
 };
