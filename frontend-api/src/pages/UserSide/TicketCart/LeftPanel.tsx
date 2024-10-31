@@ -72,7 +72,6 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
         backgroundPosition: "center",
       }}
     >
-      {/* Flex container for icon and title */}
       <div className="flex items-center mb-2">
         <img
           src={icon}

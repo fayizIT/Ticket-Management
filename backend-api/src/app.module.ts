@@ -21,7 +21,7 @@ import { RazorpayModule } from './admin-side/razorpay/razorpay.module';
     BookingModule,
     StayCategoryModule,
     CouponModule,
-    RazorpayModule
+    RazorpayModule,
   ],
   controllers: [AppController],
   providers: [AppService],

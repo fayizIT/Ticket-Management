@@ -7,6 +7,7 @@ import { TicketCategory, TicketCategorySchema } from 'src/admin-side/ticket.cate
 import { StayCategory, StayCategorySchema } from 'src/admin-side/stay.category/entities/stay.category.entity';
 import { Booking, BookingSchema } from './entities/booking.ticket.entity';
 import { RazorpayModule } from '../razorpay/razorpay.module';
+import { OtpModule } from './Otp.module';
 
 @Module({
     imports: [
@@ -14,7 +15,7 @@ import { RazorpayModule } from '../razorpay/razorpay.module';
         MongooseModule.forFeature([{ name: Coupon.name, schema: CouponSchema }]),
         MongooseModule.forFeature([{ name: TicketCategory.name, schema: TicketCategorySchema }]),
         MongooseModule.forFeature([{ name: StayCategory.name, schema: StayCategorySchema }]),
-        RazorpayModule
+        RazorpayModule,OtpModule,
     ],
     controllers: [BookingController],
     providers: [BookingService],

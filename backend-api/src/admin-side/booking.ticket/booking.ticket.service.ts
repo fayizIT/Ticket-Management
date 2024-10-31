@@ -5,17 +5,20 @@ import { Booking, BookingDocument } from './entities/booking.ticket.entity';
 import { CreateBookingDto } from './dto/create-booking.ticket.dto';
 import { Coupon } from '../coupon/entities/coupon.entity';
 import Razorpay from 'razorpay';
+import { OtpService } from './OtpService';
 
 @Injectable()
 export class BookingService {
     private readonly GST_RATE = 0.18; // 18%
     private razorpayInstance: Razorpay;
+    private otpStore = new Map<string, string>(); 
 
     constructor(
         @InjectModel(Booking.name) private bookingModel: Model<Booking>,
         @InjectModel(Coupon.name) private couponModel: Model<Coupon>,
         @InjectModel('TicketCategory') private ticketModel: Model<any>,
         @InjectModel('StayCategory') private stayModel: Model<any>,
+        private readonly otpService: OtpService, 
     ) {
         // Initialize Razorpay instance with your credentials
         this.razorpayInstance = new Razorpay({
@@ -192,6 +195,50 @@ export class BookingService {
         } catch (error) {
             throw new InternalServerErrorException('Failed to update payment status.');
         }
+    }
+
+
+
+    async sendOtp(email: string): Promise<void> {
+        // Check if email exists in Booking collection
+        const bookingExists = await this.bookingModel.findOne({ email }).exec();
+        if (!bookingExists) {
+            throw new BadRequestException('Email not found in bookings.');
+        }
+
+        const otp = this.generateOtp(); // Generate OTP
+        await this.otpService.sendOtp(email, otp); 
+
+        // Store the OTP temporarily
+        this.otpStore.set(email, otp);
+    }
+
+    async verifyOtp(email: string, otp: string): Promise<any> {
+        const storedOtp = this.otpStore.get(email);
+        
+        if (!storedOtp) {
+            throw new BadRequestException('OTP not sent or expired.');
+        }
+
+        if (storedOtp !== otp) {
+            throw new BadRequestException('Invalid OTP.');
+        }
+
+        // Optionally, delete the OTP after verification
+        this.otpStore.delete(email);
+
+        // Retrieve and return the booking details after successful OTP verification
+        const booking = await this.bookingModel.findOne({ email }).exec();
+        if (!booking) {
+            throw new BadRequestException('Booking not found.');
+        }
+
+        return booking; // Return the booking details
+    }
+
+    private generateOtp(): string {
+        // Implement your OTP generation logic here
+        return Math.floor(100000 + Math.random() * 900000).toString(); // Example: 6-digit OTP
     }
     
 }

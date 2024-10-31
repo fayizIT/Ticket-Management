@@ -7,7 +7,6 @@ import BillingInformation from "./BillingInformation";
 import { decrementStay, incrementStay } from "../../../redux/stayCategorySlice";
 import { decrementTicket, incrementTicket } from "../../../redux/ticketSlice";
 import { setBookingData } from "../../../redux/bookingSlice";
-import backgroundImage from "../../../../public/assets/images/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
 import Footer from "../../../components/userFooter";
@@ -212,7 +211,7 @@ const ReviewBookingPage: React.FC = () => {
   };
 
   const Image = '/assets/images/clientlogo.png';
-  const backgroundImage = '/assets/images/bg.png';
+  const backgroundImage = '/assets/images/TicketFramee.png';
 
   return (
     <div
