@@ -79,14 +79,14 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
           className="mr-2 w-8 h-8 cursor-pointer"
           onClick={handleIconClick}
         />
-        <h2 className="text-xl font-bold text-blue-900">Grab Your Tickets</h2>
+        <h2 className="text-xl font-extrabold text-blue-900">Grab Your Tickets</h2>
       </div>
 
       <p className="text-blue-800 mb-4 leading-relaxed text-sm">
         Grab your tickets for a weekend of excitement, and fun. Our tickets run
         out fast so book now.
       </p>
-      <h3 className="text-lg text-center font-bold text-black-900 mb-3">
+      <h3 className="text-lg text-center font-extrabold text-blue-900 mb-3">
         Trending Coupons
       </h3>
 
@@ -98,7 +98,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
         slidesToScroll={1}
         arrows={true}
         appendDots={(dots: any) => (
-          <div style={{ color: "black" }}>
+          <div style={{ color: "blue" }}>
             <ul style={{ margin: "0px" }}>{dots}</ul>
           </div>
         )}

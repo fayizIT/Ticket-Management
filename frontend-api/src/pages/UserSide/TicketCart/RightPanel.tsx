@@ -69,7 +69,7 @@ const RightPanel: React.FC<{
 
   return (
     <div className="bg-white p-2 md:p-3 rounded-3xl shadow-md w-full h-auto md:h-[380px] border border-gray-300 flex-grow -mt-6">
-      <h3 className="text-lg font-semibold mb-2 text-blue-900">
+      <h3 className="text-lg font-extrabold mb-2 text-blue-900">
         Choose your tickets
       </h3>
       <div className="border rounded-md p-3 mb-3 bg-gray-50">

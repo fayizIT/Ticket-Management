@@ -21,7 +21,7 @@ const LeftPanel: React.FC = () => {
       }}
     >
       <div className="bg-white bg-opacity-30 rounded-xl flex flex-col">
-        <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-900  flex items-center ">
+        <h2 className="text-xl md:text-2xl font-extrabold mb-4 text-blue-900  flex items-center ">
           <img
             src={icon}
             alt="Park Icon"

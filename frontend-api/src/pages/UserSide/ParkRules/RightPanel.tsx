@@ -14,10 +14,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 }) => {
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[400px] w-full mx-auto">
-      <div className="text-lg lg:text-xl font-bold mb-8 text-blue-900 text-center">
-        Information
-      </div>
-
+    
       <div className="flex-grow overflow-y-auto mb-4 pr-2">
         {renderSection(
           "Dress Code Of Fun",
