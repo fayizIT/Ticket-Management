@@ -79,10 +79,10 @@ const RightPanel: React.FC<{
               <div className="flex items-center">
                 <FaUser className="w-5 h-5 mr-2 text-blue-900" />
                 <div>
-                  <h4 className="font-medium text-sm text-blue-900">
+                  <h4 className="font-semibold text-sm text-blue-900">
                     {category.name}
                   </h4>
-                  <p className="text-xs text-blue-900">
+                  <p className="text-xs text-blue-900 font-semibold">
                     ₹{category.price.toFixed(2)}
                   </p>
                 </div>
@@ -121,13 +121,13 @@ const RightPanel: React.FC<{
       <div className="flex items-center bg-blue-50 p-2 rounded-md mb-3">
         <input
           type="text"
-          className="bg-transparent border-none flex-grow text-xs focus:outline-none placeholder-blue-900"
+          className="bg-transparent border-none flex-grow text-xs focus:outline-none placeholder-blue-900 font-semibold"
           placeholder="Enter a Coupon code"
           value={couponCode}
           onChange={(e) => setCouponCode(e.target.value)}
         />
         <button
-          className="bg-blue-900 text-white rounded-md px-2 py-1 text-xs hover:bg-blue-900"
+          className="bg-blue-900 text-white rounded-md px-2 py-1 text-xs hover:bg-blue-900 font-semibold"
           onClick={handleApplyCoupon}
         >
           {activeCoupon ? "Remove" : "Apply"}

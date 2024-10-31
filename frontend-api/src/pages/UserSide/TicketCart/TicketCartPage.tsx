@@ -2,25 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTicketCategories,
-  applyDiscount,
-  removeDiscount,
 } from "../../../redux/ticketSlice";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import { useNavigate } from "react-router-dom";
 import Timeline from "../../../components/Timeline";
 import { toast } from "react-toastify";
-import { GoChevronRight } from "react-icons/go";
 import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
+import Footer from "../../../components/userFooter";
 
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedDate = useSelector((state: any) => state.date.selectedDate);
-  const { tickets, activeCoupon, discountedTotal, categories } = useSelector(
-    (state: any) => state.ticketCategory
-  );
+  const { tickets } = useSelector((state: any) => state.ticketCategory);
   const [couponCode, setCouponCode] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -73,33 +69,20 @@ const TicketCartPage: React.FC = () => {
       }}
     >
       <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
-      <div className="flex flex-col md:flex-row justify-center items-stretch p-8 space-y-6 md:space-y-0 md:space-x-6 mt-3">
-        <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
+      <div className="flex flex-col md:flex-row justify-center items-stretch space-y-6 md:space-y-0 md:space-x-6 mt-5 px-4 md:px-0">
+        <div className="flex-1 max-w-md w-full h-auto md:h-[355px]">
           <LeftPanel setCouponCode={setCouponCode} />
-          <div className="mt-4 text-start text-blue-900 space-y-2">
-            <h2 className="text-sm md:text-sm font-bold flex items-center">
-              Know More About Us
-              <GoChevronRight className="ml-1 text-blue-900" />
-            </h2>
-            <h2 className="text-sm md:text-sm font-bold flex items-center">
-              Contact Us
-              <GoChevronRight className="ml-1 text-blue-500" />
-            </h2>
-            <hr className="border-t border-gray-300 w-[90%] md:w-[185%] my-2 mx-auto border-t-2" />
-          </div>
         </div>
-        <div className="flex-1 max-w-md w-full h-auto md:h-[500px]">
+        <div className="flex-1 max-w-md w-full h-auto md:h-[355px]">
           <RightPanel
             handleConfirm={handleConfirm}
             couponCode={couponCode}
             setCouponCode={setCouponCode}
           />
-          <div className="flex justify-center mt-1">
-            <div className="flex-1 flex justify-end items-center ">
-              <img src={Image} alt="Logo" className="h-8 sm:h-12 md:h-16" />
-            </div>
-          </div>
         </div>
+      </div>
+      <div className="flex flex-col md:flex-row w-full justify-between p-4 md:p-8">
+        <Footer imageSrc={Image} />
       </div>
     </div>
   );

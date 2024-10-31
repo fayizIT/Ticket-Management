@@ -116,7 +116,7 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
                     <FaUser className="w-6 h-6 text-blue-900" />
                     <div className="ml-2">
                       <h4 className="font-bold text-sm">{category.name}</h4>
-                      <p className="text-xs text-blue-900">
+                      <p className="text-xs font-semibold text-blue-900">
                         ₹{category.price.toFixed(2)}
                       </p>
                     </div>
@@ -153,7 +153,7 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
                     </div>
                   </div>
 
-                  <p className="text-xs text-blue-900 w-1/5 text-right">
+                  <p className="text-xs font-semibold text-blue-900 w-1/5 text-right">
                     ₹{(count * category.price).toFixed(2)}
                   </p>
                 </div>
