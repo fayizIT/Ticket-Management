@@ -1,5 +1,4 @@
 import React from "react";
-import image from "../../public/assets/images/navbarBanner.png";
 import { useNavigate } from "react-router-dom";
 
 const scrollToSection = (sectionId: string) => {
@@ -12,6 +11,8 @@ const scrollToSection = (sectionId: string) => {
 const BannerSection: React.FC = () => {
   const navigate = useNavigate();
 
+  const imageUrl = '/assets/images/navbarBanner.png';
+
   // Handle the Book Now button click
   const handleBookNow = () => {
     navigate("/date-selector");
@@ -20,7 +21,7 @@ const BannerSection: React.FC = () => {
   return (
     <div
       className="relative w-full h-[100vh] bg-cover bg-center"
-      style={{ backgroundImage: `url(${image})` }}
+      style={{ backgroundImage: `url(${imageUrl})` }}
     >
       {/* Navbar */}
       <nav className="absolute top-0 w-full flex justify-end p-6 text-white space-x-8">

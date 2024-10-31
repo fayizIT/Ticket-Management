@@ -1,5 +1,3 @@
-// src/components/CouponsList.tsx
-
 import React from "react";
 
 interface Coupon {

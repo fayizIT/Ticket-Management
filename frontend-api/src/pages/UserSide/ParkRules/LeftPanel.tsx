@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import parkRuleImage from "../../../../public/assets/images/parkRules.png";
-import icon from "../../../../public/assets/images/backwardicon.png";
+
 
 const LeftPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -9,6 +8,9 @@ const LeftPanel: React.FC = () => {
   const handleIconClick = () => {
     navigate("/ticket-cart");
   };
+
+  const  icon ='/assets/images/backwardicon.png';
+  const parkRuleImage ='/assets/images/parkRules.png';
 
   return (
     <div

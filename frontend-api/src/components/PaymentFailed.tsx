@@ -1,9 +1,7 @@
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import backgroundImage from "../../public/assets/images/TicketFrame.png";
 import Timeline from "./Timeline";
-import Image from "../../public/assets/images/clientlogo.png";
 import Footer from "./userFooter";
 
 const PaymentFailed: React.FC = () => {
@@ -13,6 +11,9 @@ const PaymentFailed: React.FC = () => {
     // Redirect to payment page or retry functionality
     navigate("/billing");
   };
+
+  const backgroundImage = '/assets/images/TicketFrame.png'
+  const Image = '/assets/images/clientlogo.png';
 
   return (
     <div

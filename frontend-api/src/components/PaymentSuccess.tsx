@@ -2,14 +2,15 @@ import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { PdfGenerator } from "./PdfGenerator";
-import backgroundImage from "../../public/assets/images/TicketFrame.png";
 import Timeline from "./Timeline";
-import Image from "../../public/assets/images/clientlogo.png";
 import Footer from "./userFooter";
 
 const PaymentSuccess: React.FC = () => {
   const location = useLocation();
   const bookingData = location.state?.bookingData;
+
+    const backgroundImage = '/assets/images/TicketFrame.png'
+    const Image = '/assets/images/clientlogo.png'
 
   // Format date to "15 October 2024"
   const formattedDate = bookingData?.dateOfVisit

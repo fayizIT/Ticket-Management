@@ -1,8 +1,6 @@
 import React from "react";
 import { FaBed, FaPlus, FaUser, FaUserFriends } from "react-icons/fa";
-import icon from "../../../../public/assets/images/backwardicon.png";
 import { useNavigate } from "react-router-dom";
-// import { FiMinus } from "react-icons/fi";
 import { TiMinus } from "react-icons/ti";
 
 interface TicketCategory {
@@ -53,6 +51,8 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
   const handleIconClick = () => {
     navigate("/park-rules");
   };
+
+  const  icon ='/assets/images/backwardicon.png';
 
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-full w-full md:w-[450px] mx-auto">

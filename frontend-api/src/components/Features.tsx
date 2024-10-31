@@ -1,13 +1,14 @@
 import React from "react";
-import bgImage from "../../public/assets/images/navbarBanner.png";
 
 const Features: React.FC = () => {
+  const bgImageUrl = '/assets/images/navbarBanner.png'; // Use the URL
+
   return (
     <div className="min-h-screen bg-white-50 p-6">
      
       <section
         className="relative h-[400px] w-full bg-cover bg-center "
-        style={{ backgroundImage: `url(${bgImage})` }}
+        style={{ backgroundImage: `url(${bgImageUrl})` }}
       >
         <div className="absolute inset-0 bg-white-900 bg-opacity-60 flex flex-col items-center justify-center">
           <h1 className="text-white text-4xl font-bold mb-4 text-center">

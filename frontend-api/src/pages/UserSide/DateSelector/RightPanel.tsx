@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { toast } from "react-toastify";
 
 interface RightPanelProps {
   selectedDate: Date | null;
@@ -40,8 +41,16 @@ const RightPanel: React.FC<RightPanelProps> = ({
   };
 
   const formattedSelectedDate = selectedDate ? formatDate(selectedDate) : "";
-
   const handleDateClick = (date: Date) => {
+    const today = new Date();
+    const selectedDateIsToday = date.toDateString() === today.toDateString();
+    const currentTime = today.getHours();
+  
+    if (selectedDateIsToday && currentTime >= 11) {
+      toast.error("You can't book a date after 11 AM today. Please select a different date.");
+      return;
+    }
+  
     if (!clickedDates.some((d) => d.toDateString() === date.toDateString())) {
       setClickedDates((prev) => [...prev, date]);
     }

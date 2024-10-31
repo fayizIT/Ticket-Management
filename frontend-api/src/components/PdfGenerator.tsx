@@ -1,7 +1,6 @@
 import jsPDF from "jspdf";
 import JsBarcode from "jsbarcode";
 import "jspdf-autotable";
-import logo from "../../public/assets/images/clientlogo.png";
 import { useNavigate } from "react-router-dom";
 
 interface PdfGeneratorProps {
@@ -90,6 +89,8 @@ export const PdfGenerator: React.FC<PdfGeneratorProps> = ({ bookingData }) => {
     };
     navigate("/");
   };
+
+  const logo = '/assets/images/clientlogo.png';
 
   return (
     <button

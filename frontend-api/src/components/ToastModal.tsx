@@ -1,5 +1,4 @@
 import React from 'react';
-import handIcon from '../../public/assets/images/Hold.png'; // Adjust the path as needed
 
 interface ModalProps {
   message: string;
@@ -7,6 +6,7 @@ interface ModalProps {
 }
 
 const ToastModal: React.FC<ModalProps> = ({ message, onClose }) => {
+  const handIcon ='/assets/images/Hold.png';
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-2xl p-6 shadow-lg max-w-60 text-center">

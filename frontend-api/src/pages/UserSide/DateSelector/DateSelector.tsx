@@ -4,11 +4,8 @@ import { setDate } from "../../../redux/dateSlice";
 import { useNavigate } from "react-router-dom";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
-import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
-import backgroundImage from "../../../../public/assets/images/TicketFrame.png";
-import Footer from "../../../components/userFooter"; // Import Footer here
-import Image from "../../../../public/assets/images/clientlogo.png"; // Import image for footer
+import Footer from "../../../components/userFooter"; 
 import ToastModal from "../../../components/ToastModal";
 
 const DateSelector: React.FC = () => {
@@ -30,6 +27,8 @@ const DateSelector: React.FC = () => {
       setShowModal(true);
       return;
     }
+
+    
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
@@ -40,6 +39,9 @@ const DateSelector: React.FC = () => {
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+  const backgroundImage = 'assets/images/TicketFrame.png';
+  const Image = 'assets/images/clientlogo.png';
 
   return (
     <div
@@ -65,13 +67,12 @@ const DateSelector: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer Section */}
       <Footer imageSrc={Image} />
 
       {showModal && (
         <ToastModal
           message="Please Select a Date for continue"
-          onClose={() => setShowModal(false)} // Close the modal when clicking OK
+          onClose={() => setShowModal(false)} 
         />
       )}
     </div>

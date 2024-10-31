@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Timeline from "../../../components/Timeline";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
-import backgroundImage from "../../../../public/assets/images/TicketFrame.png";
 import Footer from "../../../components/userFooter"; 
-import Image from "../../../../public/assets/images/clientlogo.png";
 
 const ParkRulesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +24,9 @@ const ParkRulesPage: React.FC = () => {
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+  const backgroundImage ='/assets/images/TicketFrame.png';
+  const Image = '/assets/images/clientlogo.png';
 
   return (
     <div

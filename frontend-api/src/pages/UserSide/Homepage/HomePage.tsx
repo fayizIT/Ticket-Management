@@ -8,13 +8,12 @@ import Features from "../../../components/Features";
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
-  // Simulate loading for a certain period
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); // Stop loading after 2 seconds
-    }, 3000); // Adjust the time as needed
+      setLoading(false); 
+    }, 2000); 
 
-    return () => clearTimeout(timer); // Cleanup on component unmount
+    return () => clearTimeout(timer); 
   }, []);
 
   return (
@@ -22,7 +21,6 @@ const HomePage: React.FC = () => {
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <div className="loader">Loading...</div>
-          {/* You can use any loader animation here. The following is a simple spinner example */}
           <div className="loader animate-spin rounded-full border-t-4 border-b-4 border-blue-500 h-16 w-16"></div>
         </div>
       ) : (

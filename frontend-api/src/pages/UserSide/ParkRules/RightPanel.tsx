@@ -1,5 +1,5 @@
 import React from "react";
-import { FaConciergeBell, FaTshirt, FaFileContract, FaLock } from "react-icons/fa"; // Import all icons
+import { FaConciergeBell, FaTshirt, FaFileContract, FaLock } from "react-icons/fa"; 
 
 interface RightPanelProps {
   activeSection: string | null;
@@ -23,7 +23,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           toggleSection,
           "Guests are expected to wear comfortable, family-friendly attire. No offensive slogans or images are allowed on clothing.",
           "text-sm",
-          <FaTshirt className="mr-3 text-blue-900" /> // Icon for Dress Code
+          <FaTshirt className="mr-3 text-blue-900" />
         )}
         {renderSection(
           "Special Services",
@@ -32,7 +32,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           toggleSection,
           "Wheelchairs & Prams are available for Sr. Citizens and Toddlers.",
           "text-sm",
-          <FaConciergeBell className="mr-3 text-blue-900" /> // Icon for Special Services
+          <FaConciergeBell className="mr-3 text-blue-900" /> 
         )}
         {renderSection(
           "Terms & Conditions",
@@ -46,7 +46,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
             <li>Foods from outside and alcoholic drinks are not allowed inside the park.</li>
           </ul>,
           "text-sm",
-          <FaFileContract className="mr-3 text-blue-900" /> // Icon for Terms & Conditions
+          <FaFileContract className="mr-3 text-blue-900" /> 
         )}
         {renderSection(
           "Locker Information",
@@ -55,7 +55,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           toggleSection,
           "Lockers are available for rent near the park entrance. Please secure your belongings for the duration of your visit.",
           "text-sm",
-          <FaLock className="mr-3 text-blue-900" /> // Icon for Locker Information
+          <FaLock className="mr-3 text-blue-900" /> 
         )}
       </div>
 

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import notFoundImage from "../../public/assets/images/notFoundImage.jpg";
 
 const NotFound: React.FC = () => {
+  const notFoundImageUrl = '/assets/images/notFoundImage.jpg'; 
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <img
-        src={notFoundImage}
+        src={notFoundImageUrl} 
         alt="Page Not Found"
         className="mb-4 w-1/2 max-w-sm"
       />

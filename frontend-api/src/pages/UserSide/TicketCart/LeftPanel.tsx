@@ -7,7 +7,6 @@ import couponBg from "../../../../public/assets/images/CouponBackgroundimage.png
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import icon from "../../../../public/assets/images/backwardicon.png";
 import { useNavigate } from "react-router-dom";
 
 interface LeftPanelProps {
@@ -62,6 +61,8 @@ const LeftPanel: React.FC<LeftPanelProps> = ({ setCouponCode }) => {
     navigate("/date-selector");
   };
 
+  const icon  = 'assets/images/backwardicon.png';
+  const couponBg ='assets/images/CouponBackgroundimage.png';
   return (
     <div
       className="bg-white p-2 md:p-3 rounded-3xl shadow-md w-full h-auto md:h-[380px] border border-gray-300 flex-grow -mt-6 relative"

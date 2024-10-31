@@ -1,5 +1,4 @@
 import React from "react";
-import indiaFlag from '../../../../public/assets//images/flag.png'
 
 interface BillingInformationProps {
   formData: {
@@ -19,6 +18,8 @@ const BillingInformation: React.FC<BillingInformationProps> = ({
   handleChange,
   handleConfirm,
 }) => {
+
+  const indiaFlag = '/assets/images/flag.png'
   return (
     <div className="bg-white p-4 rounded-3xl shadow-lg border border-gray-300 flex flex-col h-auto max-h-[450px] md:h-[575px] w-[450px]">
       <h2 className="text-xl font-bold mb-4  text-blue-900">

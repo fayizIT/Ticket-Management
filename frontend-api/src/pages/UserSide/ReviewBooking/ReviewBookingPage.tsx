@@ -7,7 +7,6 @@ import BillingInformation from "./BillingInformation";
 import { decrementStay, incrementStay } from "../../../redux/stayCategorySlice";
 import { decrementTicket, incrementTicket } from "../../../redux/ticketSlice";
 import { setBookingData } from "../../../redux/bookingSlice";
-import Image from "../../../../public/assets/images/clientlogo.png";
 import backgroundImage from "../../../../public/assets/images/TicketFramee.png";
 import { toast } from "react-toastify";
 import Timeline from "../../../components/Timeline";
@@ -211,6 +210,9 @@ const ReviewBookingPage: React.FC = () => {
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
+
+  const Image = '/assets/images/clientlogo.png';
+  const backgroundImage = '/assets/images/bg.png';
 
   return (
     <div

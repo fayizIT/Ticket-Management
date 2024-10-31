@@ -7,7 +7,7 @@ const FeaturesSection: React.FC = () => {
       <div className="text-center mb-8">
         <h2 className="text-2xl text-blue-900 font-bold mt-4 flex items-center justify-center">
           <img
-            src="/assets/Vector.png"
+            src="/assets/images/Vector.png"
             alt="Nature Icon"
             className="mr-8 w-100 h-10 object-cover mt-[-90px] "
           />
@@ -20,7 +20,7 @@ const FeaturesSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-gradient-to-br from-purple-400 to-pink-400 p-4 rounded-lg shadow-md">
           <img
-            src="/assets/Nature.png"
+            src="/assets/images/Nature.png"
             alt="Nature Icon"
             className="mr-26  w-100 h-10 object-cover mt-[-55px] "
           />
@@ -33,7 +33,7 @@ const FeaturesSection: React.FC = () => {
         </div>
         <div>
           <img
-            src="/assets/kindAdventure.png"
+            src="/assets/images/kindAdventure.png"
             alt="Adventure Park"
             className="w-full h-64 object-cover rounded-lg"
           />
@@ -44,7 +44,7 @@ const FeaturesSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <img
-            src="/assets/childrenBanner.png"
+            src="/assets/images/childrenBanner.png"
             alt="Children's Park"
             className="w-full h-64 object-cover rounded-lg"
           />
@@ -69,7 +69,7 @@ const FeaturesSection: React.FC = () => {
         </div>
         <div>
           <img
-            src="/assets//childrens.png"
+            src="/assets/images/childrens.png"
             alt="Thrilling Rides"
             className="w-full h-64 object-cover rounded-lg"
           />

@@ -8,7 +8,7 @@ const FooterSection: React.FC = () => {
           <p className="text-sm">&copy; 2024 Designed and Developed by</p>
 
           <img
-            src="/assets/companylogo.png"
+            src="/assets/images/companylogo.png"
             alt="Company Logo"
             className="h-7 w-25"
           />
@@ -16,7 +16,7 @@ const FooterSection: React.FC = () => {
 
         <div className="mt-4 sm:mt-0">
           <img
-            src="/assets/clientlogo.png"
+            src="/assets/images/clientlogo.png"
             alt="Client Logo"
             className="h-20 w-20 sm:absolute sm:bottom-1 sm:right-3"
           />
