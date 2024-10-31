@@ -3,10 +3,9 @@ import { FaCheckCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { PdfGenerator } from "./PdfGenerator";
 import backgroundImage from "../../public/assets/TicketFrame.png";
-import RightFooter from "./RightFooter";
-import LeftFooter from "./LeftFooter";
 import Timeline from "./Timeline";
 import Image from "../../public/assets/clientlogo.png";
+import Footer from "./userFooter";
 
 const PaymentSuccess: React.FC = () => {
   const location = useLocation();
@@ -28,21 +27,18 @@ const PaymentSuccess: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-no-repeat bg-cover bg-center w-full"
+      className="flex flex-col min-h-screen w-full bg-no-repeat bg-cover bg-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
       }}
     >
-      <Timeline
-        currentStep={4}
-        onStepClick={() => console.log("Step clicked!")}
-      />
+      <Timeline currentStep={4} onStepClick={() => console.log("Step clicked!")} />
 
-      <div className="flex flex-col items-center justify-center w-full flex-grow p-4 md:p-8">
-        <div className="bg-white  rounded-3xl shadow-lg p-4 md:p-6 w-[350px] max-w-md text-center">
+      <div className="flex flex-col items-center justify-center flex-grow p-4 md:p-8 overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-lg p-4 md:p-6 w-full max-w-md text-center">
           {/* Success Icon */}
-          <div className="w-full flex justify-center mb-4">
+          <div className="flex justify-center mb-4">
             <FaCheckCircle className="text-green-500 text-5xl md:text-6xl" />
           </div>
 
@@ -56,37 +52,33 @@ const PaymentSuccess: React.FC = () => {
             payment is completed.
           </p>
 
-          <hr className="mb-3 font-bold"></hr>
+          <hr className="mb-3 font-bold" />
 
-          {/* Additional Details - Horizontal Layout */}
+          {/* Additional Details - Responsive Layout */}
           {bookingData && (
-            <div className="flex justify-around items-start text-gray-700 mb-4">
-              <div className="text-start">
-                <p className="font-semibold text-[#15196E] text-start opacity-40">Date of Visit</p>
+            <div className="flex flex-col md:flex-row justify-between items-start text-gray-700 mb-4 space-y-2 md:space-y-0">
+              <div className="flex-1 text-start">
+                <p className="font-semibold text-[#15196E] opacity-40">Date of Visit</p>
                 <p className="font-bold text-blue-900">{formattedDate}</p>
               </div>
-              <div className="text-center ">
+              <div className="flex-1 text-center">
                 <p className="font-semibold text-[#15196E] opacity-40">Visitors</p>
                 <p className="font-bold text-blue-900">{bookingData.totalVisitors}</p>
               </div>
-              <div className="text-end">
-                <p className="font-semibold text-[#15196E] opacity-40 text-end">Total</p>
-                <p className="font-bold text-blue-900 text-end">₹{formattedTotal}</p>
+              <div className="flex-1 text-end">
+                <p className="font-semibold text-[#15196E] opacity-40">Total</p>
+                <p className="font-bold text-blue-900">₹{formattedTotal}</p>
               </div>
             </div>
           )}
 
-          
           <div className="space-y-3">
             <PdfGenerator bookingData={bookingData} />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row w-full justify-between p-4 md:p-8">
-        <LeftFooter />
-        <RightFooter imageSrc={Image} />
-      </div>
+      <Footer imageSrc={Image} />
     </div>
   );
 };
