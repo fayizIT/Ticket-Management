@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import Image from "../../../../public/assets/clientlogo.png";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
 import Footer from "../../../components/userFooter";
-import Modal from "../../../components/HoldToast";
+import ToastModal from "../../../components/ToastModal";
 
 const TicketCartPage: React.FC = () => {
   const navigate = useNavigate();
@@ -46,10 +46,8 @@ const TicketCartPage: React.FC = () => {
       0
     );
 
-    if (totalTickets === 0) {
-      console.log("gettttt");
-      
-      setShowModal(true); // Show the modal when no tickets are selected
+    if (totalTickets === 0) {      
+      setShowModal(true); // Show the ToastModal when no tickets are selected
       return;
     }
 
@@ -90,7 +88,7 @@ const TicketCartPage: React.FC = () => {
         <Footer imageSrc={Image} />
       </div>
       {showModal && (
-        <Modal
+        <ToastModal
           message="Please add at least one ticket."
           onClose={() => setShowModal(false)} // Close the modal when clicking OK
         />

@@ -90,7 +90,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
       <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-2 sm:space-y-0 sm:space-x-2">
         <h6 className="text-xs sm:text-sm font-bold text-blue-900 text-center sm:text-left">
           You selected{" "}
-          <span className="font-semibold">{formattedSelectedDate}</span>
+          <span className="font-bold">{formattedSelectedDate}</span>
         </h6>
         <button
           className={`w-full sm:w-auto font-semibold bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-800 transition duration-200`}

@@ -9,12 +9,14 @@ import Timeline from "../../../components/Timeline";
 import backgroundImage from "../../../../public/assets/TicketFrame.png";
 import Footer from "../../../components/userFooter"; // Import Footer here
 import Image from "../../../../public/assets/clientlogo.png"; // Import image for footer
+import ToastModal from "../../../components/ToastModal";
 
 const DateSelector: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDateState] = useState<Date | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [showModal, setShowModal] = useState(false); 
 
   const handleDateChange = (value: Date | Date[] | null) => {
     if (value instanceof Date) {
@@ -25,7 +27,7 @@ const DateSelector: React.FC = () => {
 
   const handleConfirm = () => {
     if (!selectedDate) {
-      toast.error("Please select a date");
+      setShowModal(true);
       return;
     }
     if (currentStep < 5) {
@@ -65,7 +67,16 @@ const DateSelector: React.FC = () => {
 
       {/* Footer Section */}
       <Footer imageSrc={Image} />
+
+      {showModal && (
+        <ToastModal
+          message="Please Select a Date for continue"
+          onClose={() => setShowModal(false)} // Close the modal when clicking OK
+        />
+      )}
     </div>
+
+    
   );
 };
 
