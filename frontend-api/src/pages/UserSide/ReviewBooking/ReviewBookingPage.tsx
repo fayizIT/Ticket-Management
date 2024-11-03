@@ -210,23 +210,26 @@ const ReviewBookingPage: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const Image = '/assets/images/clientlogo.png';
-  const backgroundImage = '/assets/images/TicketFramee.png';
+  const Image = "/assets/images/clientlogo.png";
+  const backgroundImage = "/assets/images/TicketBg.png";
 
   return (
     <div
-      className="min-h-screen flex flex-col w-full"
+      className=" flex flex-col bg-no-repeat bg-cover bg-top   w-full"
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
+        minHeight: "100vh", // Ensures the initial view shows at least the full viewport height
+        height: "auto",
       }}
     >
-      <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
+      <div className="w-full sm:w-[68%] mx-auto mt-6 mb-3">
+        <Timeline currentStep={currentStep} onStepClick={handleStepClick} />
+      </div>
 
-      <div className="w-full sm:w-4/5 mx-auto mt-6 flex flex-col md:flex-row justify-center items-start space-y-4 md:space-y-0 md:space-x-0 px-2 sm:px-0">
-        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col">
+      {/* <div className="w-full sm:w-4/5 mx-auto mt-6 flex flex-col md:flex-row justify-center gap-7 items-start space-y-4 md:space-y-0 md:space-x-0 px-2 sm:px-0">
+        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col"> */}
+      <div className="w-full sm:w-[68%] mx-auto mt-4  flex flex-col md:flex-row gap-7 justify-center items-start space-y-4 md:space-y-0 md:space-x-4 px-2 sm:px-0">
+        <div className="flex-1     h-auto">
           <BookingSummary
             selectedDate={selectedDate}
             totalTicketCount={totalTicketCount}
@@ -241,10 +244,10 @@ const ReviewBookingPage: React.FC = () => {
             updateTicketCount={updateTicketCount}
             updateStayCount={updateStayCount}
             handleDecrementWithCheck={handleDecrementWithCheck}
-          /> 
+          />
         </div>
 
-        <div className="flex-1 max-w-full md:max-w-lg w-full min-h-full flex flex-col">
+        <div className="flex-1">
           <BillingInformation
             formData={formData}
             handleChange={handleChange}
@@ -253,8 +256,9 @@ const ReviewBookingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Unified Footer */}
-      <Footer imageSrc={Image} />
+      <div className="w-full sm:w-[68%] mx-auto  mt-8 mb-44">
+        <Footer imageSrc={Image} />
+      </div>
     </div>
   );
 };

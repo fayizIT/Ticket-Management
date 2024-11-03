@@ -45,12 +45,14 @@ const RightPanel: React.FC<RightPanelProps> = ({
     const today = new Date();
     const selectedDateIsToday = date.toDateString() === today.toDateString();
     const currentTime = today.getHours();
-  
+
     if (selectedDateIsToday && currentTime >= 11) {
-      toast.error("You can't book a date after 11 AM today. Please select a different date.");
+      toast.error(
+        "You can't book a date after 11 AM today. Please select a different date."
+      );
       return;
     }
-  
+
     if (!clickedDates.some((d) => d.toDateString() === date.toDateString())) {
       setClickedDates((prev) => [...prev, date]);
     }
@@ -58,11 +60,12 @@ const RightPanel: React.FC<RightPanelProps> = ({
   };
 
   return (
-    <div className="bg-white p-4 rounded-3xl shadow-lg w-full md:h-[425px] border border-gray-300">
-      <h3 className="text-lg sm:text-xl font-bold mb-3 text-blue-900">
+    <div className="bg-white p-5 sm:p-7 rounded-3xl w-full border border-gray-300">
+      <h3 className="text-lg sm:text-2xl md:text-3xl font-extrabold mb-4 sm:mb-5 mt-2 text-[#15196E] ">
         Choose a date to visit
       </h3>
-      <div className="flex justify-center mb-4">
+
+      <div className="flex justify-center mb-6  w-full rounded-lg p-3 sm:p-3">
         <Calendar
           onChange={(value) => {
             if (value instanceof Date) handleDateClick(value);
@@ -70,18 +73,20 @@ const RightPanel: React.FC<RightPanelProps> = ({
           }}
           value={selectedDate}
           tileClassName={({ date }: { date: Date }) =>
-            `${
+            ` ${
               isPastDate(date)
                 ? "bg-gray-200 text-gray-500"
                 : isSelectedDate(date)
                 ? "bg-blue-900 text-white font-semibold"
-                : clickedDates.some((d) => d.toDateString() === date.toDateString())
-                ? "bg-blue-100 text-blue-900 font-semibold"
-                : "bg-blue-100 text-blue-900"
-            } rounded-lg p-2 flex items-center justify-center text-sm sm:text-base`
+                : clickedDates.some(
+                    (d) => d.toDateString() === date.toDateString()
+                  )
+                ? "bg-[#D5EFFF] bg-opacity-55 text-[#15196E] font-semibold"
+                : "bg-[#D5EFFF] bg-opacity-55 text-blue-900"
+            } p-3 sm:p-5 w-full flex items-center justify-center text-xs sm:text-sm border-0`
           }
           tileDisabled={({ date }: { date: Date }) => isPastDate(date)}
-          className="w-full max-w-xs text-xs sm:text-sm grid gap-2" 
+          className="w-full text-xs sm:text-sm border-0"
           calendarType="gregory"
           navigationLabel={({ label }) => (
             <span className="font-semibold text-blue-900">{label}</span>
@@ -96,13 +101,14 @@ const RightPanel: React.FC<RightPanelProps> = ({
           }
         />
       </div>
-      <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-2 sm:space-y-0 sm:space-x-2">
-        <h6 className="text-xs sm:text-sm font-bold text-blue-900 text-center sm:text-left">
+
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-4 sm:mt-6 space-y-3 sm:space-y-0 sm:space-x-3">
+        <h6 className="text-sm sm:text-lg font-bold text-[#15196E] text-center sm:text-left">
           You selected{" "}
           <span className="font-bold">{formattedSelectedDate}</span>
         </h6>
         <button
-          className={`w-full sm:w-auto font-semibold bg-blue-900 text-white py-2 px-4 rounded-full text-xs sm:text-sm hover:bg-blue-800 transition duration-200`}
+          className="w-full sm:w-auto font-semibold bg-[#2D3192] text-white py-2 px-6 sm:py-3 sm:px-8 rounded-full text-xs sm:text-base md:text-lg hover:bg-blue-800 transition duration-200"
           onClick={onConfirm}
         >
           Continue
