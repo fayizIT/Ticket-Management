@@ -1,4 +1,4 @@
-/* src/assets/fonts.css */
+
 @font-face {
     font-family: 'Panton Narrow';
     src: url('/assets/fonts/PantonNarrowTrial.otf') format('opentype'); 
@@ -30,28 +30,28 @@
   @font-face {
     font-family: 'Panton';
     src: url('/assets/fonts/Panton-Heavy-Italic.otf') format('truetype');
-    font-weight: 800; /* Define specific weight for italic */
+    font-weight: 800; 
     font-style: italic;
   }
   
   @font-face {
     font-family: 'Panton';
     src: url('/assets/fonts/Panton-ExtraBold.otf') format('truetype');
-    font-weight: 600; /* Adjust based on the font weight scale */
+    font-weight: 900; 
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Panton';
     src: url('/assets/fonts/Panton-ExtraLight.otf') format('truetype');
-    font-weight: 200; /* Adjust based on the font weight scale */
+    font-weight: 200; 
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Panton';
     src: url('/assets/fonts/Panton-Light.otf') format('truetype');
-    font-weight: 300; /* Adjust based on the font weight scale */
+    font-weight: 300; 
     font-style: normal;
   }
   

@@ -200,7 +200,6 @@ export class BookingService {
 
 
     async sendOtp(email: string): Promise<void> {
-        // Check if email exists in Booking collection
         const bookingExists = await this.bookingModel.findOne({ email }).exec();
         if (!bookingExists) {
             throw new BadRequestException('Email not found in bookings.');
@@ -224,21 +223,18 @@ export class BookingService {
             throw new BadRequestException('Invalid OTP.');
         }
 
-        // Optionally, delete the OTP after verification
         this.otpStore.delete(email);
 
-        // Retrieve and return the booking details after successful OTP verification
         const booking = await this.bookingModel.findOne({ email }).exec();
         if (!booking) {
             throw new BadRequestException('Booking not found.');
         }
 
-        return booking; // Return the booking details
+        return booking; 
     }
 
     private generateOtp(): string {
-        // Implement your OTP generation logic here
-        return Math.floor(100000 + Math.random() * 900000).toString(); // Example: 6-digit OTP
+        return Math.floor(100000 + Math.random() * 900000).toString(); 
     }
     
 }

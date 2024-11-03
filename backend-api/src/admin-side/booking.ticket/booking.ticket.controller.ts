@@ -11,8 +11,8 @@ import {
 import { BookingService } from './booking.ticket.service'; 
 import { CreateBookingDto } from './dto/create-booking.ticket.dto';
 import { Booking } from './entities/booking.ticket.entity';
-import { SendOtpDto } from './dto/send-otp.dto'; // Ensure you have this DTO defined
-import { VerifyOtpDto } from './dto/verify-otp.dto'; // Ensure you have this DTO defined
+import { SendOtpDto } from './dto/send-otp.dto'; 
+import { VerifyOtpDto } from './dto/verify-otp.dto'; 
 
 @Controller('bookings')
 export class BookingController {

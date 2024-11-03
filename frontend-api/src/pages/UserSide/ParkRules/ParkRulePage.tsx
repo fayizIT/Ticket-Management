@@ -31,11 +31,11 @@ const ParkRulesPage: React.FC = () => {
   const Image = '/assets/images/clientlogo.png';
 
   const handleMyBooking = () => {
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); 
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false); 
   };
 
   return (
