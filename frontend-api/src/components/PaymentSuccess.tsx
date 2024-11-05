@@ -9,19 +9,18 @@ const PaymentSuccess: React.FC = () => {
   const location = useLocation();
   const bookingData = location.state?.bookingData;
 
-    const backgroundImage = '/assets/images/TicketFrame.png'
-    const Image = '/assets/images/clientlogo.png'
+  const backgroundImage = '/assets/images/TicketBg.png';
+  const Image = '/assets/images/clientlogo.png';
 
-  // Format date to "15 October 2024"
   const formattedDate = bookingData?.dateOfVisit
     ? new Date(bookingData.dateOfVisit).toLocaleDateString('en-GB', {
         day: 'numeric',
-        month: 'long',
+        month: 'short',
         year: 'numeric',
       })
     : "";
 
-  // Format total to avoid unnecessary decimal points
+ 
   const formattedTotal = bookingData?.grandTotal
     ? parseFloat(bookingData.grandTotal.toFixed(2))
     : "";
@@ -31,47 +30,49 @@ const PaymentSuccess: React.FC = () => {
       className="flex flex-col min-h-screen w-full bg-no-repeat bg-cover bg-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
       }}
     >
-      <Timeline currentStep={4} onStepClick={() => console.log("Step clicked!")} />
+      <div className="w-full sm:w-[68%] mx-auto mt-4 mb-3">
+        <Timeline currentStep={4} onStepClick={() => console.log("Step clicked!")} />
+      </div>
 
       <div className="flex flex-col items-center justify-center flex-grow p-4 md:p-8 overflow-hidden">
-        <div className="bg-white rounded-3xl shadow-lg p-4 md:p-6 w-full max-w-md text-center">
-          {/* Success Icon */}
-          <div className="flex justify-center mb-4">
-            <FaCheckCircle className="text-green-500 text-5xl md:text-6xl" />
+        <div className="bg-white rounded-3xl p-4 md:p-10 w-full max-w-xl text-center">
+         
+          <div className="flex justify-center mb-4 md:mb-8">
+            <FaCheckCircle  className="text-[#89C541] w-[90px] h-[90px]  md:w-[117px] md:h-[117px]" />
           </div>
 
-          {/* Success Message */}
-          <h2 className="text-xl md:text-2xl font-bold mb-3 text-green-500">
-            Payment Successful!
-          </h2>
-          <p className="text-blue-800 text-sm md:text-base mb-4">
-            Thank you for your payment. Your booking has been confirmed! You
-            will receive a confirmation mail with your tickets as soon as the
-            payment is completed.
-          </p>
+         
+          <div className="w-full flex flex-col items-center">
+            <h2 className="text-xl md:text-[33px] font-[1000] mb-4 md:mb-8 text-[#619D19]">
+              Payment Successful!
+            </h2>
+            <p className="text-[#15196E] leading-tight text-base md:text-[22px] mb-6 font-bold w-full ">
+              You will receive a confirmation mail with your tickets as soon as the payment is complete.
+            </p>
+          </div>
 
-          <hr className="mb-3 font-bold" />
+          <hr className="mb-6 font-bold h-[2px] bg-[#2D3192] bg-opacity-10" />
 
-          {/* Additional Details - Responsive Layout */}
+         
           {bookingData && (
-            <div className="flex flex-col md:flex-row justify-between items-start text-gray-700 mb-4 space-y-2 md:space-y-0">
-              <div className="flex-1 text-start">
-                <p className="font-semibold text-[#15196E] opacity-40">Date of Visit</p>
-                <p className="font-bold text-blue-900">{formattedDate}</p>
-              </div>
-              <div className="flex-1 text-center">
-                <p className="font-semibold text-[#15196E] opacity-40">Visitors</p>
-                <p className="font-bold text-blue-900">{bookingData.totalVisitors}</p>
-              </div>
-              <div className="flex-1 text-end">
-                <p className="font-semibold text-[#15196E] opacity-40">Total</p>
-                <p className="font-bold text-blue-900">₹{formattedTotal}</p>
-              </div>
-            </div>
-          )}
+  <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start text-gray-700 mb-4 space-y-2 md:space-y-0">
+    <div className="flex-1 text-center mb-1 md:mb-5">
+      <p className="font-semibold text-[#15196E] text-xl md:text-[23px] opacity-40 mb-3">Date of Visit</p>
+      <p className="font-bold text-lg md:text-[20px] text-[#15196E]">{formattedDate}</p>
+    </div>
+    <div className="flex-1 text-center mb-1 md:mb-5">
+      <p className="font-semibold text-[#15196E] text-xl md:text-[23px] mb-3 opacity-40">Visitors</p>
+      <p className="font-bold text-lg md:text-[20px] text-[#15196E]">{bookingData.totalVisitors}</p>
+    </div>
+    <div className="flex-1 text-center mb-1 md:mb-5">
+      <p className="font-semibold text-[#15196E] text-xl md:text-[23px] mb-3 opacity-40">Total</p>
+      <p className="font-bold text-lg md:text-[20px] text-[#15196E]">₹{formattedTotal}</p>
+    </div>
+  </div>
+)}
+
 
           <div className="space-y-3">
             <PdfGenerator bookingData={bookingData} />
@@ -79,7 +80,9 @@ const PaymentSuccess: React.FC = () => {
         </div>
       </div>
 
-      <Footer imageSrc={Image} />
+      <div className="w-full sm:w-[68%] mx-auto mt-8 mb-44">
+        <Footer imageSrc={Image} />
+      </div>
     </div>
   );
 };

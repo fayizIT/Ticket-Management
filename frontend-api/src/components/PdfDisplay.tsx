@@ -1,7 +1,6 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import JsBarcode from 'jsbarcode';
-import 'jspdf-autotable'; 
 
 interface PdfGeneratorProps {
   bookingData: {
@@ -94,12 +93,7 @@ export const PdfGenerator: React.FC<PdfGeneratorProps> = ({ bookingData }) => {
       const pdfUrl = URL.createObjectURL(pdfBlob);
 
       // Open the PDF in a new tab
-      const newTab = window.open(pdfUrl);
-      if (newTab) {
-        newTab.focus();
-      } else {
-        console.error('Failed to open new tab. Please allow popups for this site.');
-      }
+      window.open(pdfUrl);
     };
   };
 
