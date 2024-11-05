@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchDashboardData = async () => {
   const token = localStorage.getItem("accessToken");
@@ -10,7 +10,7 @@ export const fetchDashboardData = async () => {
     const response = await fetch(`${API_URL}/admin-auth/dashboard`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
