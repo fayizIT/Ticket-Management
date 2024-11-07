@@ -1,99 +1,98 @@
-// VerifyOtpModal.tsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface VerifyOtpModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onVerify: (otp: string) => Promise<void>;
 }
 
-const VerifyOtpModal: React.FC<VerifyOtpModalProps> = ({ isOpen, onClose }) => {
-  const [otp, setOtp] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false);
+const VerifyOtpModal: React.FC<VerifyOtpModalProps> = ({
+  isOpen,
+  onClose,
+  onVerify,
+}) => {
+  const [otp, setOtp] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSendOtp = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to send OTP here
-    console.log("Sending OTP to", phoneNumber);
-    setIsOtpSent(true);
+    try {
+      await onVerify(otp);
+      toast.error("Invalid OTP. Please try again.");
+    } catch (error: any) {
+      if (error.message.includes("Invalid OTP")) {
+        toast.error("Invalid OTP. Please try again.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again later.");
+      }
+    }
   };
 
-  const handleVerify = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Logic to verify OTP here
-    console.log("Verifying OTP...");
-  };
-
-  const handleResend = () => {
-    // Logic to resend OTP here
-    console.log("Resending OTP...");
-  };
+  const parkRuleImage = "/assets/images/parkRules.png";
+  const emailImage = "/assets/images/Email.png";
+  const Logo = "/assets/images/Logo.png";
 
   return (
-    <div className="fixed inset-0 flex">
-      <div className="bg-black bg-opacity-50 w-full h-full" onClick={onClose} />
-      <div className="bg-gray-100 w-full md:w-1/3 h-full p-6 relative flex flex-col justify-center items-center">
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <ToastContainer />
+      <div
+        className="bg-[#191919D1] bg-opacity-80 absolute inset-0"
+        onClick={onClose}
+      />
+      <div className="bg-white w-full max-w-lg h-auto p-6 rounded-[29.38px] shadow-lg z-10 relative mr-4 mt-4 mb-4">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 transition duration-200 hover:bg-red-200"
+          className="absolute top-4 right-4 text-xl font-bold"
         >
-          &times;
+          ✖
         </button>
-        <h2 className="text-xl font-extrabold mb-4 text-center">{isOtpSent ? 'Verify Your OTP' : 'Enter Your Phone Number'}</h2>
-        <p className="mb-4 text-center">
-          {isOtpSent ? 'Please enter the OTP sent to your registered mobile number.' : 'We will send you an OTP for verification.'}
-        </p>
-        
-        {isOtpSent ? (
-          <>
-            <form onSubmit={handleVerify} className="w-full">
-              <label className="block mb-2 text-center">OTP*</label>
-              <input
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter your OTP"
-                required
-                className="border border-gray-300 p-2 mb-4 w-full rounded-2xl"
-              />
-              <button
-                type="submit"
-                className="bg-blue-900 text-white font-bold py-2 px-4 rounded-3xl w-full transition duration-200 hover:bg-blue-600 mb-4"
-              >
-                Verify OTP
-              </button>
-            </form>
-            <p className="text-center mb-4">
-              OTP sent to {phoneNumber}****.
-            </p>
-            <button
-              onClick={handleResend}
-              className="text-blue-600 underline hover:text-blue-800 transition duration-200"
-            >
-              Facing Problem in receiving OTP? Click Here to Resend
-            </button>
-          </>
-        ) : (
-          <form onSubmit={handleSendOtp} className="w-full">
-            <label className="block mb-2 text-center">Phone Number*</label>
+        <div className="flex items-start justify-center">
+          <img
+            src={Logo}
+            alt="Foggy Mountain Logo"
+            className="h-[201.18px] w-[210.84px] object-contain -mt-4"
+          />
+        </div>
+        <div className="border border-[#000000] border-opacity-15 rounded-[29.28px] p-4">
+          <h2 className="text-[30px] font-bold mb-4 text-left text-[#15196E] flex justify-between font-barlow-condensed">
+            Login to Foggy Mountain
+            <img
+              src={emailImage}
+              alt="Foggy Mountain Logo"
+              className="object-contain "
+            />
+          </h2>
+          <form onSubmit={handleSubmit} className="w-full">
             <input
               type="text"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter your phone number"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="OTP"
               required
-              className="border border-gray-300 p-2 mb-4 w-full rounded-2xl"
+              className="border border-[#000000] border-opacity-15 p-3 mb-4 w-full rounded-[10.46px] bg-[#D5EFFF] bg-opacity-40 outline-none text-[#2D3192] font-semibold text-lg placeholder:text-[#2D3192] placeholder:opacity-50"
             />
+            <p className="text-center text-[#15196E] text-xl font-bold">
+              You will receive an OTP in your email, please enter the OTP above
+              to login.
+            </p>
             <button
               type="submit"
-              className="bg-blue-900 text-white font-bold py-2 px-4 rounded-3xl w-full transition duration-200 hover:bg-blue-600 mb-4"
+              className="bg-[#2D3192] text-white font-bold text-lg py-3 px-4 rounded-[41.29px] w-full mt-4"
             >
-              Send OTP
+              Verify OTP
             </button>
           </form>
-        )}
+        </div>
+        <div className="flex items-center justify-center overflow-hidden w-full sm:w-[512px] h-48 sm:h-96 -ml-6 absolute bottom-0">
+          <img
+            src={parkRuleImage}
+            alt="Foggy Mountain Logo"
+            className="w-full h-full object-cover rounded-[29.38px] opacity-50"
+          />
+        </div>
       </div>
     </div>
   );
