@@ -4,7 +4,7 @@ import Footer from "./userFooter";
 import { PiParkFill } from "react-icons/pi";
 import { FaCheckCircle } from "react-icons/fa";
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import 'jspdf-autotable'; 
 
 interface TicketCategory {
   ticketCategoryId: string;
@@ -87,7 +87,7 @@ const generatePDF = (booking:Booking) => {
   }
 
   // Add the table to the PDF
-  doc.autoTable(columns, data, {
+  (doc as any).autoTable(columns, data, {
     margin: { top: 10 },
     styles: { fontSize: 10 },
     columnStyles: {
