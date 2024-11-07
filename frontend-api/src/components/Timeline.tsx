@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import MyBookingButton from "../pages/UserSide/Bookings/MybookingButton";
+import { FaCheck } from "react-icons/fa";
 
 const Timeline: React.FC<{
   currentStep: number;
@@ -30,7 +32,7 @@ const Timeline: React.FC<{
   };
 
   return (
-    <div className="flex justify-center items-center w-full max-w-2xl mx-auto p-4 mb-4">
+    <div className="flex flex-col lg:flex-row justify-center items-center w-full mx-auto p-4 mb-4 mt-5 relative">
       <div className="flex items-center w-full justify-between relative text-blue-900">
         {steps.map((step, index) => (
           <React.Fragment key={step}>
@@ -43,7 +45,7 @@ const Timeline: React.FC<{
                   top: "35%",
                   zIndex: "0",
                   transform: "translateY(-50%)",
-                  left: `${index * 25 - 0}px`,
+                  left: `${index * 34 - 0}px`,
                 }}
               />
             )}
@@ -51,25 +53,23 @@ const Timeline: React.FC<{
             <div className="flex flex-col items-center relative z-10">
               <div
                 className={`rounded-full h-10 w-10 flex items-center justify-center border-2 transition duration-00
-    ${
-      index === currentStep
-        ? "border-blue-900 bg-white"
-        : "border-gray-300 bg-gray-100"
-    }
-    ${index <= currentStep ? "cursor-pointer" : "cursor-not-allowed"}
-  `}
+                  ${
+                    index === currentStep
+                      ? "border-blue-900 bg-white"
+                      : "border-gray-300 bg-gray-100"
+                  }
+                  ${index <= currentStep ? "cursor-pointer" : "cursor-not-allowed"}
+                `}
                 onClick={() => handleStepClick(index)}
               >
                 {index < currentStep ? (
                   <div className="relative flex items-center justify-center">
-                  {/* Outer Circle with Light Green Border */}
-                  <div className="absolute rounded-full h-12 w-12 border-4 border-[#318435] flex items-center justify-center"> 
-                    <div className="rounded-full h-10 w-10 bg-[#89C541] flex items-center justify-center"> 
-                      <span className="text-white text-lg">✓</span> 
+                    <div className="absolute rounded-full h-12 w-12 border-4 border-[#318435] flex items-center justify-center">
+                      <div className="rounded-full h-10 w-10 bg-[#89C541] flex items-center justify-center">
+                        <span className="text-white text-lg"> <FaCheck /></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
                 ) : index === currentStep ? (
                   <div className="h-3 w-3 bg-blue-900 rounded-full"></div>
                 ) : (
@@ -78,7 +78,7 @@ const Timeline: React.FC<{
               </div>
 
               <span
-                className={`mt-1 text-xs md:text-sm text-center ${
+                className={`mt-1   text-xs md:text-lg text-center ${
                   index <= currentStep
                     ? "font-bold text-blue-900"
                     : "text-gray-400"
@@ -90,9 +90,11 @@ const Timeline: React.FC<{
           </React.Fragment>
         ))}
       </div>
+      <div className="flex justify-center lg:justify-end w-full mt-9 lg:mt-0">
+        <MyBookingButton />
+      </div>
     </div>
   );
 };
 
 export default Timeline;
-

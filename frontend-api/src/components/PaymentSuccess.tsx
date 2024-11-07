@@ -45,10 +45,10 @@ const PaymentSuccess: React.FC = () => {
 
          
           <div className="w-full flex flex-col items-center">
-            <h2 className="text-xl md:text-[33px] font-[1000] mb-4 md:mb-8 text-[#619D19]">
+            <h2 className="text-xl md:text-[32px] font-bold mb-4 md:mb-8 text-[#619D19] font-barlow-condensed">
               Payment Successful!
             </h2>
-            <p className="text-[#15196E] leading-tight text-base md:text-[22px] mb-6 font-bold w-full ">
+            <p className="text-[#15196E] leading-tight text-base md:text-[22px] mb-10 font-bold w-full -mt-3">
               You will receive a confirmation mail with your tickets as soon as the payment is complete.
             </p>
           </div>
@@ -64,7 +64,7 @@ const PaymentSuccess: React.FC = () => {
     </div>
     <div className="flex-1 text-center mb-1 md:mb-5">
       <p className="font-semibold text-[#15196E] text-xl md:text-[23px] mb-3 opacity-40">Visitors</p>
-      <p className="font-bold text-lg md:text-[20px] text-[#15196E]">{bookingData.totalVisitors}</p>
+      <p className="font-bold text-lg md:text-[20px] text-[#15196E]">{bookingData.totalVisitors>1?`${bookingData.totalVisitors} Visitors`:`${bookingData.totalVisitors} Visitor`}</p>
     </div>
     <div className="flex-1 text-center mb-1 md:mb-5">
       <p className="font-semibold text-[#15196E] text-xl md:text-[23px] mb-3 opacity-40">Total</p>
