@@ -7,8 +7,7 @@ export class RazorpayService {
 
     constructor() {
         this.razorpay = new Razorpay({
-            key_id: 'rzp_test_vGGGd2XhY2l19v',
-            key_secret: 'sZ1yJrVgiaoDcF7OVdqV7I5T',
+   
         });
     }
 
