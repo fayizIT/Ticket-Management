@@ -5,6 +5,5 @@ import { RazorpayController } from './razorpay.controller';
 @Module({
   controllers: [RazorpayController],
   providers: [RazorpayService],
-  exports: [RazorpayService], // Export the service
-})
+  exports: [RazorpayService], 
 export class RazorpayModule {}
