@@ -15,15 +15,15 @@ import BookingDetails from '../pages/AdminSide/userDetails/BookingDetails';
 const AdminRouter = () => (
   <Routes>
     <Route path="/admin/login" element={<AdminLogin />} />
-    <Route path="/admin/dashboard" element={<Dashboard />} />
-    <Route path="/admin/create-ticket-category" element={<CreateTicketCategory />} />
-    <Route path="/admin/ticket-Category" element={<TicketCategoriesList />} />
-    <Route path="/admin/edit-ticket-Category/:id" element={<EditTicketCategory />} />
-    <Route path="/admin/stay-category" element={<StayCategoryList />} />
-    <Route path="/admin/editStayCategory/:id" element={<EditStayCategory />} />
-    <Route path="/admin/addStayCategory" element={<CreateStayCategory />} />
-    <Route path="/admin/coupon-code" element={<CouponCodeList />} />
-    <Route path="/admin/addCoupon" element={<CreateCouponCode />} />
+    <Route path="/admin/home" element={<Dashboard />} />
+    <Route path="/admin/add tickect" element={<CreateTicketCategory />} />
+    <Route path="/admin/ticketlist" element={<TicketCategoriesList />} />
+    <Route path="/admin/edit-ticketlist/:id" element={<EditTicketCategory />} />
+    <Route path="/admin/stayList" element={<StayCategoryList />} />
+    <Route path="/admin/editStayList/:id" element={<EditStayCategory />} />
+    <Route path="/admin/addStayList" element={<CreateStayCategory />} />
+    <Route path="/admin/couponcode" element={<CouponCodeList />} />
+    <Route path="/admin/ceateCoupon" element={<CreateCouponCode />} />
     <Route path="/admin/editCoupon/:id" element={<EditCouponCode />} />
     <Route path="/admin/booking-ticket" element={<BookingDetails />} />
   </Routes>

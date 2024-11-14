@@ -14,14 +14,14 @@ import NotFound from '../components/NotFound';
 const UserRouter = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
-    <Route path="/date-selector" element={<DateSelector />} />
-    <Route path="/ticket-cart" element={<TicketCartPage />} />
-    <Route path="/park-rules" element={<ParkRulesPage />} />
-    <Route path="/stay-categories" element={<StayCart />} />
+    <Route path="/dateselector" element={<DateSelector />} />
+    <Route path="/ticketcart" element={<TicketCartPage />} />
+    <Route path="/parkrules" element={<ParkRulesPage />} />
+    <Route path="/staycategories" element={<StayCart />} />
     <Route path="/billing" element={<ReviewBookingPage />} />
-    <Route path="/thank-you" element={<PaymentSuccess />} />
-    <Route path="/payment-failed" element={<PaymentFailed />} />
-    <Route path="/booking-details" element={<UserBookings />} />
+    <Route path="/thankyou" element={<PaymentSuccess />} />
+    <Route path="/paymentfailed" element={<PaymentFailed />} />
+    <Route path="/bookingdetails" element={<UserBookings />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
