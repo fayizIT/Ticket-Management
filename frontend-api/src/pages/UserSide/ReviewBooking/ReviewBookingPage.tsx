@@ -124,7 +124,6 @@ const ReviewBookingPage: React.FC = () => {
       }
 
       const options = {
-        key: "rzp_test_vGGGd2XhY2l19v",
         amount: (result.grandTotal * 100).toString(),
         currency: "INR",
         name: "Foggy Mountain",
@@ -136,7 +135,6 @@ const ReviewBookingPage: React.FC = () => {
 
           try {
             const paymentResponse = await fetch(
-              `http://localhost:3000/bookings/${result.bookingId}/confirm-payment`,
               {
                 method: "PATCH",
                 headers: {

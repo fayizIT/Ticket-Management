@@ -7,9 +7,9 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: 'http://localhost:3001', // Allow requests from your Vite frontend
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    origin: 'http://localhost:3001', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, 
   });
   app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(3000);

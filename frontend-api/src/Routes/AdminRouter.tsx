@@ -1,5 +1,3 @@
-// AdminRouter.tsx
-
 import { Routes, Route } from 'react-router-dom';
 import AdminLogin from '../pages/AdminSide/AdminLogin/AdminLogin'; 
 import Dashboard from '../pages/AdminSide/Dashboard'; 
